@@ -6,105 +6,153 @@ import java.util.HashMap;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
 //import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Partitioner;
 import org.apache.hadoop.mapreduce.Reducer;
 //import org.apache.hadoop.mapreduce.MapContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+
 public class InvertedIndex {
+	
+	public static class InvertedIndexMapper 
+		extends Mapper<LongWritable, Text, Text, LongWritable>{
+		
+		private static final LongWritable ONE = new LongWritable(1);
+		
+		@Override
+		public void map(LongWritable key, Text value, Context context) 
+				throws IOException, InterruptedException {
+			
+			/* Bepaal de bestandsnaam */
+			FileSplit filesplit = (FileSplit) context.getInputSplit();
+			Path path = filesplit.getPath();
+			String filename = path.getName();
+			
+			/*...*/
+			StringTokenizer itr = new StringTokenizer(value.toString());
+			
+			while(itr.hasMoreTokens()) {
+				String keyToWrite = itr.nextToken().toLowerCase() + "@" + filename;
+				context.write(new Text(keyToWrite), ONE);
+			}
+		}
+	}
+	
+	
+	// Combiner:
+	// Alle '1's optellen om het verkeer te verminderen.
+	public static class InvertedIndexCombiner
+		extends Reducer<Text, LongWritable, Text, LongWritable>{
+		
+		@Override
+		public void reduce(Text word, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException{
+			long total = 0;
+			for(LongWritable value : values) {
+				total += value.get();
+			}
+			
+			context.write(word,  new LongWritable(total));
+			
+		}
+	}
+	
+	// Partitioner: (woord@filename) enkel 'word' hashen
+	public class InvertedIndexPartitioner<Text, LongWritable> extends Partitioner<Text, LongWritable>{
+		public int getPartition(Text key, LongWritable value, int numReduceTasks) {
+			String s = key.toString().split("@")[0];
+			return (s.hashCode() & Integer.MAX_VALUE) % numReduceTasks;
+		}
+	}
+	
+	
+	// Reducer
+	public static class InvertedIndexReducer extends Reducer<Text, LongWritable, Text, Text>{
+		
+		private String previousWord = null;
+		private StringBuilder outString = new StringBuilder();
+		
+		
+		// key: word@filename
+		@Override
+		public void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
+			String word = key.toString().split("@")[0];
+			String filename = key.toString().split("@")[1];
+			
+			long sum = 0;
+			
+			if(previousWord != null && !previousWord.equals(word)) { // nieuw woord gezien
+				outString.setLength(outString.length() - 1);
+				context.write(new Text(previousWord), new Text(outString.toString()));
+				
+			}
+			
+			//bezig met huidig woord
+			for (LongWritable value:values) {
+				sum += value.get();
+			}
+			
+			// outstring aanpassen
+			outString.append(filename + ":" + sum + ";");
+			
+			// previousword aanpassen
+			previousWord = word;
+		}
+		
+		
+		public void cleanup(Context context) throws IOException, InterruptedException{
+			outString.setLength(outString.length() - 1);
+			context.write(new Text(previousWord), new Text(outString.toString()));
+			super.cleanup(context);
+		}
+	}
+	
+	
 
-  /*
-  This is the Mapper class. It extends the hadoop's Mapper class.
-  This maps input key/value pairs to a set of intermediate(output) key/value pairs.
-  Here our input key is a Object and input value is a Text.
-  And the output key is a Text and value is an Text. [word<Text> DocID<Text>]<->[aspect 5722018411]
-  */
-  public static class InvertedIndexMapper
-       extends Mapper<Object, Text, Text, Text>{
-
-    /*
-    Hadoop supported datatypes. This is a hadoop specific datatype that is used to handle
-    numbers and Strings in a hadoop environment. IntWritable and Text are used instead of
-    Java's Integer and String datatypes.
-    Here 'one' is the number of occurance of the 'word' and is set to value 1 during the
-    Map process.
-    */
-    //private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
-
-    public void map(Object key, Text value, Context context
-                    ) throws IOException, InterruptedException {
-
-      // Split DocID and the actual text
-      String DocId = value.toString().substring(0, value.toString().indexOf("\t"));
-      String value_raw =  value.toString().substring(value.toString().indexOf("\t") + 1);
-      
-      // Reading input one line at a time and tokenizing by using space, "'", and "-" characters as tokenizers.
-      StringTokenizer itr = new StringTokenizer(value_raw, " '-");
-      
-      // Iterating through all the words available in that line and forming the key/value pair.
-      while (itr.hasMoreTokens()) {
-        // Remove special characters
-        word.set(itr.nextToken().replaceAll("[^a-zA-Z]", "").toLowerCase());
-        if(word.toString() != "" && !word.toString().isEmpty()){
-        /*
-        Sending to output collector(Context) which in-turn passed the output to Reducer.
-        The output is as follows:
-          'word1' 5722018411
-          'word1' 6722018415
-          'word2' 6722018415
-        */
-          context.write(word, new Text(DocId));
-        }
-      }
-    }
-  }
-
-  public static class InvertedIndexReducer
-       extends Reducer<Text,Text,Text,Text> {
-    /*
-    Reduce method collects the output of the Mapper calculate and aggregate the word's count.
-    */
-    public void reduce(Text key, Iterable<Text> values,
-                       Context context
-                       ) throws IOException, InterruptedException {
-
-      HashMap<String,Integer> map = new HashMap<String,Integer>();
-      /*
-      Iterable through all the values available with a key [word] and add them together and give the
-      final result as the key and sum of its values along with the DocID.
-      */
-      for (Text val : values) {
-        if (map.containsKey(val.toString())) {
-          map.put(val.toString(), map.get(val.toString()) + 1);
-        } else {
-          map.put(val.toString(), 1);
-        }
-      }
-      StringBuilder docValueList = new StringBuilder();
-      for(String docID : map.keySet()){
-        docValueList.append(docID + ":" + map.get(docID) + " ");
-      }
-      context.write(key, new Text(docValueList.toString()));
-    }
-  }
-
-  public static void main(String[] args) throws Exception {
-    Configuration conf = new Configuration();
-    Job job = Job.getInstance(conf, "inverted index");
-    job.setJarByClass(InvertedIndex.class);
-    job.setMapperClass(InvertedIndexMapper.class);
-    // Commend out this part if you want to use combiner. Mapper and Reducer input and outputs type matching might be needed in this case. 
-    //job.setCombinerClass(IntSumReducer.class);
-    job.setReducerClass(InvertedIndexReducer.class);
-    job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(Text.class);
-    FileInputFormat.addInputPath(job, new Path(args[0]));
-    FileOutputFormat.setOutputPath(job, new Path(args[1]));
-    System.exit(job.waitForCompletion(true) ? 0 : 1);
-  }
+	public static void main(String[] args) throws Exception {
+		if(args.length != 2) {
+			System.out.println("Usage: Nuclear meltdown. Usage: <input_dir> <output_dir>");
+			System.exit(-1);
+		}
+		
+		//instance of job maken
+		Configuration conf = new Configuration();
+		Job job = Job.getInstance(conf, "WordCount");
+		
+		// moet je altijd doen als je ...
+		job.setJarByClass(InvertedIndex.class);
+		
+		// set mapper and reducer
+		job.setMapperClass(InvertedIndexMapper.class);
+		job.setReducerClass(InvertedIndexReducer.class);
+		
+		// set combiner
+		job.setCombinerClass(InvertedIndexCombiner.class);
+		job.setPartitionerClass(InvertedIndexPartitioner.class);
+		
+		//set input and output types
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(LongWritable.class);
+		
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(LongWritable.class);
+		
+		//set input and output directory
+		// waar zijn de input-files?
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		
+		// waar zijn de outputfiles? 
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		
+		// voor het testen
+		job.setNumReduceTasks(0);
+		
+		System.exit(job.waitForCompletion(true) ? 0 : 1);		
+	}
 }
