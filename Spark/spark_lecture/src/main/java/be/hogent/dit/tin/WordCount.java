@@ -1,8 +1,15 @@
 package be.hogent.dit.tin;
 
 import org.apache.spark.sql.Dataset;
+
+
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import static org.apache.spark.sql.functions.col;
+import static org.apache.spark.sql.functions.split;
+import static org.apache.spark.sql.functions.explode;
+import static org.apache.spark.sql.functions.desc;
+
 
 public class WordCount {
 
@@ -22,11 +29,20 @@ public class WordCount {
 		
 		
 		// Data uit de tekstbestanden inlezen.
-		Dataset<Row> tekstbestand = spark.read()
+		Dataset<Row> textDF = spark.read()
 				.text("src/main/resources");
 		
 		// Toont een deel van wat is ingelezen.
-		tekstbestand.show();
+		
+		
+		textDF = textDF
+				.withColumn("words", explode(split(col("value"), " ")))
+				.drop("value")
+				.groupBy("words").count()
+				.orderBy(desc("count"));
+		
+		textDF.show();
+		
 		spark.close();
 	}
 }
