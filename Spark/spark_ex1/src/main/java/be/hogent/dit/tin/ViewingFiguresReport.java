@@ -107,7 +107,7 @@ public class ViewingFiguresReport {
 	public static void main(String[] args) {
 		
 		ViewingFiguresReport vfr_controller = new ViewingFiguresReport();
-		Dataset<Row> chapters = vfr_controller.readChapters("src/main/resources/chapters.csv", "src/main/resources/chapters-header.csv");
+		Dataset<Row> chapters = vfr_controller.readChapters("c", "src/main/resources/chapters-header.csv");
 		Dataset<Row> views = vfr_controller.readViews("src/main/resources/views-1.csv", "src/main/resources/viewsHeader.csv");
 		Dataset<Row> titles = vfr_controller.readTitles("src/main/resources/titles.csv", "src/main/resources/titles-header.csv");
 		
