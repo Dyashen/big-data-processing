@@ -5,6 +5,7 @@ import static org.apache.spark.sql.functions.col;
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
+import org.apache.spark.ml.evaluation.RegressionEvaluator;
 import org.apache.spark.ml.feature.MinMaxScaler;
 import org.apache.spark.ml.feature.StandardScaler;
 import org.apache.spark.ml.feature.VectorAssembler;
@@ -97,18 +98,29 @@ public class AirPolutionPipelineRegression {
 				aplinreg.getLinearRegModel()
 				});
 		
-		// Dataframe opsplitsen in twee delen.
+		/* Dataframe opsplitsen in twee delen. */
 		double[] verhouding = {0.8,0.2};
 		Dataset<Row>[] sets = aplinreg.splitSets(regression, verhouding);
 		
-		// Model trainen met de 80%.
+		
+		
+		/* Model trainen met de 80%. */
 		PipelineModel model = pipeline.fit(sets[0]);
 		
-		// Model testen met de 20%. 
-		// Tabel met voorspelde waarden toevoegen.
+		
+		
+		/*
+		 * Model testen met de 20%. 
+		 * Tabel met voorspelde waarden toevoegen.
+		 */
 		Dataset<Row> predictions = model.transform(sets[1]);
 		
-		predictions.show();
+		RegressionEvaluator evaluator = new RegressionEvaluator()
+				  .setLabelCol("AQI Value")
+				  .setPredictionCol("prediction")
+				  .setMetricName("rmse");
+		double rmse = evaluator.evaluate(predictions);
+		System.out.println("Root Mean Squared Error (RMSE) on test data = " + rmse);
 
 	}
 

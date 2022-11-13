@@ -11,6 +11,7 @@ import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.LinearRegressionModel;
 import org.apache.spark.ml.regression.LinearRegressionSummary;
 import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
+import org.apache.spark.ml.stat.Correlation;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -69,6 +70,26 @@ public class KaggleLinearRegression {
 		
 		return lr.fit(dataset);
 	}
+	
+	
+	private void printSummaries(LinearRegressionSummary linregsum) {
+		System.out.println("Trainingset --> RMSE: " + linregsum.rootMeanSquaredError());
+		System.out.println("Testset --> RMSE: " + linregsum.rootMeanSquaredError());
+
+		System.out.println("Trainingset --> r2: " + linregsum.r2());
+		System.out.println("Testset --> r2: " + linregsum.r2());
+	}
+	
+	private void printCorrelation(Dataset<Row> dataset) {
+		Row r1 = Correlation.corr(dataset, "features").head();
+		System.out.println("Pearson correlation matrix:\n" + r1.get(0).toString());
+
+		Row r2 = Correlation.corr(dataset, "features", "spearman").head();
+		System.out.println("Spearman correlation matrix:\n" + r2.get(0).toString());
+	}
+	
+	
+	
 
 	public static void main(String[] args) {
 
@@ -94,16 +115,19 @@ public class KaggleLinearRegression {
 
 		LinearRegressionTrainingSummary trainingSummary = model.summary();
 		
-		//System.out.println("numIterations: " + trainingSummary.totalIterations());
-		//System.out.println("objectiveHistory: " + Vectors.dense(trainingSummary.objectiveHistory()));
-
+		/*
+		 * 
+		 * Analysing the ML data.
+		 * 1. Show the residuals.
+		 * 2. Print RMSE + R2 for the training & testset.
+		 * 3. Print the correlation matrix for the dataset.
+		 * 
+		 */
 		trainingSummary.residuals().show();
-
-		System.out.println("Trainingset --> RMSE: " + trainingSummary.rootMeanSquaredError());
-		System.out.println("Testset --> RMSE: " + testSummary.rootMeanSquaredError());
-
-		System.out.println("Trainingset --> r2: " + trainingSummary.r2());
-		System.out.println("Testset --> r2: " + testSummary.r2());
+		linreg.printSummaries(trainingSummary);
+		linreg.printCorrelation(regression);
+		
+		
 
 	}
 
