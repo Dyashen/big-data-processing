@@ -6,6 +6,8 @@ import static org.apache.spark.sql.functions.regexp_replace;
 import org.apache.spark.ml.classification.DecisionTreeClassifier;
 import org.apache.spark.ml.classification.LogisticRegression;
 import org.apache.spark.ml.classification.LogisticRegressionModel;
+import org.apache.spark.ml.classification.NaiveBayes;
+import org.apache.spark.ml.classification.NaiveBayesModel;
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator;
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
 import org.apache.spark.ml.feature.CountVectorizer;
@@ -73,10 +75,6 @@ public class DisasterNLP {
 		Dataset<Row> training = nlp.getTrainingData();
 		Dataset<Row> test = nlp.getTestData();
 		
-		
-		training.groupBy(col("target")).count().show();
-		
-		
 		Dataset<Row> ml_df = training.select(col("id"), col("text"), col("target"));
 		
 		ml_df = ml_df.na().drop();
@@ -114,8 +112,6 @@ public class DisasterNLP {
 		Dataset<Row> countVectorizer_train = model.transform(words_df);
 		countVectorizer_train = model.transform(words_df);
 		countVectorizer_train.show();
-		
-		countVectorizer_train.select("text","words","filtered","features","target").show();
 		
 		/* Dataframe opsplitsen in twee delen. */
 		double[] verhouding = {0.8,0.2};
@@ -194,7 +190,7 @@ public class DisasterNLP {
 //				.setLabelCol("target")
 //				.setFeaturesCol("features");
 //		
-//		NaiveBayesModel nbModel = nb.fit(trainData);
+//		NaiveBayesModel nbModel = nb.fit(sets[0]);
 //		
 //		Dataset<Row> nb_predictions = nbModel.transform(sets[1]);
 		
