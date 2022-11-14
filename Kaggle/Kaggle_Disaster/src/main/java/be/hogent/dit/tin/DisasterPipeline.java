@@ -17,9 +17,12 @@ import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
 import org.apache.spark.ml.feature.CountVectorizer;
 import org.apache.spark.ml.feature.RegexTokenizer;
 import org.apache.spark.ml.feature.StopWordsRemover;
+import org.apache.spark.ml.linalg.Matrix;
+import org.apache.spark.mllib.evaluation.MulticlassMetrics;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.StructField;
 
 public class DisasterPipeline {
 
@@ -49,15 +52,32 @@ public class DisasterPipeline {
 		return dataset.randomSplit(verhouding);
 	}
 
-	private Dataset<Row> getLogRegPredictions(Dataset<Row>[] datasets, int iter) {
+	private Dataset<Row> getLogRegPredictions(Dataset<Row> trainingset, Dataset<Row> testset, int iter) {
 		LogisticRegression lr = new LogisticRegression().setFeaturesCol("features").setLabelCol("target")
 				.setMaxIter(iter);
 
-		LogisticRegressionModel lrModel = lr.fit(datasets[0]);
+		LogisticRegressionModel lrModel = lr.fit(trainingset);
 
-		return lrModel.transform(datasets[1]);
+		return lrModel.transform(testset);
+	}
+	
+	private Dataset<Row> getDecisionTreePredictions(Dataset<Row> trainingset, Dataset<Row> testset, int depth) {
+		DecisionTreeClassifier dtc = new DecisionTreeClassifier().setFeaturesCol("features").setLabelCol("target")
+				.setMaxDepth(depth);
+
+		DecisionTreeClassificationModel dtcm = dtc.fit(trainingset);
+		return dtcm.transform(testset);
+	}
+	
+	private Dataset<Row> getRFCPredictions(Dataset<Row> trainingset, Dataset<Row> testset, int numTr, int maxDepth) {
+		RandomForestClassifier rfc = new RandomForestClassifier().setNumTrees(numTr).setMaxDepth(maxDepth)
+				.setLabelCol("target").setFeaturesCol("features").setSeed(42);
+		
+		RandomForestClassificationModel rfcm = rfc.fit(trainingset);
+		return rfcm.transform(testset);
 	}
 
+	
 	private double getAccuracy(Dataset<Row> predictions) {
 		return new MulticlassClassificationEvaluator().setLabelCol("target").setPredictionCol("prediction")
 				.setMetricName("accuracy").evaluate(predictions);
@@ -65,6 +85,19 @@ public class DisasterPipeline {
 
 	private double getAreaROCCurve(Dataset<Row> predictions) {
 		return new BinaryClassificationEvaluator().setLabelCol("target").evaluate(predictions);
+	}
+	
+	private void printConfusionMatrixEssence(Dataset<Row> predictions_and_labels) {
+		Dataset<Row> preds_and_labels = predictions_and_labels
+				.select("prediction", "target")
+				.orderBy("prediction")
+				.withColumn("target_d", col("target").cast("double"))
+				.drop(col("target"));
+		
+		MulticlassMetrics metrics = new MulticlassMetrics(preds_and_labels);
+		System.out.println(metrics.confusionMatrix());
+		System.out.printf("Precision: %.5f \n", metrics.weightedPrecision());
+		System.out.printf("Recall: %.5f \n", metrics.weightedRecall());
 	}
 
 	public static void main(String[] args) {
@@ -77,31 +110,29 @@ public class DisasterPipeline {
 		Dataset<Row> test = nlp.getTestData();
 
 		Dataset<Row> ml_df = training.select(col("id"), col("text"), col("target"));
-
 		ml_df = ml_df.na().drop();
 		ml_df = ml_df.withColumn("str_only", regexp_replace(col("text"), "\\d+", ""));
 
 		Pipeline pipeline = new Pipeline().setStages(
 				new PipelineStage[] { nlp.getRegexTokenizer(), nlp.getStopWordsRemover(), nlp.getCountVectorizer() });
 
-		/* Model trainen met de 80%. */
 		PipelineModel model = pipeline.fit(ml_df);
-
 		Dataset<Row> final_data = model.transform(ml_df);
+		 
+		
+		Dataset<Row> test_df = test.select(col("id"), col("text"));
+		test_df = test_df.withColumn("str_only", regexp_replace(col("text"), "\\d+", ""));
+		
+		Pipeline pipeline_test = new Pipeline().setStages(
+				new PipelineStage[] { nlp.getRegexTokenizer(), nlp.getStopWordsRemover(), nlp.getCountVectorizer() });
+
+		PipelineModel model_test = pipeline.fit(ml_df);
+		Dataset<Row> final_test_data = model.transform(ml_df);
 
 		/*
-		 * 
-		 * Dataframe opsplitsen in twee delen.
-		 * 
+		 * LOGISTIC REGRESSION 
 		 */
-		double[] verhouding = { 0.8, 0.2 };
-		Dataset<Row>[] sets = nlp.splitSets(final_data, verhouding);
-
-		/*
-		 * 
-		 * LOGISTIC REGRESSION
-		 * 
-		 */
+		
 		// int[] iterations_ints = {1, 10, 25, 50, 100};
 		int[] iterations_ints = { 1, 3, 6, 9 };
 		double maxAreaIter = 0;
@@ -110,7 +141,7 @@ public class DisasterPipeline {
 		int idealAccIter = 1;
 
 		for (int iter : iterations_ints) {
-			Dataset<Row> logregPredictions = nlp.getLogRegPredictions(sets, iter);
+			Dataset<Row> logregPredictions = nlp.getLogRegPredictions(final_data, final_test_data, idealAccIter);
 
 			double currentArea = nlp.getAreaROCCurve(logregPredictions);
 			double currentAccuracy = nlp.getAccuracy(logregPredictions);
@@ -129,24 +160,26 @@ public class DisasterPipeline {
 		System.out.println("-*-*- LOGISTIC REGRESSION -*-*-");
 		System.out.printf("Ideaal aantal iteraties %d met accuracy: %.5f \n", idealAccIter, maxAccuracyIter);
 		System.out.printf("Ideaal aantal iteraties %d voor ROC Area: %.5f \n", idealAreaIter, maxAreaIter);
+		
+		Dataset<Row> logregIdealPredict = nlp.getLogRegPredictions(final_data, final_test_data, idealAccIter);
+		nlp.printConfusionMatrixEssence(logregIdealPredict);
+		System.out.println();
+
 
 		/*
 		 * 
 		 * DECISION TREE CLASSIFIER
 		 * 
 		 */
+		
 		double maxArea = 0;
 		double maxAccuracy = 0;
 		int idealLevelArea = 1;
 		int idealLevelAcc = 1;
 
-		for (int i = 1; i < 31; i++) {
+		for (int i = 30; i >= 20; i--) {
 
-			DecisionTreeClassifier dtc = new DecisionTreeClassifier().setFeaturesCol("features").setLabelCol("target")
-					.setMaxDepth(i);
-
-			DecisionTreeClassificationModel dtcm = dtc.fit(sets[0]);
-			Dataset<Row> dtcPredictions = dtcm.transform(sets[1]);
+			Dataset<Row> dtcPredictions = nlp.getDecisionTreePredictions(final_data, final_test_data, i);
 
 			double currentArea = nlp.getAreaROCCurve(dtcPredictions);
 			double currentAccuracy = nlp.getAccuracy(dtcPredictions);
@@ -165,31 +198,42 @@ public class DisasterPipeline {
 		System.out.println("-*-*- DECISION TREE CLASSIFIER -*-*-");
 		System.out.printf("Ideaal aantal levels voor accuracy: %d met %.5f \n", idealLevelAcc, maxAccuracy);
 		System.out.printf("Ideaal aantal levels voor ROC Area: %d met %.5f \n", idealLevelArea, maxArea);
-
-		/*
-		 * 
-		 * RANDOM FOREST CLASSIFIER
-		 * 
-		 */
 		
-		System.out.println("-*-*- RANDOM FOREST CLASSIFIER -*-*-");
+		Dataset<Row> detreeIdealPredict = nlp.getDecisionTreePredictions(final_data, final_test_data, idealLevelAcc);
+		nlp.printConfusionMatrixEssence(detreeIdealPredict);
+		System.out.println();
+
+		
+		 /* 
+		 * RANDOM FOREST CLASSIFIER
+		 */ 
 
 		int[] numTrees = {5, 15, 30, 45, 60, 75};
-		int[] maxDepth = {15, 30, 45};
+		int[] maxDepth = {15, 20, 25, 30};
 
+		int idealNrTrees = 5;
+		int idealDepth = 15;
+		
 		for (int numTr : numTrees) {
 			for (int maxD : maxDepth) {
-				RandomForestClassifier rfc = new RandomForestClassifier().setNumTrees(numTr).setMaxDepth(maxD)
-						.setLabelCol("target").setFeaturesCol("features").setSeed(42);
 				
-				RandomForestClassificationModel rfcm = rfc.fit(sets[0]);
-				Dataset<Row> rfrPredictions = rfcm.transform(sets[1]);
+				Dataset<Row> rfcPredictions = nlp.getRFCPredictions(final_data, final_test_data, numTr, maxD);
 				
-				double currentArea = nlp.getAreaROCCurve(rfrPredictions);
-				double currentAccuracy = nlp.getAccuracy(rfrPredictions);
+				double currentAccuracy = nlp.getAccuracy(rfcPredictions);
 				
-				System.out.printf("%d %d : %.5f %.5f \n", numTr, maxD, currentArea, currentAccuracy);
+				if (currentAccuracy >= maxAccuracy) {
+					maxAccuracy = currentAccuracy;
+					idealNrTrees = numTr;
+					idealDepth = maxD;
+				}
 			}
 		}
+		
+		System.out.println("-*-*- RANDOM FOREST CLASSIFIER -*-*-");
+		Dataset<Row> rfcPredictions = nlp.getRFCPredictions(final_data, final_test_data, idealNrTrees, idealDepth);
+		nlp.printConfusionMatrixEssence(rfcPredictions);
+		System.out.println();
+		
 	}
+	
 }

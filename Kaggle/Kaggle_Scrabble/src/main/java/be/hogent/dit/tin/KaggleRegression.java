@@ -93,6 +93,8 @@ public class KaggleRegression {
 
 		KaggleRegression kagglereg = new KaggleRegression();
 		
+		kagglereg.spark.sparkContext().setLogLevel("ERROR");
+		
 		Dataset<Row> regressiondata = kagglereg.getData();
 		
 		regressiondata = kagglereg.dropColumns(regressiondata);
