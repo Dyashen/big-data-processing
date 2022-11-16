@@ -6,6 +6,7 @@ import org.apache.spark.ml.feature.MinMaxScaler;
 import org.apache.spark.ml.feature.MinMaxScalerModel;
 import org.apache.spark.ml.feature.StringIndexer;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.apache.spark.ml.linalg.Matrix;
 import org.apache.spark.ml.linalg.Vectors;
 import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.LinearRegressionModel;
@@ -82,10 +83,17 @@ public class KaggleLinearRegression {
 	
 	private void printCorrelation(Dataset<Row> dataset) {
 		Row r1 = Correlation.corr(dataset, "features").head();
-		System.out.println("Pearson correlation matrix:\n" + r1.get(0).toString());
+		
+		Matrix r2= r1.getAs(0);
+		   for (int i = 0; i < r2.numRows(); i++) {
+		       for (int j = 0; j < r2.numCols(); j++) {
+		            System.out.printf("%.2f \t", r2.apply(i,j));
+		       }
+		       System.out.println();
+		   }
 
-		Row r2 = Correlation.corr(dataset, "features", "spearman").head();
-		System.out.println("Spearman correlation matrix:\n" + r2.get(0).toString());
+//		Row r2 = Correlation.corr(dataset, "features", "spearman").head();
+//		System.out.println("Spearman correlation matrix:\n" + r2.get(0).toString());
 	}
 	
 	
@@ -94,6 +102,8 @@ public class KaggleLinearRegression {
 	public static void main(String[] args) {
 
 		KaggleLinearRegression linreg = new KaggleLinearRegression();
+		
+		linreg.spark.sparkContext().setLogLevel("ERROR");
 
 		Dataset<Row> regression = linreg.getData();
 
@@ -102,6 +112,9 @@ public class KaggleLinearRegression {
 		regression = linreg.stringIndexing(regression);
 		regression = regression.drop(col("winner"));
 		regression = linreg.assemblingFeatures(regression);
+		
+		regression.show();
+		
 		// regression = linreg.minmaxScaling(regression);
 
 		double[] proportie = { 0.8, 0.2 };

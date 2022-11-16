@@ -9,6 +9,7 @@ import org.apache.spark.ml.evaluation.RegressionEvaluator;
 import org.apache.spark.ml.feature.MinMaxScaler;
 import org.apache.spark.ml.feature.StandardScaler;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.apache.spark.ml.regression.DecisionTreeRegressor;
 import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.RandomForestRegressor;
 import org.apache.spark.sql.Dataset;
@@ -20,7 +21,7 @@ public class AirPolutionPipelineRegression {
 	/*
 	 * SparkSession maken.
 	 */
-	SparkSession spark = SparkSession.builder().appName("KaggleLinearRegression").master("local[*]").getOrCreate();
+	SparkSession spark = SparkSession.builder().appName("AirPolutionRegression").master("local[*]").getOrCreate();
 
 	/*
 	 * Data ophalen. De CSV staat onder /src/main/resources
@@ -37,7 +38,6 @@ public class AirPolutionPipelineRegression {
 				.drop(col("Ozone AQI Category")).drop(col("NO2 AQI Category")).drop(col("`pm2.5 AQI Category`"));
 	}
 
-	
 	/*
 	 * De kolommen worden initieel opgeslaan als strings. Dit moet worden aangepast.
 	 */
@@ -75,36 +75,40 @@ public class AirPolutionPipelineRegression {
 	}
 
 	/*
-	 * Een dataset opsplitsen naargelang een verhouding. De verhouding moeten twee doubles zijn: %training & %test.
+	 * Een dataset opsplitsen naargelang een verhouding. De verhouding moeten twee
+	 * doubles zijn: %training & %test.
 	 */
 	private Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
 		return dataset.randomSplit(verhouding);
 	}
 
-	
 	private LinearRegression getLinearRegModel() {
 		return new LinearRegression().setFeaturesCol("features").setLabelCol("AQI Value");
 	}
-	
+
 	/*
 	 * Object voor het Random Forest Regressie model.
 	 */
 	private RandomForestRegressor getRandomForestRegModel(int maxDepth) {
 		return new RandomForestRegressor().setLabelCol("AQI Value").setFeaturesCol("features").setMaxDepth(maxDepth);
 	}
-	
+
+	private DecisionTreeRegressor getDecisionTreeModel(int i) {
+		return new DecisionTreeRegressor().setFeaturesCol("indexedFeatures").setMaxDepth(i);
+	}
+
 	/*
-	 * Vier metrieken worden bijgehouden in een array. 
-	 * We hergebruiken het deel code om zo enkel de metricname aan te passen. 
-	 * De evaluatie gebeurt op dezelfde label en voorspelde kolom.
+	 * Vier metrieken worden bijgehouden in een array. We hergebruiken het deel code
+	 * om zo enkel de metricname aan te passen. De evaluatie gebeurt op dezelfde
+	 * label en voorspelde kolom.
 	 */
 	private void printRegressionEvaluation(Dataset<Row> predictions) {
 
 		String[] metricTypes = { "mse", "rmse", "r2", "mae" };
 
 		for (String metricType : metricTypes) {
-			RegressionEvaluator evaluator = new RegressionEvaluator().setLabelCol("AQI Value").setPredictionCol("prediction")
-					.setMetricName(metricType);
+			RegressionEvaluator evaluator = new RegressionEvaluator().setLabelCol("AQI Value")
+					.setPredictionCol("prediction").setMetricName(metricType);
 
 			double calc = evaluator.evaluate(predictions);
 
@@ -117,7 +121,6 @@ public class AirPolutionPipelineRegression {
 		AirPolutionPipelineRegression apreg = new AirPolutionPipelineRegression();
 		apreg.spark.sparkContext().setLogLevel("ERROR");
 		Dataset<Row> dataset = apreg.getData();
-		
 
 		// Voorbereiding
 		dataset = apreg.dropColumns(dataset);
@@ -144,26 +147,40 @@ public class AirPolutionPipelineRegression {
 		PipelineModel model = pipelineLinReg.fit(sets[0]);
 		Dataset<Row> predictions = model.transform(sets[1]);
 		apreg.printRegressionEvaluation(predictions);
-		
-		
+
 		/*
 		 * 
 		 * Random Forest Regression De pipeline hier volgt dezelfde structuur mits de
 		 * uitzondering van het randomforestmodel.
 		 * 
+		 * Lus --> GridSearch + Cross-validation + ParamGridBuilder
+		 * 
 		 */
-
 		for (int i = 5; i < 30; i += 5) {
 			System.out.printf("\n_-* Random Forest Regression %d *-_\n", i);
-			Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { 
-					apreg.getAssembler(),
-					// ff.getMinMaxScaler(),
+			Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { apreg.getAssembler(),
+					apreg.getMinMaxScaler(),
 					apreg.getRandomForestRegModel(i) });
 
 			PipelineModel modelRFR = pipelineRFR.fit(sets[0]);
 			Dataset<Row> predictionsRFR = modelRFR.transform(sets[1]);
 			apreg.printRegressionEvaluation(predictionsRFR);
 
+		}
+
+		/*
+		 * DecisionTree Regression
+		 */
+
+		for (int i = 5; i < 30; i += 5) {
+			Pipeline pipelineDT = new Pipeline().setStages(new PipelineStage[] { apreg.getAssembler(),
+					//apreg.getIndexer(),
+					apreg.getMinMaxScaler(),
+					apreg.getDecisionTreeModel(i) });
+			
+			PipelineModel modelDT = pipelineDT.fit(sets[0]);
+			Dataset<Row> predictionsDT = modelDT.transform(sets[1]);
+			apreg.printRegressionEvaluation(predictionsDT);
 		}
 	}
 }

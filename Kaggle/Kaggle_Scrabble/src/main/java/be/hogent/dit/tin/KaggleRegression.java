@@ -54,12 +54,6 @@ public class KaggleRegression {
 				.setInputCol("features")
 				.setOutputCol("scaledFeatures");
 	}
-	
-	private StandardScaler stdScaler() {
-		return new StandardScaler()
-				.setInputCol("features")
-				.setOutputCol("scaledFeatures");
-	}
 
 	private Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] proportie) {
 		return dataset.randomSplit(proportie);
@@ -75,7 +69,6 @@ public class KaggleRegression {
 	private void printSummaries(LinearRegressionSummary linregsum) {
 		System.out.println("Trainingset --> RMSE: " + linregsum.rootMeanSquaredError());
 		System.out.println("Testset --> RMSE: " + linregsum.rootMeanSquaredError());
-
 		System.out.println("Trainingset --> r2: " + linregsum.r2());
 		System.out.println("Testset --> r2: " + linregsum.r2());
 	}
@@ -109,13 +102,15 @@ public class KaggleRegression {
 		
 		double[] verhouding = {0.8,0.2};
 		Dataset<Row>[] sets = kagglereg.splitSets(regressiondata, verhouding);
-		
 		PipelineModel model = pipeline.fit(sets[0]);
 		Dataset<Row> predictions = model.transform(sets[1]);
 		
 		predictions.show();
-		
 		kagglereg.printCorrelation(predictions);
+		
+		/*
+		 * RMSE
+		 */
 
 	}
 

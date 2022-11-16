@@ -48,9 +48,13 @@ public class DisasterPipeline {
 		return new CountVectorizer().setInputCol("filtered").setOutputCol("features");
 	}
 
-	private Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
-		return dataset.randomSplit(verhouding);
-	}
+	
+	/*
+	 * Niet nodig hier. We krijgen al een training- en testset.
+	 */
+//	private Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
+//		return dataset.randomSplit(verhouding);
+//	}
 
 	private Dataset<Row> getLogRegPredictions(Dataset<Row> trainingset, Dataset<Row> testset, int iter) {
 		LogisticRegression lr = new LogisticRegression().setFeaturesCol("features").setLabelCol("target")
