@@ -48,14 +48,6 @@ public class DisasterPipeline {
 		return new CountVectorizer().setInputCol("filtered").setOutputCol("features");
 	}
 
-	
-	/*
-	 * Niet nodig hier. We krijgen al een training- en testset.
-	 */
-//	private Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
-//		return dataset.randomSplit(verhouding);
-//	}
-
 	private Dataset<Row> getLogRegPredictions(Dataset<Row> trainingset, Dataset<Row> testset, int iter) {
 		LogisticRegression lr = new LogisticRegression().setFeaturesCol("features").setLabelCol("target")
 				.setMaxIter(iter);
@@ -127,11 +119,15 @@ public class DisasterPipeline {
 		Dataset<Row> test_df = test.select(col("id"), col("text"));
 		test_df = test_df.withColumn("str_only", regexp_replace(col("text"), "\\d+", ""));
 		
+		//test_df.show();
+		
 		Pipeline pipeline_test = new Pipeline().setStages(
 				new PipelineStage[] { nlp.getRegexTokenizer(), nlp.getStopWordsRemover(), nlp.getCountVectorizer() });
 
 		PipelineModel model_test = pipeline.fit(ml_df);
 		Dataset<Row> final_test_data = model.transform(ml_df);
+		
+		final_test_data.show();
 
 		/*
 		 * LOGISTIC REGRESSION 
@@ -167,6 +163,9 @@ public class DisasterPipeline {
 		
 		Dataset<Row> logregIdealPredict = nlp.getLogRegPredictions(final_data, final_test_data, idealAccIter);
 		nlp.printConfusionMatrixEssence(logregIdealPredict);
+		
+		logregIdealPredict.show();
+		
 		System.out.println();
 
 

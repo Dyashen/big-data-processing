@@ -9,9 +9,16 @@ import org.apache.spark.ml.evaluation.RegressionEvaluator;
 import org.apache.spark.ml.feature.MinMaxScaler;
 import org.apache.spark.ml.feature.StandardScaler;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.apache.spark.ml.param.Param;
+import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.regression.DecisionTreeRegressor;
+import org.apache.spark.ml.regression.GeneralizedLinearRegression;
 import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.RandomForestRegressor;
+import org.apache.spark.ml.tuning.CrossValidator;
+import org.apache.spark.ml.tuning.CrossValidatorModel;
+import org.apache.spark.ml.tuning.ParamGridBuilder;
+import org.apache.spark.mllib.regression.GeneralizedLinearModel;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -82,21 +89,6 @@ public class AirPolutionPipelineRegression {
 		return dataset.randomSplit(verhouding);
 	}
 
-	private LinearRegression getLinearRegModel() {
-		return new LinearRegression().setFeaturesCol("features").setLabelCol("AQI Value");
-	}
-
-	/*
-	 * Object voor het Random Forest Regressie model.
-	 */
-	private RandomForestRegressor getRandomForestRegModel(int maxDepth) {
-		return new RandomForestRegressor().setLabelCol("AQI Value").setFeaturesCol("features").setMaxDepth(maxDepth);
-	}
-
-	private DecisionTreeRegressor getDecisionTreeModel(int i) {
-		return new DecisionTreeRegressor().setFeaturesCol("indexedFeatures").setMaxDepth(i);
-	}
-
 	/*
 	 * Vier metrieken worden bijgehouden in een array. We hergebruiken het deel code
 	 * om zo enkel de metricname aan te passen. De evaluatie gebeurt op dezelfde
@@ -112,7 +104,7 @@ public class AirPolutionPipelineRegression {
 
 			double calc = evaluator.evaluate(predictions);
 
-			System.out.printf("%s: %.5f \n", metricType, calc);
+			System.out.printf("%s:\t%.5f \n", metricType, calc);
 		}
 	}
 
@@ -125,7 +117,11 @@ public class AirPolutionPipelineRegression {
 		// Voorbereiding
 		dataset = apreg.dropColumns(dataset);
 		dataset = apreg.changeTypeColumns(dataset);
-		Dataset<Row>[] sets = apreg.splitSets(dataset, new double[] { 0.8, 0.2 });
+		Dataset<Row>[] sets = apreg.splitSets(dataset, new double[] { 0.7, 0.3 });
+
+		MinMaxScaler minmax = apreg.getMinMaxScaler();
+		VectorAssembler assembler = apreg.getAssembler();
+		RegressionEvaluator regEval = new RegressionEvaluator().setLabelCol("AQI Value").setMetricName("rmse");
 
 		/*
 		 * Lineair regressiemodel. Er wordt gewerkt met een pipeline: 1. De kolommen,
@@ -133,10 +129,14 @@ public class AirPolutionPipelineRegression {
 		 * 2. Min-maxscaling. De features gaan een waarde hebben binnen het bereik (0
 		 * --> 1). 3. Het lineaire regressiemodel.
 		 */
-		System.out.println("_-* Linear Regression *-_");
-		Pipeline pipelineLinReg = new Pipeline().setStages(new PipelineStage[] { apreg.getAssembler(),
-				// ff.getMinMaxScaler(),
-				apreg.getLinearRegModel() });
+		
+		
+		System.out.printf("\n _-* Linear Regression *-_\n");
+		
+		LinearRegression linreg = new LinearRegression().setFeaturesCol("scaledFeatures").setLabelCol("AQI Value");
+		
+		Pipeline pipelineLinReg = new Pipeline()
+				.setStages(new PipelineStage[] { assembler, minmax, linreg});
 
 		/*
 		 * Lineair regressiemodel evalueren. De trainingset (80%) wordt gebruikt om het
@@ -151,36 +151,76 @@ public class AirPolutionPipelineRegression {
 		/*
 		 * 
 		 * Random Forest Regression De pipeline hier volgt dezelfde structuur mits de
-		 * uitzondering van het randomforestmodel.
-		 * 
-		 * Lus --> GridSearch + Cross-validation + ParamGridBuilder
+		 * uitzondering van het randomforestmodel. Lus --> GridSearch + Cross-validation
+		 * + ParamGridBuilder
 		 * 
 		 */
-		for (int i = 5; i < 30; i += 5) {
-			System.out.printf("\n_-* Random Forest Regression %d *-_\n", i);
-			Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { apreg.getAssembler(),
-					apreg.getMinMaxScaler(),
-					apreg.getRandomForestRegModel(i) });
+		System.out.println();
+		System.out.printf("\n_-* Random Forest Regression *-_\n");
 
-			PipelineModel modelRFR = pipelineRFR.fit(sets[0]);
-			Dataset<Row> predictionsRFR = modelRFR.transform(sets[1]);
-			apreg.printRegressionEvaluation(predictionsRFR);
+		RandomForestRegressor rfr = new RandomForestRegressor().setLabelCol("AQI Value").setFeaturesCol("scaledFeatures");
 
-		}
+		ParamMap[] paramGridRFR = new ParamGridBuilder()
+				.addGrid(rfr.maxDepth(), new int[] {5, 10, 15, 20, 25, 30})
+				.addGrid(rfr.numTrees(), new int[] {20, 40, 60, 80, 100, 120})
+				.build();
+
+		Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, rfr });
+
+		CrossValidator cv = new CrossValidator().setEstimator(pipelineRFR).setEvaluator(regEval)
+				.setEstimatorParamMaps(paramGridRFR);
+
+		CrossValidatorModel cvmRFR = cv.fit(sets[0]);
+
+		System.out.printf("Beste model: %s\n", cvmRFR.bestModel().params().toString());
+		
+		Dataset<Row> cvPredictions = cvmRFR.transform(sets[1]);
+		
+		apreg.printRegressionEvaluation(cvPredictions);
 
 		/*
 		 * DecisionTree Regression
 		 */
+		System.out.printf("\n_-* Decision Tree Regressor *-_\n");
 
-		for (int i = 5; i < 30; i += 5) {
-			Pipeline pipelineDT = new Pipeline().setStages(new PipelineStage[] { apreg.getAssembler(),
-					//apreg.getIndexer(),
-					apreg.getMinMaxScaler(),
-					apreg.getDecisionTreeModel(i) });
-			
-			PipelineModel modelDT = pipelineDT.fit(sets[0]);
-			Dataset<Row> predictionsDT = modelDT.transform(sets[1]);
-			apreg.printRegressionEvaluation(predictionsDT);
-		}
+		DecisionTreeRegressor dtr = new DecisionTreeRegressor().setFeaturesCol("scaledFeatures").setLabelCol("AQI Value");
+
+		Pipeline pipelineDT = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, dtr });
+
+		ParamMap[] paramGridDT = new ParamGridBuilder().addGrid(dtr.maxDepth(), new int[] { 5, 10, 15, 20, 25, 30 })
+				.build();
+
+		CrossValidator cvDT = new CrossValidator().setEstimator(pipelineDT).setEvaluator(regEval)
+				.setEstimatorParamMaps(paramGridDT);
+
+		CrossValidatorModel cvmDT = cvDT.fit(sets[0]);
+
+		System.out.printf("Beste model: %s\n", cvmDT.bestModel().params().toString());
+		Dataset<Row> cvPredictionsDT = cvmDT.transform(sets[1]);
+		apreg.printRegressionEvaluation(cvPredictionsDT);
+		
+		
+		/*
+		 * Generalized Lineaire Regressie
+		 */
+		System.out.printf("\n_-* Generalized Linear Regression *-_\n");
+		
+		GeneralizedLinearRegression glr = new GeneralizedLinearRegression().setFeaturesCol("scaledFeatures").setLabelCol("AQI Value").setFamily("gaussian");
+		
+		Pipeline pipelineGLR = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, glr });
+
+		ParamMap[] paramGridGLR = new ParamGridBuilder()
+				.addGrid(glr.maxIter(), new int[] {4, 8, 12, 16})
+				.addGrid(glr.regParam(), new double[] {0.3, 0.6, 0.9})
+				.build();
+		
+		CrossValidator cvGLR = new CrossValidator().setEstimator(pipelineGLR).setEvaluator(regEval)
+				.setEstimatorParamMaps(paramGridGLR);
+
+		CrossValidatorModel cvmGLR = cvGLR.fit(sets[0]);
+
+		System.out.printf("Beste model: %s\n", cvmGLR.bestModel().params().toString());
+		Dataset<Row> cvPredictionsGLR = cvmGLR.transform(sets[1]);
+		apreg.printRegressionEvaluation(cvPredictionsGLR);	
 	}
 }

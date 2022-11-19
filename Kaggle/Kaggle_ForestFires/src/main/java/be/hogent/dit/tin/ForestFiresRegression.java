@@ -8,8 +8,12 @@ import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.ml.evaluation.RegressionEvaluator;
 import org.apache.spark.ml.feature.MinMaxScaler;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.apache.spark.ml.param.ParamMap;
 import org.apache.spark.ml.regression.LinearRegression;
 import org.apache.spark.ml.regression.RandomForestRegressor;
+import org.apache.spark.ml.tuning.CrossValidator;
+import org.apache.spark.ml.tuning.CrossValidatorModel;
+import org.apache.spark.ml.tuning.ParamGridBuilder;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -50,37 +54,6 @@ public class ForestFiresRegression {
 	}
 
 	/*
-	 * De assembler gaat alle kolommen omzetten naar één kolom. Om een voorspelling
-	 * te maken is een vector nodig van alle features.
-	 */
-	private VectorAssembler getAssembler() {
-		return new VectorAssembler()
-				.setInputCols(new String[] { "FFMC", "DMC", "DC", "ISI", "temp", "RH", "wind", "rain" })
-				.setOutputCol("features");
-	}
-
-	/*
-	 * De features op een gelijke schaal brengen. Alles moet tussen 0 en 1 liggen.
-	 */
-	private MinMaxScaler getMinMaxScaler() {
-		return new MinMaxScaler().setMax(1.0).setMin(0.0).setInputCol("features").setOutputCol("scaledFeatures");
-	}
-
-	/*
-	 * Object voor het lineaire regressiemodel maken.
-	 */
-	private LinearRegression getLinearRegModel() {
-		return new LinearRegression().setFeaturesCol("features").setLabelCol("area");
-	}
-
-	/*
-	 * Object voor het Random Forest Regressie model.
-	 */
-	private RandomForestRegressor getRandomForestRegModel(int maxDepth) {
-		return new RandomForestRegressor().setLabelCol("area").setFeaturesCol("features").setMaxDepth(maxDepth);
-	}
-
-	/*
 	 * Een dataset opsplitsen naargelang een verhouding. De verhouding moeten twee
 	 * doubles zijn: %training & %test.
 	 */
@@ -103,7 +76,7 @@ public class ForestFiresRegression {
 
 			double calc = evaluator.evaluate(predictions);
 
-			System.out.printf("%s: %.5f \n", metricType, calc);
+			System.out.printf("%s: \t%.5f \n", metricType, calc);
 		}
 	}
 
@@ -115,6 +88,13 @@ public class ForestFiresRegression {
 		 */
 		ForestFiresRegression ff = new ForestFiresRegression();
 		ff.spark.sparkContext().setLogLevel("ERROR");
+
+		VectorAssembler assembler = new VectorAssembler()
+				.setInputCols(new String[] { "FFMC", "DMC", "DC", "ISI", "temp", "RH", "wind", "rain" })
+				.setOutputCol("features");
+		MinMaxScaler minmax = new MinMaxScaler().setMax(1.0).setMin(0.0).setInputCol("features")
+				.setOutputCol("scaledFeatures");
+		RegressionEvaluator regEval = new RegressionEvaluator().setLabelCol("area").setMetricName("rmse");
 
 		/*
 		 * Dataset ophalen + Datacleaning + Datasets splitsen.
@@ -131,9 +111,10 @@ public class ForestFiresRegression {
 		 * --> 1). 3. Het lineaire regressiemodel.
 		 */
 		System.out.println("_-* Linear Regression *-_");
-		Pipeline pipelineLinReg = new Pipeline().setStages(new PipelineStage[] { ff.getAssembler(),
-				// ff.getMinMaxScaler(),
-				ff.getLinearRegModel() });
+
+		LinearRegression linreg = new LinearRegression().setFeaturesCol("scaledFeatures").setLabelCol("area");
+
+		Pipeline pipelineLinReg = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, linreg });
 
 		/*
 		 * Lineair regressiemodel evalueren. De trainingset (80%) wordt gebruikt om het
@@ -146,23 +127,26 @@ public class ForestFiresRegression {
 		ff.printRegressionEvaluation(predictions);
 
 		/*
-		 * 
 		 * Random Forest Regression De pipeline hier volgt dezelfde structuur mits de
 		 * uitzondering van het randomforestmodel.
-		 * 
 		 */
+		System.out.printf("\n_-* Random Forest Regression *-_\n");
 
-		for (int i = 5; i < 30; i += 5) {
-			System.out.printf("\n_-* Random Forest Regression %d *-_\n", i);
-			Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { ff.getAssembler(),
-					//ff.getMinMaxScaler(),
-					ff.getRandomForestRegModel(i) });
+		RandomForestRegressor rfr = new RandomForestRegressor().setLabelCol("area").setFeaturesCol("scaledFeatures");
+		Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, rfr });
+		
+		ParamMap[] paramGridRFR = new ParamGridBuilder()
+				.addGrid(rfr.maxDepth(), new int[] {5, 10, 15, 20, 25, 30})
+				.addGrid(rfr.numTrees(), new int[] {20, 40, 60, 80, 100, 120})
+				.build();
 
-			PipelineModel modelRFR = pipelineRFR.fit(sets[0]);
-			Dataset<Row> predictionsRFR = modelRFR.transform(sets[1]);
-			ff.printRegressionEvaluation(predictionsRFR);
+		CrossValidator cvRFR = new CrossValidator().setEstimator(pipelineRFR).setEvaluator(regEval)
+				.setEstimatorParamMaps(paramGridRFR);
+		CrossValidatorModel cvmRFR = cvRFR.fit(sets[0]);
 
-		}
+		System.out.printf("Beste model: %s\n", cvmRFR.bestModel().params().toString());
+		Dataset<Row> cvPredictionsRFR = cvmRFR.transform(sets[1]);
+		ff.printRegressionEvaluation(cvPredictionsRFR);
 
 	}
 }
