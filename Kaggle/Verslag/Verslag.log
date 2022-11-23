@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  14 NOV 2022 21:22
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  23 NOV 2022 09:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Distributed_Databases/Kaggle/Verslag/Verslag.tex
-(c:/Distributed_Databases/Kaggle/Verslag/Verslag.tex
+**c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex
+(c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex
 LaTeX2e <2022-06-01> patch level 5
 L3 programming layer <2022-09-28> (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
 Document Class: report 2021/10/04 v1.4n Standard LaTeX document class
@@ -400,18 +400,20 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ] [6
 
+] [7
+
 ] (Verslag.aux)
 Package logreq Info: Writing requests to 'Verslag.run.xml'.
 \openout1 = `Verslag.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 9921 strings out of 410532
- 192842 string characters out of 2813299
- 1030646 words of memory out of 3000000
- 31047 multiletter control sequences out of 15000+600000
+ 9917 strings out of 410532
+ 192830 string characters out of 2813299
+ 1032661 words of memory out of 3000000
+ 31043 multiletter control sequences out of 15000+600000
  470220 words of font info for 37 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 60i,6n,68p,720b,3840s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 60i,6n,68p,732b,3840s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on Verslag.xdv (6 pages, 19452 bytes).
+Output written on Verslag.xdv (7 pages, 31308 bytes).

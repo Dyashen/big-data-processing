@@ -1,6 +1,6 @@
-PWD c:\Distributed_Databases\Kaggle\Verslag
+PWD c:\Users\dylan\Distributed_Databases\Kaggle\Verslag
 INPUT C:\Users\dylan\AppData\Local\MiKTeX\miktex\data\le\xetex\xelatex.fmt
-INPUT c:\Distributed_Databases\Kaggle\Verslag\Verslag.tex
+INPUT c:\Users\dylan\Distributed_Databases\Kaggle\Verslag\Verslag.tex
 OUTPUT Verslag.log
 INPUT C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
 INPUT C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls

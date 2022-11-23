@@ -1,14 +1,14 @@
 # Fdb version 3
-["biber Verslag"] 1668368899 "Verslag.bcf" "Verslag.bbl" "Verslag" 1668457337
-  "Verslag.bcf" 1668457337 124441 a8b528fd643ce71bc4af3b866364dc4f "xelatex"
+["biber Verslag"] 1669186684 "Verslag.bcf" "Verslag.bbl" "Verslag" 1669192971
+  "Verslag.bcf" 1669192971 124441 a8b528fd643ce71bc4af3b866364dc4f "xelatex"
   (generated)
   "Verslag.bbl"
   "Verslag.blg"
-["xdvipdfmx"] 1668457337 "Verslag.xdv" "Verslag.pdf" "Verslag" 1668457337
-  "Verslag.xdv" 1668457337 19452 cc4a12cc8307a78a2d8f61f51b5c3082 "xelatex"
+["xdvipdfmx"] 1669192971 "Verslag.xdv" "Verslag.pdf" "Verslag" 1669192971
+  "Verslag.xdv" 1669192971 31308 cea77f95367a9d4d464bd1d17435b80b "xelatex"
   (generated)
   "Verslag.pdf"
-["xelatex"] 1668457335 "c:/Distributed_Databases/Kaggle/Verslag/Verslag.tex" "Verslag.xdv" "Verslag" 1668457337
+["xelatex"] 1669192969 "c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex" "Verslag.xdv" "Verslag" 1669192971
   "C:/Users/dylan/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1667983219 24055908 6d46f8d4e08cf3721dc96751e7e810f7 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi12.tfm" 1136765053 1524 4414a8315f39513458b80dfc63bff03a ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr12.tfm" 1136765053 1288 655e228510b4c2a1abe905c368440826 ""
@@ -52,11 +52,11 @@
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/latex/logreq/logreq.def" 1280937415 1620 fb1c32b818f2058eca187e5c41dfae77 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/latex/logreq/logreq.sty" 1280937415 6187 b27afc771af565d3a9ff1ca7d16d0d46 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "Verslag.aux" 1668457337 239 bf596965a8c2bee91322ff406f112a3b "xelatex"
-  "Verslag.bbl" 1668368902 486 ee04f40f768daeed26442158e95aba61 "biber Verslag"
-  "Verslag.run.xml" 1668457337 2409 c33e2735a53fc205afd7d7629e7792e0 "xelatex"
-  "Verslag.tex" 1668457334 2255 4b43f627e610620f290e842da2ae6fe4 ""
-  "c:/Distributed_Databases/Kaggle/Verslag/Verslag.tex" 1668457334 2255 4b43f627e610620f290e842da2ae6fe4 ""
+  "Verslag.aux" 1669192971 239 21a73f09e39070ba54521dc677a616b9 "xelatex"
+  "Verslag.bbl" 1669186686 486 ee04f40f768daeed26442158e95aba61 "biber Verslag"
+  "Verslag.run.xml" 1669192971 2409 c33e2735a53fc205afd7d7629e7792e0 "xelatex"
+  "Verslag.tex" 1669192968 3493 7cd106dbff449709f997a907d90778b7 ""
+  "c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex" 1669192968 3493 7cd106dbff449709f997a907d90778b7 ""
   (generated)
   "Verslag.aux"
   "Verslag.bcf"

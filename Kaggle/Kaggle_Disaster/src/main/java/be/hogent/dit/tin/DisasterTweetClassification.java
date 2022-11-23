@@ -140,7 +140,7 @@ public class DisasterTweetClassification {
 		
 		ParamMap[] paramGridLogReg = new ParamGridBuilder()
 				.addGrid(lr.maxIter(), new int[] {4, 8, 12, 16})
-				.addGrid(lr.threshold(), new double[] {0.3, 0.6, 0.9})
+				.addGrid(lr.threshold(), new double[] {0.2, 0.4, 0.6, 0.8})
 				.build();
 		
 		CrossValidator cvLogReg = new CrossValidator()
@@ -164,7 +164,7 @@ public class DisasterTweetClassification {
 			
 		ParamMap[] paramGridRFC = new ParamGridBuilder()
 				.addGrid(rfc.maxDepth(), new int[] {5, 10, 15, 20, 25, 30})
-				.addGrid(rfc.numTrees(), new int[] {20, 40, 60, 80, 100, 120})
+				.addGrid(rfc.numTrees(), new int[] {20, 40, 60, 80, 100, 120}) // testen op 20 & 40
 				.build();
 		
 		CrossValidator cvRFC = new CrossValidator()
