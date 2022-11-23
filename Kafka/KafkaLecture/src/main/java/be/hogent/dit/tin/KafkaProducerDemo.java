@@ -25,8 +25,6 @@ public class KafkaProducerDemo {
 		 * 2. Serialization: moet niet dezelfde serializer zijn.
 		 * 
 		 */
-		
-
 		Properties properties = new Properties();
 		properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");  
 		properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -60,12 +58,7 @@ public class KafkaProducerDemo {
 					}
 				}
 			});
-			
-			
 		}
-		
-		
-		
 		
 		// Close producer
 		/*
