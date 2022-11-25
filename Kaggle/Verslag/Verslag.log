@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  23 NOV 2022 09:42
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  25 NOV 2022 23:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -339,26 +339,26 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 (Verslag.aux)
 \openout1 = `Verslag.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 14.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 12.
  (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
 Package biblatex Info: Trying to load language 'dutch' -> 'dutch-apa'...
 Package biblatex Info: ... file 'dutch-apa.lbx' found.
  (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/biblatex-apa\dutch-apa.lbx
@@ -382,25 +382,34 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'Verslag.bbl' found.
  (Verslag.bbl)
-Package biblatex Info: Reference section=0 on input line 14.
-Package biblatex Info: Reference segment=0 on input line 14.
+Package biblatex Info: Reference section=0 on input line 12.
+Package biblatex Info: Reference segment=0 on input line 12.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 15.
+(Font)              <14.4> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 15.
+(Font)              <7> on input line 13.
  [1
 
-] [2
+] (Verslag.toc)
+\tf@toc=\write4
+\openout4 = `Verslag.toc'.
+
+ [2
 
 ] [3
 
 ] [4
 
-] [5
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] [6
+ [5] [6] [7
 
-] [7
+] [8
+
+] [9
+
+] [10
 
 ] (Verslag.aux)
 Package logreq Info: Writing requests to 'Verslag.run.xml'.
@@ -408,12 +417,12 @@ Package logreq Info: Writing requests to 'Verslag.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 9917 strings out of 410532
- 192830 string characters out of 2813299
- 1032661 words of memory out of 3000000
- 31043 multiletter control sequences out of 15000+600000
+ 9932 strings out of 410532
+ 193009 string characters out of 2813299
+ 1039661 words of memory out of 3000000
+ 31055 multiletter control sequences out of 15000+600000
  470220 words of font info for 37 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 60i,6n,68p,732b,3840s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 60i,6n,68p,1332b,3840s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on Verslag.xdv (7 pages, 31308 bytes).
+Output written on Verslag.xdv (10 pages, 75676 bytes).

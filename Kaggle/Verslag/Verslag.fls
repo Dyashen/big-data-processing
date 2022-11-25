@@ -288,6 +288,10 @@ INPUT C:\Users\dylan\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Users\dylan\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
 INPUT C:\Users\dylan\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
 OUTPUT Verslag.xdv
+INPUT .\Verslag.toc
+INPUT Verslag.toc
+INPUT Verslag.toc
+OUTPUT Verslag.toc
 INPUT Verslag.aux
 INPUT Verslag.run.xml
 OUTPUT Verslag.run.xml

@@ -21,12 +21,6 @@ public class FireDepartment {
 
 	SparkSession spark = SparkSession.builder().appName("InvertedIndex").master("local[*]").getOrCreate();
 
-	private Dataset<Row> getFile(String pathname_data) {
-
-		// Data uit de tekstbestanden inlezen.
-		return null;
-	}
-
 	public static void main(String[] args) {
 
 		FireDepartment fd = new FireDepartment();
