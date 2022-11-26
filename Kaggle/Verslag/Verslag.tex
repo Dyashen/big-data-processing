@@ -31,6 +31,8 @@ Als eerste opdracht deden wij mee aan de "New York City Taxi Trip Duration" comp
 
 Bron: https://www.kaggle.com/competitions/nyc-taxi-trip-duration
 
+Gevolgde notebook: https://www.kaggle.com/code/ashishc17/from-exploration-to-linear-regression-prediction
+
 \subsection*{Aanpak}
 
 Onze data is nog te ruw en daarom maken wij een clean-functie aan. De pick-up en drop-off datetime wordt meegegeven als datetime-object. Dit moeten we veranderen naar een bruikbaar formaat voor het regressiemodel. Eerst gaan wij de datetime kolommen opsplitsen in twee kolommen: 'hour' en 'day'. We willen numerieke waarden, dus we behouden enkel de dag van de week (bijvoorbeeld 1) en het uur van de dag (bijvoorbeeld 12). Vervolgens gaan wij de outliers uit onze dataset halen. Voor de outliers willen wij kijken naar de rijen die een veel te hoge longitude of latitude hebben. De outliers kunnen wij bepalen door te kijken naar rijen die buiten het bereik van (3 x standaardafwijking) vallen. Als laatst verwijderen we alle rijen die geen passagiers meenmenen. 
@@ -43,42 +45,96 @@ Na het maken van de kolommen tonen wij, in de terminal, de gemiddelde snelheid e
 
 Bij alle modellen, op het lineaire model na, moeten we de parameters finetunen. Als we dit niet doen zal ons model niet optimaal benut worden en tegenvallende resultaten teruggeven. Dit probleem pakken wij aan door te werken met een ParamGridBuilder. Hiermee kunnen wij meerdere waarden voor verschillende parameters meegeven. Iedere combinatie zal aan bod komen. Hoe meer parameters, hoe langer de uitvoertijd van de applicatie.
 
-\subsection*{Evaluatie}
+\subsection*{Evaluatie en controle}
 
-Bij dit regressieprobleem voeren wij twee algemene testen uit: de correlatiematrix en de vier metrieken. Deze metrieken zijn de Mean Squared Error (MSE), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE) en de correlatiewaarde (R²).
+Bij dit regressieprobleem voeren wij twee algemene testen uit: de correlatiematrix en de vier metrieken. Als tussentijdse controle toonden wij de inhoud van de dataframe. Dit om zeker te zijn dat onze transformaties of clean-opdrachten juist werden uitgevoerd. Deze metrieken zijn de Mean Squared Error (MSE), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE) en de correlatiewaarde (R²).
 
-
-\chapter*{2. Credit Card fraude achterhalen met classificatie. }
+\chapter*{2. Credit Card fraude achterhalen met binaire classificatie. }
 
 Bron: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 
-\subsection*{Aanpak}
-We hebben hier twee klassen: correcte tweets en fraudulente tweets. We moeten een aanpak vinden voor een binaire classificatiemodel.
+Gevolgde notebook: https://www.kaggle.com/code/janiobachmann/credit-fraud-dealing-with-imbalanced-datasets
 
-\subsection*{Evaluatie}
-Bij het evalueren van het classificatiemodel ging onze voorkeur uit naar de confusionmatrix. Zo hebben wij een zicht op hoe goed ons model de klassen kan voorspellen. Bij de logistische regressie merken wij een goed evenwicht op tussen valse positieven en valse negatieven. De classificatiemodellen met Random Forest en Decision Trees voorspellen daarentegen weinig valse negatieven, maar wel uitbundig veel valse positieven. Als extra hebben wij ook de nauwkeurigheid van het model berekent.
+\subsection*{Probleemstelling}
 
-\chapter*{3. De tekstinhoud van tweets detecteren op .}
+Deze dataset werd eerder voor een andere competitie gebruikt, maar wij konden geen toegang verkrijgen tot deze competitie. Deze dataset bestaat uit ongeveer 25.000 rijen. We hebben hier twee klassen: niet-fraudulente en fraudulente transacties. We pakken dit aan met een binair classificatiemodel. Bij het bestuderen van de dataset merken we op dat 99.83 percent van alle transacties niet fraudulent zijn, terwijl enkel 0.71 percent wél fraudulent is.
 
 \subsection*{Aanpak}
 
-Gebruikte regressiemodellen:
-* Lineaire regressie
-* Random forest regressie
+De oorspronkelijke dataset is skewed. Ons model zal een grotere kans hebben op overfitten aangezien het er van uit zal gaan dat de meeste transacties niet fraudulent zal zijn. Daarom gaan we een 'sub-sample' aanmaken. Bij deze kleinere dataset richten we ons op een 50:50 ratio.
 
-De resultaten van de metrieken waren zwak. Onze presumptie lag bij de volatiele waarden. Sommige waarden waren tussen het bereik van 0 - 10. De ... feature daarentegen had een range van 0 - 1000. Dit hebben we opgelost door een MinMaxScaler toe te voegen aan de pipeline.
+Alle nodige features starten met een 'V'-teken. Met behulp van een for-lus en de 'startswith' methode kunnen wij de features zo aan een array van Strings toevoegen. Dit omdat we anders alle 28 features manueel moeten ingeven. De array geven we mee aan de assembler. Die zal de waarden in de 28 kolommen omzetten naar één vector van features.
+
+We hebben hier 28 features dat sterk op elkaar gelijken. Om te experimenteren maken wij ook in onze pipeline gebruik van PCA om dimensionality reduction op onze features uit te voeren. Zo behouden wij enkel de essentiële features.
+
+Voor de binaire classificatie keken wij naar drie verschillende classificatiemodellen: Random Forest, Lineaire SVM en logistische regressie. Het tunen van de parameters doen we, net zoals de vorige oefening, met een ParamGridBuilder.
 
 \subsection*{Evaluatie}
 
-\chapter*{4. Verschillen highlighten met andere machine learning pakketten}
+Bij het evalueren van het classificatiemodel ging onze voorkeur uit naar de confusionmatrix. Zo hebben wij een zicht op hoe goed ons model de klassen kan voorspellen. Uit de confusion matrix kunnen wij ook de precision en recall berekenen. Deze functies zijn ingebouwd in Spark en dit hoeven wij niet manueel te berekenen. Als extra berekenen wij ook de nauwkeurigheid van het model. Wij merken op dat zowel de Random Forest als de Lineaire SVM even goed scoort. Het logistische regressiemodel daarentegen komt net te kort.
+
+\begin{table}[]
+    \caption{Confusion matrix: Random Forest}
+    \label{tab:my-table}
+    \begin{tabular}{lclll}
+    \multicolumn{1}{c}{\textbf{}}   & \textbf{0}               & \textbf{1}              &  &  \\ \cline{2-3}
+    \multicolumn{1}{c|}{\textbf{0}} & \multicolumn{1}{c|}{100} & \multicolumn{1}{c|}{3}  &  &  \\ \cline{2-3}
+    \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{c|}{5}   & \multicolumn{1}{c|}{98} &  &  \\ \cline{2-3}
+                                    & \multicolumn{1}{l}{}     &                         &  & 
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{Confusion matrix: Lineaire SVM}
+    \label{tab:my-table}
+    \begin{tabular}{lclll}
+    \multicolumn{1}{c}{\textbf{}}   & \textbf{0}               & \textbf{1}              &  &  \\ \cline{2-3}
+    \multicolumn{1}{c|}{\textbf{0}} & \multicolumn{1}{c|}{100} & \multicolumn{1}{c|}{3}  &  &  \\ \cline{2-3}
+    \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{c|}{5}   & \multicolumn{1}{c|}{98} &  &  \\ \cline{2-3}
+                                    & \multicolumn{1}{l}{}     &                         &  & 
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{Confusion matrix: Logistische regressie}
+    \label{tab:my-table}
+    \begin{tabular}{lclll}
+    \multicolumn{1}{c}{\textbf{}}   & \textbf{0}              & \textbf{1}              &  &  \\ \cline{2-3}
+    \multicolumn{1}{c|}{\textbf{0}} & \multicolumn{1}{c|}{99} & \multicolumn{1}{c|}{4}  &  &  \\ \cline{2-3}
+    \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{c|}{6}  & \multicolumn{1}{c|}{97} &  &  \\ \cline{2-3}
+                                    & \multicolumn{1}{l}{}    &                         &  & 
+    \end{tabular}
+\end{table}
+
+\chapter*{3. De inhoud van tweets detecteren met binaire NLP-classificatie.}
+
+Bron: https://www.kaggle.com/c/nlp-getting-started
+
+\subsection*{Probleemstelling}
+
+Voor deze opdracht moeten we, op basis van gegeven Engelstalige Tweets, achterhalen of een Tweet gaat over een ramp of niet. De dubbelzinnigheid is een grote horde, want zo kan iemand zeggen 'look at the sky it was ablaze' terwijl het woord 'ablaze' een andere context heeft. In deze zin is het metaforisch.
+
+\subsection*{Aanpak}
+
+We krijgen rauwe tekstdata binnen. Deze bevat niet-alfanumerieke karakters, overbodige spaties en stopwoorden. Deze woorden willen wij liefst mijden in ons model. Om de tekstdata om te zetten naar bruikbare data voor ons model maken wij gebruik van een pipeline. Het classificatiemodel voeren wij buiten de pipeline uit.
+
+Allereerst gaan we enkel de alfanumerieke karakters behouden. Dit doen we met een RegexTokenizer-object. Het patroon W geeft aan dat we enkel alfanumerieke karakters willen. Vervolgens willen we de stopwoorden verwijderen. Dit doen we met een StopWordsRemover. Als de tweets in een andere taal waren, dan hadden wij eerst de stopwoorden uit die taal moeten opladen en vervolgens moeten toekennen aan het model. Dit hoeven wij niet te doen aangezien alle tweets Engelstalig zijn. Als laatste deel van de NLP-pipeline moeten wij nog de gefilterde woorden gaan omzetten naar features. Dit doen we met een CountVectorizer-object.
+
+TODO
+
+\subsection*{Evaluatie}
+
+Net zoals daarnet gaat onze voorkeur hier uit naar de confusionmatrix. Zo hebben wij een zicht op hoe goed ons model de klassen kan voorspellen. Uit de confusion matrix kunnen wij ook de precision en recall berekenen. Deze functies zijn ingebouwd in Spark en dit hoeven wij niet manueel te berekenen. Als extra berekenen wij ook de nauwkeurigheid van het model. Wij merken op dat zowel de Random Forest als de Lineaire SVM even goed scoort. Het logistische regressiemodel daarentegen komt net te kort.
+
+\chapter*{4. Bevindingen ML met Spark.}
 
 \subsection*{Sklearn}
 
-...
+TODO
 
 \chapter*{Conclusie}
 
-
+TODO
 
 \appendix
 

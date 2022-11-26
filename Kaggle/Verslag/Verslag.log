@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  25 NOV 2022 23:46
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  26 NOV 2022 13:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -336,7 +336,14 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 
 \@quotelevel=\count399
 \@quotereset=\count400
-(Verslag.aux)
+(Verslag.aux
+
+LaTeX Warning: Label `tab:my-table' multiply defined.
+
+
+LaTeX Warning: Label `tab:my-table' multiply defined.
+
+)
 \openout1 = `Verslag.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -398,31 +405,60 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ] [3
 
-] [4
+]
+Overfull \hbox (38.30002pt too wide) in paragraph at lines 34--35
+[]\TU/lmr/m/n/12 Gevolgde notebook: https://www.kaggle.com/code/ashishc17/from-exploration-
+ []
+
+[4
+
+] [5] [6]
+Overfull \hbox (11.39603pt too wide) in paragraph at lines 56--57
+[]\TU/lmr/m/n/12 Gevolgde notebook: https://www.kaggle.com/code/janiobachmann/credit-
+ []
+
+[7
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5] [6] [7
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 76.
 
-] [8
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 79.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 79.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 79.
 
-] [9
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 87.
 
-] [10
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 98.
+
+[8] [9
+
+] [10] [11
+
+] [12
 
 ] (Verslag.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package logreq Info: Writing requests to 'Verslag.run.xml'.
 \openout1 = `Verslag.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 9932 strings out of 410532
- 193009 string characters out of 2813299
- 1039661 words of memory out of 3000000
- 31055 multiletter control sequences out of 15000+600000
- 470220 words of font info for 37 fonts, out of 8000000 for 9000
+ 9953 strings out of 410532
+ 193268 string characters out of 2813299
+ 1039708 words of memory out of 3000000
+ 31069 multiletter control sequences out of 15000+600000
+ 472964 words of font info for 47 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 60i,6n,68p,1332b,3840s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 60i,9n,68p,1332b,3840s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on Verslag.xdv (10 pages, 75676 bytes).
+Output written on Verslag.xdv (12 pages, 111588 bytes).

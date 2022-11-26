@@ -7,6 +7,7 @@ import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.ml.classification.LogisticRegression;
+import org.apache.spark.ml.classification.LogisticRegressionModel;
 import org.apache.spark.ml.classification.RandomForestClassifier;
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator;
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
@@ -25,6 +26,7 @@ import org.apache.spark.sql.SparkSession;
 public class DisasterTweetClassification {
 	
 	final static String label = "target";
+	final static double[] verhouding = {0.8,0.2};
 
 	static SparkSession spark = SparkSession.builder().appName("KaggleLinearRegression").master("local[*]").getOrCreate();
 
@@ -35,6 +37,15 @@ public class DisasterTweetClassification {
 	private static Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
 		return dataset.randomSplit(verhouding);
 	}
+	
+	private static Dataset<Row> createSubSample(Dataset<Row> dataset){
+		dataset = dataset.sample(1.0);
+		Dataset<Row> nietDisaster = dataset.where(col(label).equalTo(1));
+		long lengte = nietDisaster.count();
+		Dataset<Row> disaster = dataset.where(col(label).equalTo(0)).limit((int)lengte);
+		dataset = nietDisaster.union(disaster);
+		return dataset.sample(1.0);
+	}
 
 	private static Dataset<Row> getTrainingData() {
 		return spark.read().option("header", true).option("inferSchema", true).csv("src/main/resources/train.csv");
@@ -44,21 +55,12 @@ public class DisasterTweetClassification {
 		return spark.read().option("header", true).option("inferSchema", true).csv("src/main/resources/test.csv");
 	}
 
-	private static RegexTokenizer getRegexTokenizer() {
-		return new RegexTokenizer().setInputCol("str_only").setOutputCol("words").setPattern("\\W");
-	}
-
-	private static StopWordsRemover getStopWordsRemover() {
-		return new StopWordsRemover().setInputCol("words").setOutputCol("filtered");
-	}
-
-	private static CountVectorizer getCountVectorizer() {
-		return new CountVectorizer().setInputCol("filtered").setOutputCol("features");
-	}
-
 	private static double getAccuracy(Dataset<Row> predictions) {
-		return new MulticlassClassificationEvaluator().setLabelCol("target").setPredictionCol("prediction")
-				.setMetricName("accuracy").evaluate(predictions);
+		return new MulticlassClassificationEvaluator()
+				.setLabelCol("target")
+				.setPredictionCol("prediction")
+				.setMetricName("accuracy")
+				.evaluate(predictions);
 	}
 
 	private static double getAreaROCCurve(Dataset<Row> predictions) {
@@ -82,9 +84,9 @@ public class DisasterTweetClassification {
 		Dataset<Row> dataset = getTrainingData();
 		Dataset<Row> testset = getTestData();
 
-		RegexTokenizer regexTokenizer = getRegexTokenizer();
-		StopWordsRemover stopWordsRemover = getStopWordsRemover();
-		CountVectorizer countVectorizer = getCountVectorizer();
+		RegexTokenizer regexTokenizer = new RegexTokenizer().setInputCol("str_only").setOutputCol("words").setPattern("\\W");
+		StopWordsRemover stopWordsRemover = new StopWordsRemover().setInputCol("words").setOutputCol("filtered");
+		CountVectorizer countVectorizer = new CountVectorizer().setInputCol("filtered").setOutputCol("features");
 
 		/*
 		 * DATA-CLEANING Null-waarden weggooien + enkel letters behouden
@@ -98,6 +100,12 @@ public class DisasterTweetClassification {
 		testset = testset.withColumn("str_only", regexp_replace(col("text"), "\\d+", ""));
 
 		/*
+		 * Lichte geskewede dataset --> 50:50 ratio
+		 */
+		dataset = createSubSample(dataset);
+		dataset.groupBy("target").count().show();
+		
+		/*
 		 * PIPELINE
 		 */
 		Pipeline pipeline_training = new Pipeline()
@@ -107,13 +115,15 @@ public class DisasterTweetClassification {
 		Dataset<Row> convertedTraining = modelTraining.transform(dataset);
 
 		PipelineModel modelTesting = pipeline_training.fit(testset);
-		Dataset<Row> convertedTesting = modelTraining.transform(testset);
+		Dataset<Row> convertedTesting = modelTesting.transform(testset);
 
-		Dataset<Row>[] datasets = splitSets(convertedTraining, new double[] { 0.7, 0.3 });
+		Dataset<Row>[] datasets = splitSets(convertedTraining, verhouding);
 		
 		convertedTraining.show();
 		convertedTesting.show();
-
+		
+		System.exit(1);
+		
 		/*
 		 * LOG-REG
 		 */
@@ -122,7 +132,7 @@ public class DisasterTweetClassification {
 		LogisticRegression lr = new LogisticRegression().setFeaturesCol("features").setLabelCol("target");
 		
 		ParamMap[] paramGridLogReg = new ParamGridBuilder()
-				.addGrid(lr.maxIter(), new int[] {10, 50, 100, 150})
+				.addGrid(lr.maxIter(), new int[] {10, 50, 100, 150, 300})
 				.addGrid(lr.threshold(), new double[] {0.9})
 				.build();
 		
@@ -130,17 +140,15 @@ public class DisasterTweetClassification {
 				.setEstimator(lr)
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label)) 
 				.setEstimatorParamMaps(paramGridLogReg)
-				.setNumFolds(5);
+				//.setNumFolds(5)
+				;
 		
 		CrossValidatorModel cvmLogReg = cvLogReg.fit(datasets[0]);
-		
 		System.out.println(cvmLogReg.paramMap().toString());
-		
 		System.out.printf("Beste model: %s\n", "");
 		Dataset<Row> cvPredictionsLogReg = cvmLogReg.transform(datasets[1]);
 		printConfusionMatrixEssence(cvPredictionsLogReg);	
 
-		
 		/*
 		 * Random Forest Classifier
 		 */

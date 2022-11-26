@@ -1,18 +1,24 @@
 # Fdb version 3
-["biber Verslag"] 1669186684 "Verslag.bcf" "Verslag.bbl" "Verslag" 1669416367
-  "Verslag.bcf" 1669416367 124441 a8b528fd643ce71bc4af3b866364dc4f "xelatex"
+["biber Verslag"] 1669453978 "Verslag.bcf" "Verslag.bbl" "Verslag" 1669464187
+  "Verslag.bcf" 1669464186 124441 a8b528fd643ce71bc4af3b866364dc4f "xelatex"
   (generated)
   "Verslag.bbl"
   "Verslag.blg"
-["xdvipdfmx"] 1669416367 "Verslag.xdv" "Verslag.pdf" "Verslag" 1669416367
-  "Verslag.xdv" 1669416367 75676 c356d414de10d4f64142911a7b9711ca "xelatex"
+["xdvipdfmx"] 1669464186 "Verslag.xdv" "Verslag.pdf" "Verslag" 1669464187
+  "Verslag.xdv" 1669464186 111588 d859669c0a4c8e78e3b837d76df618d7 "xelatex"
   (generated)
   "Verslag.pdf"
-["xelatex"] 1669416365 "c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex" "Verslag.xdv" "Verslag" 1669416367
+["xelatex"] 1669464184 "c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex" "Verslag.xdv" "Verslag" 1669464187
   "C:/Users/dylan/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1667983219 24055908 6d46f8d4e08cf3721dc96751e7e810f7 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi12.tfm" 1136765053 1524 4414a8315f39513458b80dfc63bff03a ""
+  "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi6.tfm" 1136765053 1512 f21f83efb36853c0b70002322c1ab3ad ""
+  "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi8.tfm" 1136765053 1520 eccf95517727cb11801f4f1aee3a21b4 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr12.tfm" 1136765053 1288 655e228510b4c2a1abe905c368440826 ""
+  "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr6.tfm" 1136765053 1300 b62933e007d01cfd073f79b963c01526 ""
+  "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr8.tfm" 1136765053 1292 21c1c5bfeaebccffdb478fd231a0997d ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy10.tfm" 1136765053 1124 6c73e740cf17375f03eec0ee63599741 ""
+  "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy6.tfm" 1136765053 1116 933a60c408fc0a863a92debe84b2d294 ""
+  "C:/Users/dylan/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136765053 1120 8b7d695260f3cff42e636090a8002094 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/generic/babel/babel.sty" 1664892351 152127 31067273495f46936aa2b3653cd6090b ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/generic/babel/locale/nl/babel-dutch.tex" 1664892355 336 688c2541014a5f1e639d9f99b6017791 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/generic/babel/locale/nl/babel-nl.ini" 1664892355 4045 fbde1263cf37675adb2dee0c18595f3d ""
@@ -52,12 +58,12 @@
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/latex/logreq/logreq.def" 1280937415 1620 fb1c32b818f2058eca187e5c41dfae77 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/latex/logreq/logreq.sty" 1280937415 6187 b27afc771af565d3a9ff1ca7d16d0d46 ""
   "C:/Users/dylan/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "Verslag.aux" 1669416367 240 c14d520ed9f8cebe00fc1ae8b9b29504 "xelatex"
-  "Verslag.bbl" 1669186686 486 ee04f40f768daeed26442158e95aba61 "biber Verslag"
-  "Verslag.run.xml" 1669416367 2409 c33e2735a53fc205afd7d7629e7792e0 "xelatex"
-  "Verslag.tex" 1669416364 7959 1a38b8cb18896a75c85a9f809b5f96b7 ""
-  "Verslag.toc" 1669416367 28 2ded947bbaebf8d887122fb6bcb1328f "xelatex"
-  "c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex" 1669416364 7959 1a38b8cb18896a75c85a9f809b5f96b7 ""
+  "Verslag.aux" 1669464186 742 4e0ff29ea1445e1170d14251a4b8b2be "xelatex"
+  "Verslag.bbl" 1669453980 486 ee04f40f768daeed26442158e95aba61 "biber Verslag"
+  "Verslag.run.xml" 1669464186 2409 c33e2735a53fc205afd7d7629e7792e0 "xelatex"
+  "Verslag.tex" 1669464182 13087 a13e52a3c428f650c86a10cb72b55669 ""
+  "Verslag.toc" 1669464186 28 2ded947bbaebf8d887122fb6bcb1328f "xelatex"
+  "c:/Users/dylan/Distributed_Databases/Kaggle/Verslag/Verslag.tex" 1669464182 13087 a13e52a3c428f650c86a10cb72b55669 ""
   (generated)
   "Verslag.aux"
   "Verslag.bcf"

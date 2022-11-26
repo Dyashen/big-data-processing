@@ -8,12 +8,14 @@ import org.apache.spark.ml.classification.LinearSVC;
 import org.apache.spark.ml.classification.LogisticRegression;
 import org.apache.spark.ml.classification.RandomForestClassifier;
 import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator;
+import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
 import org.apache.spark.ml.feature.MinMaxScaler;
 import org.apache.spark.ml.feature.PCA;
-import org.apache.spark.ml.feature.PCAModel;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.apache.spark.ml.linalg.Matrix;
 import org.apache.spark.ml.param.Param;
 import org.apache.spark.ml.param.ParamMap;
+import org.apache.spark.ml.stat.Correlation;
 import org.apache.spark.ml.tuning.CrossValidator;
 import org.apache.spark.ml.tuning.CrossValidatorModel;
 import org.apache.spark.ml.tuning.ParamGridBuilder;
@@ -24,18 +26,51 @@ import org.apache.spark.sql.SparkSession;
 
 public class KaggleCreditCardClassification {
 
-	SparkSession spark = SparkSession.builder().appName("CreditCardClassification").master("local[*]").getOrCreate();
+	static SparkSession spark = SparkSession.builder().appName("CreditCardClassification").master("local[*]").getOrCreate();
 
-	private Dataset<Row> getData() {
-		return this.spark.read().option("header", true).option("inferSchema", true)
+	private static Dataset<Row> getData() {
+		return spark.read().option("header", true).option("inferSchema", true)
 				.csv("src/main/resources/creditcard.csv");
 	}
-
-	private Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
-		return dataset.randomSplit(verhouding);
+	
+	private static Dataset<Row> createSubSample(Dataset<Row> dataset){
+		dataset = dataset.sample(1.0);
+		Dataset<Row> nietFraudulent = dataset.where(col("class").equalTo(1));
+		long lengte = nietFraudulent.count();
+		Dataset<Row> fraudulent = dataset.where(col("class").equalTo(0)).limit((int)lengte);
+		dataset = nietFraudulent.union(fraudulent);
+		return dataset.sample(1.0);
 	}
 
-	private void printConfusionMatrixEssence(Dataset<Row> predictions_and_labels) {
+	private static Dataset<Row>[] splitSets(Dataset<Row> dataset, double[] verhouding) {
+		return dataset.randomSplit(verhouding);
+	}
+	
+	private static double getAccuracy(Dataset<Row> predictions) {
+		return new MulticlassClassificationEvaluator()
+				.setLabelCol("target")
+				.setPredictionCol("prediction")
+				.setMetricName("accuracy")
+				.evaluate(predictions);
+	}
+
+	private static double getAreaROCCurve(Dataset<Row> predictions) {
+		return new BinaryClassificationEvaluator().setLabelCol("target").evaluate(predictions);
+	}
+		
+	private static void printCorrelation(Dataset<Row> dataset) {
+		Row r1 = Correlation.corr(dataset, "features").head();
+		System.out.printf("\n\nCorrelation Matrix\n");
+		Matrix matrix = r1.getAs(0);
+		for (int i = 0; i < matrix.numRows(); i++) {
+			for (int j = 0; j < matrix.numCols(); j++) {
+				System.out.printf("%.2f \t", matrix.apply(i, j));
+			}
+			System.out.println();
+		}
+	}
+
+	private static void printConfusionMatrixEssence(Dataset<Row> predictions_and_labels) {
 		Dataset<Row> preds_and_labels = predictions_and_labels.select("prediction", "Class").orderBy("prediction")
 				.withColumn("Class", col("Class").cast("double"));
 
@@ -47,11 +82,22 @@ public class KaggleCreditCardClassification {
 
 	public static void main(String[] args) {
 
-		KaggleCreditCardClassification ccc = new KaggleCreditCardClassification();
-		ccc.spark.sparkContext().setLogLevel("ERROR");
+		spark.sparkContext().setLogLevel("ERROR");
 
-		Dataset<Row> data = ccc.getData();
-
+		Dataset<Row> data = getData();
+		
+		/*
+		 * Data zoals het is
+		 */
+		data.show();
+		data.groupBy("class").count().show();
+		
+		/*
+		 * Sub-sample maken met 50:50 ratio en grootte [492:492]
+		 */
+		data = createSubSample(data);
+		data.groupBy("class").count().show();
+		
 		/*
 		 * Alle features opslaan in een String array.
 		 * Alle nodige features beginnen met een V-teken. 
@@ -70,7 +116,7 @@ public class KaggleCreditCardClassification {
 		 * De transformers:
 		 * Assembler zal de features (meerdere kolommen) omzetten naar één kolom met daarin een vector van features.
 		 * MinMax zal de features gaan scalen van waarde 0 tot en met waarde 1.
-		 * PCA zal dimension reduction uitvoeren. Hiermee gaan we proberen om enkel de de primaire features te behouden zonder side-effects in de resultaten.
+		 * PCA zal dimension reduction uitvoeren. Hiermee gaan we proberen om enkel de primaire features te behouden zonder side-effects in de resultaten.
 		 */
 		VectorAssembler assembler = new VectorAssembler().setInputCols(arrFeatures).setOutputCol("features");
 		MinMaxScaler minmax = new MinMaxScaler().setMax(1.0).setMin(0.0).setInputCol("features")
@@ -81,7 +127,7 @@ public class KaggleCreditCardClassification {
 		 * Het splitten van de dataset. Trainingset = 80% & Testset = 20%
 		 */
 		double[] verhouding = { 0.8, 0.2 };
-		Dataset<Row>[] datasets = ccc.splitSets(data, verhouding);
+		Dataset<Row>[] datasets = splitSets(data, verhouding);
 
 		/*
 		 * Random Forest Classifier
@@ -104,9 +150,10 @@ public class KaggleCreditCardClassification {
 		 */
 		
 		
-		ParamMap[] paramGridRFC = new ParamGridBuilder().addGrid(rfc.maxDepth(), new int[] { 10, 20, 30 })
-				.addGrid(rfc.numTrees(), new int[] { 40, 60, 80 }).addGrid(pca.k(), new int[] { 5, 10, 15 })
-				// .addGrid(rfc.thresholds(), new double[]{ 0.5, 0.75, 0.9 })
+		ParamMap[] paramGridRFC = new ParamGridBuilder()
+				.addGrid(rfc.maxDepth(), new int[] { 10, 20, 30 })
+				.addGrid(rfc.numTrees(), new int[] { 40, 60, 80 })
+				.addGrid(pca.k(), new int[] {3,6,9})
 				.build();
 		
 
@@ -138,7 +185,7 @@ public class KaggleCreditCardClassification {
 		 * De confusion matrix wordt uitgeprint.
 		 */
 		System.out.printf("\n\nRandom Forest Classifier\n");
-		ccc.printConfusionMatrixEssence(predictionsRFC);
+		printConfusionMatrixEssence(predictionsRFC);
 
 		/*
 		 * Lineaire SVM
@@ -151,10 +198,13 @@ public class KaggleCreditCardClassification {
 		 * 3. Dimensionality reduction (dit moet na de scaler gebeuren!)
 		 * 4. LinearSVM model.
 		 */
-		Pipeline pipelineSVM = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, rfc });
+		Pipeline pipelineSVM = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, pca, rfc });
 
-		ParamMap[] paramGridSVM = new ParamGridBuilder().addGrid(svc.maxIter(), new int[] { 5, 10, 15 })
-				.addGrid(svc.regParam(), new double[] { 0.1, 0.2, 0.3 }).build();
+		ParamMap[] paramGridSVM = new ParamGridBuilder()
+				.addGrid(svc.maxIter(), new int[] { 5, 10, 15 })
+				.addGrid(svc.regParam(), new double[] { 0.1, 0.2, 0.3 })
+				.addGrid(pca.k(), new int[] {3,6,9})
+				.build();
 
 		CrossValidator cvSVM = new CrossValidator().setEstimator(pipelineSVM)
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol("Class"))
@@ -167,17 +217,20 @@ public class KaggleCreditCardClassification {
 		Dataset<Row> predictionsSVM = cvmSVM.transform(datasets[1]);
 
 		System.out.printf("\n\nLineaire SVM Classifier\n");
-		ccc.printConfusionMatrixEssence(predictionsSVM);
+		printConfusionMatrixEssence(predictionsSVM);
 
 		/*
 		 * Logistische Regressie
 		 */
-		LogisticRegression lr = new LogisticRegression().setLabelCol("Class").setFeaturesCol("scaledFeatures");
+		LogisticRegression lr = new LogisticRegression().setLabelCol("Class").setFeaturesCol("pcaFeatures");
 
-		Pipeline pipelineLogReg = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, lr });
+		Pipeline pipelineLogReg = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, pca, lr });
 
-		ParamMap[] paramGridLogReg = new ParamGridBuilder().addGrid(lr.threshold(), new double[] { 0.5, 0.75, 0.9 })
-				.addGrid(lr.maxIter(), new int[] { 5, 10, 15 }).build();
+		ParamMap[] paramGridLogReg = new ParamGridBuilder()
+				.addGrid(lr.threshold(), new double[] { 0.5, 0.75, 0.9 })
+				.addGrid(lr.maxIter(), new int[] { 5, 10, 15 })
+				.addGrid(pca.k(), new int[] {3,6,9})
+				.build();
 
 		CrossValidator cvLogReg = new CrossValidator().setEstimator(pipelineLogReg)
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol("Class"))
@@ -190,7 +243,7 @@ public class KaggleCreditCardClassification {
 		Dataset<Row> predictionsLogReg = cvmLogReg.transform(datasets[1]);
 
 		System.out.printf("\n\nLogistische Regressie\n");
-		ccc.printConfusionMatrixEssence(predictionsLogReg);
+		printConfusionMatrixEssence(predictionsLogReg);
 
 	}
 }
