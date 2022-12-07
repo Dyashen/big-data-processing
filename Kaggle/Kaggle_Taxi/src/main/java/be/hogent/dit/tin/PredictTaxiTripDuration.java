@@ -8,6 +8,8 @@ import static org.apache.spark.sql.functions.dayofweek;
 import static org.apache.spark.sql.functions.desc;
 
 import java.lang.Math;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
@@ -35,6 +37,8 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.api.java.UDF4;
 import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 
 public class PredictTaxiTripDuration {
 
@@ -55,11 +59,57 @@ public class PredictTaxiTripDuration {
 	 * Training & Testset ophalen
 	 */
 	private static Dataset<Row> getTraining() {
-		return spark.read().option("header", true).csv("src/main/resources/train.csv");
+		
+		List<StructField> fields = Arrays.asList(
+				DataTypes.createStructField("id", DataTypes.StringType, false),
+				DataTypes.createStructField("vendor_id", DataTypes.DoubleType, false),
+				DataTypes.createStructField("pickup_datetime", DataTypes.TimestampType, false), //TimestampType
+				DataTypes.createStructField("dropoff_datetime", DataTypes.TimestampType, false),
+				DataTypes.createStructField("passenger_count", DataTypes.DoubleType, false),
+				DataTypes.createStructField("pickup_longitude", DataTypes.DoubleType, false),
+				DataTypes.createStructField("pickup_latitude", DataTypes.DoubleType, false),
+				DataTypes.createStructField("dropoff_longitude", DataTypes.DoubleType, false),
+				DataTypes.createStructField("dropoff_latitude", DataTypes.DoubleType, false), 
+				DataTypes.createStructField("store_and_fwd_flag", DataTypes.StringType, false),
+				DataTypes.createStructField("trip_duration", DataTypes.DoubleType, false)); // waarom kan dit geen Integer zijn?
+
+		StructType schema = DataTypes.createStructType(fields);
+		
+		Dataset<Row> dataset = spark.read()
+				.option("header", true)
+				.schema(schema)
+				.csv("src/main/resources/train.csv");
+		
+		return dataset
+				.withColumn("hour", hour(col("pickup_datetime")))
+				.withColumn("day", dayofweek(col("pickup_datetime")))
+				.drop("id", "pickup_datetime", "dropoff_datetime"); // eventueel toevoegen aan schema?
 	}
 
 	private static Dataset<Row> getTest() {
-		return spark.read().option("header", true).csv("src/main/resources/test.csv");
+		
+		List<StructField> fields = Arrays.asList(
+				DataTypes.createStructField("id", DataTypes.StringType, false),
+				DataTypes.createStructField("vendor_id", DataTypes.DoubleType, false),
+				DataTypes.createStructField("pickup_datetime", DataTypes.TimestampType, false),
+				DataTypes.createStructField("passenger_count", DataTypes.DoubleType, false),
+				DataTypes.createStructField("pickup_longitude", DataTypes.DoubleType, false),
+				DataTypes.createStructField("pickup_latitude", DataTypes.DoubleType, false),
+				DataTypes.createStructField("dropoff_longitude", DataTypes.DoubleType, false),
+				DataTypes.createStructField("dropoff_latitude", DataTypes.DoubleType, false), 
+				DataTypes.createStructField("store_and_fwd_flag", DataTypes.StringType, false));
+
+		StructType schema = DataTypes.createStructType(fields);
+		
+		Dataset<Row> dataset = spark.read()
+				.option("header", true)
+				.schema(schema)
+				.csv("src/main/resources/test.csv");
+		
+		return dataset
+				.withColumn("hour", hour(col("pickup_datetime")))
+				.withColumn("day", dayofweek(col("pickup_datetime")))
+				.drop("id", "pickup_datetime");
 	}
 
 	/*
@@ -84,19 +134,21 @@ public class PredictTaxiTripDuration {
 		/*
 		 * CHANGE TYPES
 		 */
-		dataset = dataset.withColumn("hour", hour(col("pickup_datetime")))
-				.withColumn("day", dayofweek(col("pickup_datetime")))
-				.withColumn("vendor_id", dataset.col("vendor_id").cast("double"))
-				.withColumn("passenger_count", dataset.col("passenger_count").cast("double"))
-				.withColumn("pickup_longitude", dataset.col("pickup_longitude").cast("double"))
-				.withColumn("pickup_latitude", dataset.col("pickup_latitude").cast("double"))
-				.withColumn("dropoff_longitude", dataset.col("dropoff_longitude").cast("double"))
-				.withColumn("dropoff_latitude", dataset.col("dropoff_latitude").cast("double"))
-				.drop("id", "pickup_datetime", "dropoff_datetime");
+		
+//		dataset = dataset.withColumn("hour", hour(col("pickup_datetime")))
+//				.withColumn("day", dayofweek(col("pickup_datetime")))
+//				.withColumn("vendor_id", dataset.col("vendor_id").cast("double"))
+//				.withColumn("passenger_count", dataset.col("passenger_count").cast("double"))
+//				.withColumn("pickup_longitude", dataset.col("pickup_longitude").cast("double"))
+//				.withColumn("pickup_latitude", dataset.col("pickup_latitude").cast("double"))
+//				.withColumn("dropoff_longitude", dataset.col("dropoff_longitude").cast("double"))
+//				.withColumn("dropoff_latitude", dataset.col("dropoff_latitude").cast("double"))
+//				.drop("id", "pickup_datetime", "dropoff_datetime");
 
 		/*
 		 * REMOVE OUTLIERS FOR LONGITUDE/LATITUDE
 		 */
+		
 		dataset = dataset.where(col("pickup_longitude").$greater$eq(longMin))
 				.where(col("dropoff_longitude").$greater$eq(longMin)).where(col("pickup_latitude").$greater$eq(latMin))
 				.where(col("dropoff_latitude").$greater$eq(latMin)).where(col("pickup_longitude").$less$eq(longMax))
@@ -107,16 +159,19 @@ public class PredictTaxiTripDuration {
 		 * Only the rows with a correct passenger count.
 		 */
 		dataset = dataset.where(col("passenger_count").$greater(0));
-
+		
 		return dataset;
 	}
 	
+	
+	// UDF4 
 	private static Dataset<Row> addDistance(Dataset<Row> dataset) {
 		return dataset
 				.withColumn("distance",  call_udf("haversine", col("pickup_latitude"), col("pickup_longitude"), col("dropoff_latitude"), col("dropoff_longitude")))
 				.drop("pickup_longitude","dropoff_longitude","pickup_latitude","dropoff_latitude");
 	}
 	
+	// UDF2
 	private static Dataset<Row> addSpeed(Dataset<Row> dataset) {
 		return dataset
 				.withColumn("speed",  call_udf("speed", col("distance"), col("trip_duration")));
@@ -162,13 +217,9 @@ public class PredictTaxiTripDuration {
 		 */
 		Dataset<Row> train = getTraining();
 		train = clean(train);
-		train = train.withColumn(label, train.col(label).cast("double"));
 
 		Dataset<Row> test = getTest();
 		test = clean(test);
-
-		train.show();
-		test.show();
 
 		/*
 		 * SHOW THE AMOUNT OF TRIPS PER HOUR
@@ -179,8 +230,7 @@ public class PredictTaxiTripDuration {
 		System.out.println("SHOW THE AMOUNT OF TRIPS PER DAY");
 		train.groupBy("day").count().orderBy("day").show();
 		
-		// Havers
-
+		// Haversine
 		UDF4<Double, Double, Double, Double, Double> haversine = new UDF4<Double, Double, Double, Double, Double>() {
 			public Double call(Double pickupLatitude, Double pickupLongitude, Double dropoffLatitude, Double dropoffLongitude) throws Exception {
 
@@ -279,7 +329,9 @@ public class PredictTaxiTripDuration {
 
 		Dataset<Row>[] datasets = splitSets(train);
 		PipelineModel model = pipelineLinReg.fit(datasets[0]);
-		Dataset<Row> trainedLinReg = model.transform(datasets[0]);
+		Dataset<Row> trainedLinReg = model.transform(datasets[1]);
+		
+		trainedLinReg.show();
 
 		/*
 		 * Pick-up longitude + drop-off longitude hebben een sterke correlatie.

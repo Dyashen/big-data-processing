@@ -3,6 +3,8 @@ title: Distributed Databases Summary
 author: Dylan Cluyse
 class: report
 geometry: margin=20mm
+mainfont: Montserrat
+titlefont: Montserrat-Black
 ---
 
 extra: font-options aanpassen https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
@@ -10,11 +12,16 @@ extra: font-options aanpassen https://tex.stackexchange.com/questions/234786/how
 # 1. Een distributed database.
 
 ## Wat?
+
+Een gedistribueerd bestandssysteem is een manier om gegevens op te slaan en te beheren die is verspreid over meerdere computers in een cluster. In tegenstelling tot een traditioneel bestandssysteem, waarbij de gegevens op één centrale server worden opgeslagen, worden de gegevens in een gedistribueerd bestandssysteem opgeslagen op verschillende computers in het cluster. Dit maakt het mogelijk om grote hoeveelheden gegevens op te slaan en te verwerken zonder te worden beperkt door de beperkte hoeveelheid opslagruimte op één server. Het kan ook helpen om de prestaties te verbeteren door het gebruik van parallellisatie, waardoor meerdere computers tegelijkertijd kunnen werken aan het verwerken van de gegevens.
+
 * Verschillende componenten op een netwerk die met elkaar communiceren.
 * Een systeem met het doel om data beschikbaar te maken. Data dat later kan worden gelezen of geschreven.
   * De mate van beschikbaarheid doet er niet toe.
 
 ## Waarom?
+
+In een gedistribueerd bestandssysteem is er een verschil tussen horizontale en verticale schaalbaarheid. Horizontale schaalbaarheid betekent dat het systeem kan worden uitgebreid door het toevoegen van meer computers aan het cluster, wat kan helpen om meer gegevens te verwerken en om de prestaties te verbeteren. Verticale schaalbaarheid betekent dat het systeem kan worden uitgebreid door het toevoegen van meer hardware aan een enkele computer, zoals extra geheugen of een snellere processor. Dit kan ook helpen om de prestaties te verbeteren, maar het is beperkter dan horizontale schaalbaarheid omdat het alleen mogelijk is binnen de beperkingen van een enkele computer.
 
 | Horizontale schaalbaarheid | Verticale schaalbaarheid |
 | -- | -- |
@@ -189,13 +196,259 @@ De locatie van metadata onderhouden gebeurt met de coordination service. Dit zor
 
 # 2. Hadoop
 
+Hadoop MapReduce is een programma dat wordt gebruikt voor het verwerken van grote hoeveelheden gegevens in een distributiefile-systeem. Het maakt gebruik van parallellisatie om de gegevens te verdelen over meerdere computers in een cluster, waardoor het verwerkingsproces sneller wordt. Dit kan worden gebruikt voor het analyseren van gegevens, zoals het ontdekken van trends en patroonherkenning. Hadoop is één van de eerste frameworks voor Big Data Processing. Het is een relatief oud project met *clunky* technieken. 
+
+Het is ontworpen met de gedachten om clusters te kunnen draaien op normale hardware. Als je cluster bestaat uit honderden computers, dan is de kans groot dat er één zal breken. Het basisidee van Hadoop is om dit soort fouten af te handelen en zodat het systeem blijft werken zoals voordien.
+
+Een pure hadoop-stack bestaat uit vier onderdelen:
+* Hadoop common: de gedeelde bibliotheken die door de andere modules worden gebruikt. Je ziet dit gedeelte niet. Het is de meeste onderste laag.
+* HDFS is een filesystem. Dit zorgt voor de distributed file storage. Je merkt de delay amper.
+* MapReduce is het processing-gedeelte. MapReduce laat je toe om parallel grote datasets te verwerken.
+* YARN voorkomt dat één element in je cluster alle resources opeet. Dit element zorgt voor request-afhandeling van resourcevragen.
+
+## HDFS
+
+Een filesystem laat je toe om data op te slaan en weer op te halen. Je hebt drie soorten data: files, mappen en metadata. Metadata is de info over de mappen of bestanden, zoals file length en permissies. Je filesystem zorgt ervoor dat de data toegankelijk is. De consistentie in filesystems wordt bewaard door middel van een logsysteem. 
+
+De data wordt opgeslaan in een cluster van gewone machines. De focus van HDFS ligt op véél data van verschillende groottes op te slaan. 
+
+Je werkt met veel groepen van machines. Als er één machine zou kapot gaan, dan neemt een andere machine over. De time delay is hier zeer laag. 
+
+Een file wordt één keer gemaakt. Een bestand wordt van begin tot einde gelezen. Het principe is 'write-once, read-many-times'. De doorvoer van het systeem is hier belangrijker. De hoeveelheid verwerkte data per tijdseenheid. HDFS op een klassiek filesysteem. Eens de machine bezig is kan je een grote doorvoer hebben. 
+
+### Anti-Patterns
+
+Wanneer heb je het niet nodig?
+* Als de latency belangrijk is. 
+* Als je vele kleine files wilt. De namenode houdt in het hoofdgeheugen bij wat de directorystructuur is. 
+* Als je meerdere writers op een moment wilt hebben.
+* Append-only fashion: Als je inhoud vooraan of in het midden wilt toevoegen.
+
+## Hadoop Components
+
+HDFS heeft twee componenten:
+1. De NameNode is het allerbelangrijkste. Dit is één computer die de filesystem-namespace zal managen. Die houdt bij wat de metadata is, de structuur van de directory. Metadata wordt in het RAM bijgehouden. Het is snel, maar vluchtig. De informatie moet worden bijgehouden. 
+1.1. De NameSpace Image is de directory structuur, dus alles met de inhoud van de directory. Terwijl het systeem loopt wordt het opgebouwd.
+1.2. De edit logs: Dit is een append-log. Telkens als er iets verandert komt er informatie bij. Als de NN opnieuw zou opstarten, dan wordt de image en edit log gelezen. Daarna worden de veranderingen van de edit log toegepast op de namespace image om zo een nieuwe namespace image te maken. Daarna wordt een nieuwe edit log gestart.
+
+### NameNode (NN)
+
+Een namenode weet uit welke blokken dit bestaat. De NN houdt bij op welke datanodes de blokken staan. Locaties worden niet persistent bijgehouden. Onderling weten ze dit door middel van *heartbeats*.  Als je een file wilt hernoemen, dan lukt dat ook. Bij een cluster heb je altijd één NN.
+
+### DataNodes (DN)
+
+Waar wordt de datablokken opgeslaan? 
+Op een DataNode. Als je iets leest is het altijd direct op de DataNode. De DN's luisteren direct naar de NN. Elk blok heeft een replicatiefactor. De replicatiefactor wijst op hoeveel systemen het bestand beschikbaar moet staan. Een HDFS heeft veel DataNodes.
+
+### Single point of failure.
+
+Als één NN uitvalt, of als de NS Image uitvalt, dan heb je een probleem. Je systeem werkt niet meer. Je zal alle data nog hebben op de DN. Alle blokken hebben random verwijzingen. Je weet niet meer waarvan de data komt of waarnaar de data gaat.
+
+De meest voor de hand liggende manier is om regelmatig een backup te nemen. In praktische systemen
+De tweede optie is een secondary NN. Zolang je een systeem niet herstart wordt je edit log langer en groter. Dit is niet ideaal, want als het neemt zowel plaats in alsook zal het opstarten van een NS image langer duren. In latere versie van Hadoop hebben ze een secondary NN toegevoegd. Een secondary NN is een proces dat op een andere computer loopt en dat de veranderingen van de edit log verwerkt in de huidige namespace.
+
+## Stappenplan
+
+```cmd
+
+```
+
 # 3. MapReduce
 
-| Mapper | Reducer |
-| -- | -- |
-| | |
+Hadoop MapReduce is een programma dat wordt gebruikt voor het verwerken van grote hoeveelheden gegevens in een distributiefile-systeem. Het maakt gebruik van parallellisatie om de gegevens te verdelen over meerdere computers in een cluster, waardoor het verwerkingsproces sneller wordt. Dit kan worden gebruikt voor het analyseren van gegevens, zoals het ontdekken van trends en patroonherkenning. Een MapReduce bestaat uit drie fasen:
+1. Mapping
+2. De "shuffle"
+3. Reducing
 
-# 4. 
+De Mapper in Hadoop MapReduce is een programma dat wordt gebruikt om gegevens te verdelen over meerdere computers in een cluster, zodat ze parallel kunnen worden verwerkt. De Mapper leest de gegevens in en verdeelt ze in kleinere stukjes, die vervolgens naar de verschillende computers in het cluster worden gestuurd om te worden verwerkt. Dit maakt het mogelijk om grote hoeveelheden gegevens snel te verwerken en te analyseren. De Mapper is het eerste onderdeel van het MapReduce-proces en zorgt ervoor dat de gegevens op een gestructureerde manier worden verwerkt.
+
+De Shuffle-fase in Hadoop MapReduce is een belangrijk onderdeel van het MapReduce-proces waarbij de gegevens worden verzameld en gerangschikt op basis van de sleutels die aan de gegevens zijn toegekend. De Mapper verdeelt de gegevens in kleinere stukjes en stuurt deze naar de verschillende computers in het cluster, waar ze worden verwerkt. De Reducer verzamelt vervolgens de verwerkte gegevens van alle computers in het cluster en sorteert ze op basis van de sleutels, zodat de gegevens kunnen worden verwerkt en geanalyseerd. De Shuffle-fase is dus een cruciale stap in het MapReduce-proces omdat het ervoor zorgt dat de gegevens op een gestructureerde manier worden verwerkt en geanalyseerd.
+
+De Reducer in Hadoop MapReduce is een programma dat wordt gebruikt om de gegevens te verzamelen en samen te voegen die door de Mapper zijn verwerkt. Dit gebeurt op basis van sleutels die aan de gegevens zijn toegekend, zodat de Reducer de gegevens kan groeperen en verwerken om de uiteindelijke resultaten te produceren. De Reducer kan bijvoorbeeld worden gebruikt om totale aantallen te berekenen of gemiddelden te berekenen voor een bepaalde groep gegevens. Het is een belangrijk onderdeel van het MapReduce-proces omdat het ervoor zorgt dat de gegevens op een gestructureerde manier worden verwerkt en geanalyseerd.
+
+# 4. Spark
+
+Batch processing: 
+* Wanneer de winkel dichtgaat --> verslag van alles wat verkocht werd die dag = data in een batch
+* Moeilijk wanneer je iets real-time wilt doen. De status van de data is belangrijk.
+
+# 4.5 Spark Structured Streaming
+
+'Data is unbounded'.
+
+* Nieuwe rijen worden continu achteraan toegevoegd.
+* Probleem: We houden geen oneindige tabel in het geheugen. 
+* ...
+
+Gelijkaardig aan een SQL API:
+* Unbounded table, maar het systeem denkt niet zo.
+* Eén API nodig om zowel batch als stream processing uit te voeren.
+* Je schrijft je query zoals je batch processing hebt.
+* Job triggeren om data te verkrijgen. Iedere keer als de job start, Spark zal kijken voor nieuwe data.
+
+### Output modes
+
+Append mode:
+* Enkel nieuwe rijen toevoegen (resultaat)
+* Historiek / bestaande rijen worden niet getoond of aangepast.
+* Standaard
+* Niet mogelijk bij WordCount: het aantal voorkomens wordt niet lang bijgehouden.
+
+Update mode:
+* Nieuwe rijen & oude rijen.
+* Sommige "sinks" ondersteunen dit niet. Alles waar je de rijen naar toe schrijft.
+* Bestanden hebben geen interne structuur, eenmaal een bestand geschreven is dan is het moeilijk om dit aan te passen. Bijvoorbeeld als de vorige rij 5 kolommen heeft en nu komt er een rij met 6 ==> error.
+
+Complete:
+* Het volledige resultaat wordt uitgeschreven
+* De output zal stelselmatig groeien. De job zal niet draaien
+* Gebruiken bij aggregation.
+
+Bij een socket lees je enkel hetgeen wat binnenkomt. Historiek wordt niet bijgehouden.
+
+### In code:
+
+Vijf stappen:
+
+1. Input source
+
+* readStream om een stream van objecten in te lezen
+* format: sockets, etc.
+* options: Kafka --> wie is de broker
+* load: dit is het beginnen met lezen, niet wanneer alles wordt gelezen.
+
+```java
+Dataset<Row> df = spark.readStream()
+      .format("socket")             // lezen van een socket
+      .option("host", "localhost")  // optie: host
+      .option("port", 9999)         // optie: poortnummer
+      .load();
+```
+
+2. Transform data
+
+Je hebt enkel de huidige data nodig.
+
+Stateful & stateless:
+* Loopt parallel met "wide & narrow"
+* stateful: de huidige informatie is voldoende (bijvoorbeeld mapping)
+* stateless: je hebt informatie van voordien nodig (bijvoorbeeld een groupby of een aggregatie)
+
+```
+
+```
+
+3. Output
+
+* Geef mee waarnaartoe je de data wilt schrijven.
+* outputMode
+
+```java
+Dataset<Row> counts = ....
+
+DataStreamWriter<Row> writer = counts.writeStream()
+                                    .format("console")
+                                    .outputMode(OutputMode.Complete());
+```
+
+4. processing details
+
+Micro-batches heel snel uitvoeren. Je moet meegeven wanneer de volgende micro-batch wordt uitgevoerd. 
+* Standaard: zo snel na de laatste micro-batch alles verwerken.
+* Trigger interval: gelijkaardig aan Cronjobs. Op een bepaald moment wordt de query uitgevoerd.
+* Eenmalig: "Verwerk alle data nu en stop dan."
+* Continuous: De data wordt niet in micro-batches verwerkt. Zo snel als het binnen komt wordt de data verwerkt. Hier is er weinig vertraging. Dit is eerder voor een experimenteel gebruik.
+
+
+```java
+DataStreamWriter<Row> writer = counts.writeStream()
+                                    .format("console")
+                                    .outputMode(OutputMode.Complete())
+                                    .trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
+```
+
+5. Query starten
+
+```java
+StreamingQuery streamingQuery = writer.start();
+
+try{
+
+} except {
+
+};
+```
+
+### Sources & Sinks
+
+Uit bestanden of directories lezen:
+
+* Parallel applicaties uitvoeren.
+* Geen garantie welk bestand er eerst wordt bekeken.
+* Naar een bestand schrijven --> enkel append mode mogelijk
+
+Uit Kafka lezen:
+
+* Het schema bij Kafka Dataframees zal altijd hetzelfde zijn. De key-value wordt als binary teruggegeven, maar dit is in binary. Parsen is noodzakelijk.
+
+Naar Kafka schrijven:
+
+* Kolomnamen staan vast. 
+* Schrijven van topic naar topic(s) is mogelijk.
+
+
+```java
+/// readStream()
+/// casten
+/// StreamingQuery
+// CheckpointLocation: Weten waar Spark de data moet opslaan. Dit is een directory.
+```
+
+### Map to overlapping windows
+
+Iedere timestamp wordt naar een windows gemapt.
+* groupby op interval en word
+* truncate op false: altijd volledige woord
+
+
+Watermark delay:
+* keeps state bounded
+
+
+Event time (ET): 
+* moment wanneer iets aangemaakt werd bij de bron
+* de watermark gaat kijken naar de grootste event time.
+
+Watermark:
+* "Bezemwagen": telkens de laatste timestamp updaten.
+* Ieder ET met een ET voor 12u10: wordt niet meegeteld.
+  * [12u - 12u10]
+* State wordt telkens kleiner.
+* 
+
+```java
+.withWatermark()
+```
+
+### Join streams
+
+Static DF + Stream:
+* Left Outer, Inner of Right Outer.
+* Enkel Outer met de streaming
+
+Geen watermarking nodig:
+* Stream met een bounded-ding: geen state van de DF nodig.
+
+Caching:
+* Iedere n aantal seconden een DF lezen: alles cachen.
+* Static DF
+
+```java
+.cache()
+```
+
+### Stream-Stream joins
+
 
 # 5. Kafka
 

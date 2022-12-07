@@ -83,6 +83,8 @@ public class DisasterTweetClassification {
 
 		Dataset<Row> dataset = getTrainingData();
 		Dataset<Row> testset = getTestData();
+		
+		// welke transformers moeten er nog bij?
 
 		RegexTokenizer regexTokenizer = new RegexTokenizer().setInputCol("str_only").setOutputCol("words").setPattern("\\W");
 		StopWordsRemover stopWordsRemover = new StopWordsRemover().setInputCol("words").setOutputCol("filtered");
@@ -121,8 +123,6 @@ public class DisasterTweetClassification {
 		
 		convertedTraining.show();
 		convertedTesting.show();
-		
-		System.exit(1);
 		
 		/*
 		 * LOG-REG

@@ -2,6 +2,9 @@ package be.hogent.dit.tin;
 
 import static org.apache.spark.sql.functions.col;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineStage;
 import org.apache.spark.ml.classification.LinearSVC;
@@ -23,13 +26,20 @@ import org.apache.spark.mllib.evaluation.MulticlassMetrics;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 
 public class KaggleCreditCardClassification {
 
 	static SparkSession spark = SparkSession.builder().appName("CreditCardClassification").master("local[*]").getOrCreate();
 
 	private static Dataset<Row> getData() {
-		return spark.read().option("header", true).option("inferSchema", true)
+		
+		// moet hier een schema komen? --> te veel features
+		
+		return spark.read().option("header", true)
+				.option("inferSchema", true)
 				.csv("src/main/resources/creditcard.csv");
 	}
 	
@@ -151,7 +161,7 @@ public class KaggleCreditCardClassification {
 		
 		
 		ParamMap[] paramGridRFC = new ParamGridBuilder()
-				.addGrid(rfc.maxDepth(), new int[] { 10, 20, 30 })
+				.addGrid(rfc.maxDepth(), new int[] { 3, 7, 9 })
 				.addGrid(rfc.numTrees(), new int[] { 40, 60, 80 })
 				.addGrid(pca.k(), new int[] {3,6,9})
 				.build();

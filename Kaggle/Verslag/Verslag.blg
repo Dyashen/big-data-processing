@@ -1,9 +1,9 @@
 [0] Config.pm:306> INFO - This is Biber 2.18
 [0] Config.pm:309> INFO - Logfile is 'Verslag.blg'
-[162] biber-MSWIN64:340> INFO - === 
-[209] Biber.pm:418> INFO - Reading 'Verslag.bcf'
-[400] Biber.pm:978> INFO - Found 0 citekeys in bib section 0
-[434] bbl.pm:654> INFO - Writing 'Verslag.bbl' with encoding 'UTF-8'
-[434] bbl.pm:757> INFO - Output to Verslag.bbl
-[435] Biber.pm:130> WARN - The file 'Verslag.bcf' does not contain any citations!
-[435] Biber.pm:132> INFO - WARNINGS: 1
+[127] biber-MSWIN64:340> INFO - === 
+[164] Biber.pm:418> INFO - Reading 'Verslag.bcf'
+[352] Biber.pm:978> INFO - Found 0 citekeys in bib section 0
+[383] bbl.pm:654> INFO - Writing 'Verslag.bbl' with encoding 'UTF-8'
+[383] bbl.pm:757> INFO - Output to Verslag.bbl
+[384] Biber.pm:130> WARN - The file 'Verslag.bcf' does not contain any citations!
+[384] Biber.pm:132> INFO - WARNINGS: 1
