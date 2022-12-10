@@ -81,8 +81,5 @@
     <requires type="dynamic">
       <file>Verslag.bcf</file>
     </requires>
-    <requires type="editable">
-      <file>distridb.bib</file>
-    </requires>
   </external>
 </requests>
