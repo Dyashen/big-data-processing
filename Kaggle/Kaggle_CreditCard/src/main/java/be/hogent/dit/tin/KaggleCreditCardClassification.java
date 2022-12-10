@@ -107,16 +107,16 @@ public class KaggleCreditCardClassification {
 		 * zonder side-effects in de resultaten.
 		 */
 		VectorAssembler assembler = new VectorAssembler().setInputCols(arrFeatures).setOutputCol("features");
-		MinMaxScaler minmax = new MinMaxScaler().setMax(1.0).setMin(0.0).setInputCol("features")
+		MinMaxScaler minmax = new MinMaxScaler().setMax(1.0).setMin(0.0).setInputCol(assembler.getOutputCol())
 				.setOutputCol("scaledFeatures");
-		PCA pca = new PCA().setInputCol("scaledFeatures").setOutputCol("pcaFeatures").setK(3);
+		PCA pca = new PCA().setInputCol(minmax.getOutputCol()).setOutputCol("pcaFeatures").setK(3);
 
 		Dataset<Row>[] datasets = data.randomSplit(verhouding);
 
-		Dataset<Row> trainingSet = datasets[0];
-		Dataset<Row> testSet = datasets[1];
+		Dataset<Row> trainSetSplit = datasets[0];
+		Dataset<Row> trainTestSplit = datasets[1];
 
-		RandomForestClassifier rfc = new RandomForestClassifier().setLabelCol(label).setFeaturesCol("pcaFeatures");
+		RandomForestClassifier rfc = new RandomForestClassifier().setLabelCol(label).setFeaturesCol(pca.getOutputCol());
 
 		Pipeline pipelineRFC = new Pipeline().setStages(new PipelineStage[] { assembler, minmax, pca, rfc });
 
@@ -131,11 +131,11 @@ public class KaggleCreditCardClassification {
 		CrossValidator cvRFC = new CrossValidator().setEstimator(pipelineRFC)
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
 				.setEstimatorParamMaps(paramGridRFC);
-		CrossValidatorModel cvmRFC = cvRFC.fit(trainingSet);
+		CrossValidatorModel cvmRFC = cvRFC.fit(trainSetSplit);
 
 		System.out.printf("Beste model: %s\n", cvmRFC.bestModel().params().toString());
 
-		Dataset<Row> predictionsRFC = cvmRFC.transform(testSet);
+		Dataset<Row> predictionsRFC = cvmRFC.transform(trainTestSplit);
 
 		// Evaluatie
 		System.out.printf("\n\nRandom Forest Classifier\n");
@@ -164,11 +164,11 @@ public class KaggleCreditCardClassification {
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
 				.setEstimatorParamMaps(paramGridSVM);
 
-		CrossValidatorModel cvmSVM = cvSVM.fit(trainingSet);
+		CrossValidatorModel cvmSVM = cvSVM.fit(trainSetSplit);
 
 		System.out.printf("Beste parameters: %s\n", cvmSVM.bestModel().params().toString());
 
-		Dataset<Row> predictionsSVM = cvmSVM.transform(testSet);
+		Dataset<Row> predictionsSVM = cvmSVM.transform(trainTestSplit);
 
 		System.out.printf("\n\nLineaire SVM Classifier\n");
 		printConfusionMatrixMetrics(predictionsSVM);
@@ -189,11 +189,11 @@ public class KaggleCreditCardClassification {
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
 				.setEstimatorParamMaps(paramGridLogReg);
 
-		CrossValidatorModel cvmLogReg = cvLogReg.fit(trainingSet);
+		CrossValidatorModel cvmLogReg = cvLogReg.fit(trainSetSplit);
 
 		System.out.printf("Beste model: %s\n", cvmLogReg.bestModel().params().toString());
 
-		Dataset<Row> predictionsLogReg = cvmLogReg.transform(testSet);
+		Dataset<Row> predictionsLogReg = cvmLogReg.transform(trainTestSplit);
 
 		System.out.printf("\n\nLogistische Regressie\n");
 		printConfusionMatrixMetrics(predictionsLogReg);

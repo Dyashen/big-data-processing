@@ -158,7 +158,7 @@ Onze data is nog te ruw en daarom maken wij een clean-functie aan. Dit moeten we
 
 	\item We verwijderen de distance-outliers uit de dataset. Hier kijken we naar alle waarden 
 		
-	\item We verwijderen alle rijen dat géén passagiers meenemen. Dus alle rijen waar het aantal passagiers gelijk is aan 0.
+	\item We verwijderen alle rijen die géén passagiers meenemen. Dus alle rijen waar het aantal passagiers gelijk is aan 0.
 \end{enumerate}
 
 \begin{lstlisting}[language=Java]
@@ -295,7 +295,7 @@ Pipeline pipelineLinReg = new Pipeline()
 
 \subsection*{Finetuning}
 
-De parameters van alle modellen moeten we finetunen. Deze stap negeren resulteert in inperformant model. Dit probleem pakken wij aan door te werken met een ParamGridBuilder. Met deze tool geven wij meerdere waarden mee voor verschillende parameters. Iedere combinatie zal worden getest. Hoe meer parameters, hoe langer de uitvoertijd van de applicatie. 
+De parameters van alle modellen moeten we finetunen. Dit probleem pakken wij aan door te werken met een ParamGridBuilder. Met deze tool geven wij meerdere waarden mee voor verschillende parameters. Iedere combinatie zal worden getest. Hoe meer parameters, hoe langer de uitvoertijd van de applicatie. 
 
 We passen crossvalidatie toe op ons model. Het beste model kiezen gebeurt op basis van een metriek. Hieronder kiezen we het model dat de beste MAE heeft. Hieronder een voorbeeld van onze Random Forest Regressor (RFR). We geven mee dat we voor de pipeline dezelfde objecten gebruiken als hierboven. Het \textit{tweaken} gebeurt binnenin de pipeline.
 

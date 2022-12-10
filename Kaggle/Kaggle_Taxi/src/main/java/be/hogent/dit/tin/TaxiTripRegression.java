@@ -50,6 +50,7 @@ public class TaxiTripRegression {
 	static final double[] verhouding = { 0.8, 0.2 };
 	static final String label = "trip_duration";
 	static final String prediction = "prediction";
+	static final String metric = "rmse";
 
 	/*
 	 * SparkSession
@@ -151,7 +152,7 @@ public class TaxiTripRegression {
 
 	// UDF2
 	private static Dataset<Row> addSpeed(Dataset<Row> dataset) {
-		return dataset.withColumn("speed", call_udf("speed", col("distance"), col("trip_duration")));
+		return dataset.withColumn("speed", call_udf("speed", col("distance"), col(label)));
 	}
 
 	private static void printCorrelation(Dataset<Row> dataset) {
@@ -173,7 +174,7 @@ public class TaxiTripRegression {
 		String[] metricTypes = { "mse", "rmse", "r2", "mae" };
 		System.out.printf("\n\nMetrics:\n");
 		for (String metricType : metricTypes) {
-			RegressionEvaluator evaluator = new RegressionEvaluator().setLabelCol(label).setPredictionCol("prediction")
+			RegressionEvaluator evaluator = new RegressionEvaluator().setLabelCol(label).setPredictionCol(prediction)
 					.setMetricName(metricType);
 
 			double calc = evaluator.evaluate(predictionsWithLabel);
@@ -181,8 +182,8 @@ public class TaxiTripRegression {
 			System.out.printf("%s: \t%.5f \n", metricType, calc);
 		}
 
-		RegressionEvaluator evaluator = new RegressionEvaluator().setLabelCol(label).setPredictionCol("prediction")
-				.setMetricName("rmse");
+		RegressionEvaluator evaluator = new RegressionEvaluator().setLabelCol(label).setPredictionCol(prediction)
+				.setMetricName(metric);
 
 		double calc = evaluator.evaluate(predictionsWithLabel);
 		double log = Math.log(calc);
@@ -290,6 +291,8 @@ public class TaxiTripRegression {
 
 		// Train-test-split
 		Dataset<Row>[] datasets = train.randomSplit(verhouding, 42);
+		Dataset<Row> trainSetSplit = datasets[0];
+		Dataset<Row> trainTestSplit = datasets[1];
 		System.out.printf("Lengte trainingset: %d\n", datasets[0].count());
 		System.out.printf("Lengte training-testset: %d\n", datasets[1].count());
 
@@ -302,15 +305,15 @@ public class TaxiTripRegression {
 				.setInputCols(new String[] { "vendor_id", "passenger_count", "hour", "day", "flag_ind", "distance" })
 				.setOutputCol("features");
 
-		MinMaxScaler minMax = new MinMaxScaler().setInputCol("features").setOutputCol("scaledFeatures");
+		MinMaxScaler minMax = new MinMaxScaler().setInputCol(assembler.getOutputCol()).setOutputCol("scaledFeatures");
 
-		LinearRegression linReg = new LinearRegression().setLabelCol(label).setFeaturesCol("scaledFeatures");
+		LinearRegression linReg = new LinearRegression().setLabelCol(label).setFeaturesCol(minMax.getOutputCol());
 
 		Pipeline pipelineLinReg = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, linReg });
 
 		// Het model trainen
-		PipelineModel model = pipelineLinReg.fit(datasets[0]);
-		Dataset<Row> trainedLinReg = model.transform(datasets[1]);
+		PipelineModel model = pipelineLinReg.fit(trainSetSplit);
+		Dataset<Row> trainedLinReg = model.transform(trainTestSplit);
 
 		// Metrieken uitprinten
 		printCorrelation(trainedLinReg);
@@ -318,23 +321,23 @@ public class TaxiTripRegression {
 
 		// Hoe groot is de marge tussen onze voorspelde waarden en de effectieve
 		// waarden?
-		Dataset<Row> rangeLinReg = getRangeDataFrame(trainedLinReg);
-		rangeLinReg.show();
+		Dataset<Row> range = getRangeDataFrame(trainedLinReg);
+		range.show();
 
 		// Voorspelling maken
 		Dataset<Row> predictionsLinReg = model.transform(test);
 		predictionsLinReg.show();
-		
+
 		// Nodig voor de volgende modellen: regEval
-		RegressionEvaluator regEval = new RegressionEvaluator().setLabelCol(label).setMetricName("rmse");
-		
+		RegressionEvaluator regEval = new RegressionEvaluator().setLabelCol(label).setMetricName(metric);
+
 		/*
 		 * Generalized Linear Regression
 		 */
 		System.out.printf("\n_-* Generalized Linear Regression *-_\n");
 
 		GeneralizedLinearRegression glr = new GeneralizedLinearRegression().setFamily("gaussian").setLink("identity")
-				.setLabelCol(label).setFeaturesCol("scaledFeatures").setMaxIter(10).setRegParam(0.3);
+				.setLabelCol(label).setFeaturesCol(minMax.getOutputCol()).setMaxIter(10).setRegParam(0.3);
 
 		Pipeline pipelineGLR = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, glr });
 
@@ -345,8 +348,11 @@ public class TaxiTripRegression {
 				.setEvaluator(regEval).setEstimatorParamMaps(paramGridGLR).setTrainRatio(0.8);
 
 		TrainValidationSplitModel trainValidationSplitModelGLR = trainValidationSplitGLR.fit(datasets[0]);
-		Dataset<Row> glrTrain = trainValidationSplitModelGLR.transform(datasets[1]);
-		printRegressionEvaluation(glrTrain);
+		Dataset<Row> trainedGLR = trainValidationSplitModelGLR.transform(datasets[1]);
+		printRegressionEvaluation(trainedGLR);
+		
+		range = getRangeDataFrame(trainedGLR);
+		range.show();
 
 		Dataset<Row> predictionsGLR = trainValidationSplitModelGLR.transform(test);
 		predictionsGLR.select(prediction).as("voorspelling GLR").show(5);
@@ -356,7 +362,7 @@ public class TaxiTripRegression {
 		 */
 		System.out.printf("\n_-* Gradient Boost Regression *-_\n");
 
-		GBTRegressor gbt = new GBTRegressor().setLabelCol(label).setFeaturesCol("scaledFeatures").setMaxIter(10);
+		GBTRegressor gbt = new GBTRegressor().setLabelCol(label).setFeaturesCol(minMax.getOutputCol()).setMaxIter(10);
 
 		Pipeline pipelineGBT = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, gbt });
 
@@ -365,19 +371,23 @@ public class TaxiTripRegression {
 		CrossValidator cvGBT = new CrossValidator().setEstimator(pipelineGBT).setEvaluator(regEval)
 				.setEstimatorParamMaps(paramGridGBT);
 
-		CrossValidatorModel cvmGBT = cvGBT.fit(datasets[0]);
-		Dataset<Row> gbtTrain = cvmGBT.transform(datasets[1]);
-		printRegressionEvaluation(gbtTrain);
+		CrossValidatorModel cvmGBT = cvGBT.fit(trainSetSplit);
+		Dataset<Row> trainedGBT = cvmGBT.transform(trainTestSplit);
+		printRegressionEvaluation(trainedGBT);
+		
+		range = getRangeDataFrame(trainedGBT);
+		range.show();
 
 		Dataset<Row> predictionsGBT = cvmGBT.transform(test);
 		predictionsGBT.select(prediction).as("voorspelling GBT").show(5);
-		
+
 		/*
 		 * Random Forest Regressie
 		 */
 
 		System.out.printf("\n_-* Random Forest Regression *-_\n");
-		RandomForestRegressor rfr = new RandomForestRegressor().setLabelCol(label).setFeaturesCol("scaledFeatures");
+		RandomForestRegressor rfr = new RandomForestRegressor().setLabelCol(label)
+				.setFeaturesCol(minMax.getOutputCol());
 
 		Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, rfr });
 
@@ -386,21 +396,22 @@ public class TaxiTripRegression {
 		 * + number of trees. Parameters were based of the standard value and finetuned
 		 * with checking the optimal parameters.
 		 */
-		ParamMap[] paramGridRFR = new ParamGridBuilder().addGrid(rfr.maxDepth(), new int[] { 5, 10, 15})
-				.addGrid(rfr.numTrees(), new int[] { 10, 15, 20}).build();
+		ParamMap[] paramGridRFR = new ParamGridBuilder().addGrid(rfr.maxDepth(), new int[] { 5, 10, 15 })
+				.addGrid(rfr.numTrees(), new int[] { 10, 15, 20 }).build();
 
 		CrossValidator cvRFR = new CrossValidator().setEstimator(pipelineRFR).setEvaluator(regEval)
 				.setEstimatorParamMaps(paramGridRFR);
 
-		CrossValidatorModel cvmRFR = cvRFR.fit(datasets[0]);
-		Dataset<Row> rfrTrain = cvmRFR.transform(datasets[1]);
+		CrossValidatorModel cvmRFR = cvRFR.fit(trainSetSplit);
+		Dataset<Row> trainedRFR = cvmRFR.transform(trainTestSplit);
 
-		printRegressionEvaluation(rfrTrain);
+		printRegressionEvaluation(trainedRFR);
+		
+		range = getRangeDataFrame(trainedRFR);
+		range.show();
 
 		Dataset<Row> predictionsRFR = cvmRFR.transform(test);
-
 		predictionsRFR.select(prediction).as("voorspelling RFR").show(5);
-
 
 		spark.stop();
 	}
