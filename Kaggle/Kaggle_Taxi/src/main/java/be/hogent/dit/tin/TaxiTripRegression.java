@@ -36,6 +36,7 @@ import org.apache.spark.ml.tuning.TrainValidationSplit;
 import org.apache.spark.ml.tuning.TrainValidationSplitModel;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.api.java.UDF4;
@@ -80,7 +81,7 @@ public class TaxiTripRegression {
 		Dataset<Row> dataset = spark.read().option("header", true).schema(schema).csv("src/main/resources/train.csv");
 
 		return dataset.withColumn("hour", hour(col("pickup_datetime")))
-				.withColumn("day", dayofweek(col("pickup_datetime"))).drop("id", "pickup_datetime", "dropoff_datetime");
+				.withColumn("day", dayofweek(col("pickup_datetime"))).drop("pickup_datetime", "dropoff_datetime");
 	}
 
 	private static Dataset<Row> getTest() {
@@ -99,7 +100,7 @@ public class TaxiTripRegression {
 		Dataset<Row> dataset = spark.read().option("header", true).schema(schema).csv("src/main/resources/test.csv");
 
 		return dataset.withColumn("hour", hour(col("pickup_datetime")))
-				.withColumn("day", dayofweek(col("pickup_datetime"))).drop("id", "pickup_datetime");
+				.withColumn("day", dayofweek(col("pickup_datetime"))).drop("pickup_datetime");
 	}
 
 	private static Dataset<Row> clean(Dataset<Row> dataframe) {
@@ -192,8 +193,7 @@ public class TaxiTripRegression {
 	}
 
 	private static Dataset<Row> getRangeDataFrame(Dataset<Row> dataframe) {
-		dataframe = dataframe.withColumn("margin",
-				abs(col("prediction").minus(col("trip_duration"))));
+		dataframe = dataframe.withColumn("margin", abs(col("prediction").minus(col("trip_duration"))));
 
 		Dataset<Row> range = dataframe.withColumn("range",
 				when(col("margin").leq(50), "0-50").when(col("margin").leq(200), "50-200")
@@ -203,19 +203,24 @@ public class TaxiTripRegression {
 		return range.groupBy("range").count();
 	}
 
+	private static void createSubmission(Dataset<Row> dataframe, String fnaam) {
+		String output = "src/main/resources/" + fnaam + ".csv";
+		dataframe = dataframe.select("id", "prediction");
+		dataframe.write().mode(SaveMode.Overwrite).csv(output);
+	}
+
 	public static void main(String[] args) {
 
+		// Enkel errors tonen
 		spark.sparkContext().setLogLevel("ERROR");
 
+		// Dataset ophalen
 		Dataset<Row> train = getTraining();
 		Dataset<Row> test = getTest();
 
-		// Statistieken tonen.
-		System.out.println("SHOW THE AMOUNT OF TRIPS PER HOUR");
+		// Statistieken tonen. Hoeveel trips waren er per dag/uur?
 		train.groupBy("hour").count().orderBy("hour").show();
 		test.groupBy("hour").count().orderBy("hour").show();
-
-		System.out.println("SHOW THE AMOUNT OF TRIPS PER DAY");
 		train.groupBy("hour").count().orderBy("hour").show();
 		test.groupBy("hour").count().orderBy("hour").show();
 
@@ -240,9 +245,7 @@ public class TaxiTripRegression {
 						* Math.cos(Math.toRadians(lat2)) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
 
 				double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
 				double d = radius * c;
-
 				return d;
 			}
 		};
@@ -258,44 +261,37 @@ public class TaxiTripRegression {
 		spark.udf().register("speed", speed, DataTypes.DoubleType);
 
 		train = addDistance(train);
-		test = addDistance(test);
-
 		train = addSpeed(train);
+		test = addDistance(test);
 
 		train.show();
 		test.show();
 
 		// Wat is de gemiddelde snelheid?
-		System.out.println("SHOW THE MEAN SPEED OF TRIPS PER HOUR");
 		train.groupBy("hour").mean("speed").orderBy("hour").show();
-
-		System.out.println("SHOW THE MEAN SPEED OF TRIPS PER DAY");
 		train.groupBy("day").mean("speed").orderBy("day").show();
 
 		// Hoeveel kilometer werd er op dat uur afgelegd?
-		System.out.println("SHOW THE MEAN DISTANCE OF TRIPS PER HOUR");
 		train.groupBy("hour").sum("distance").orderBy("hour").show();
-
-		System.out.println("SHOW THE MEAN DISTANCE OF TRIPS PER DAY");
 		train.groupBy("day").sum("distance").orderBy("day").show();
 
 		train = clean(train);
 		test = clean(test);
 
-		// Outliers uit de trainingset halen
+		// Outliers verwijderen op basis van elapsed time
 		double rightOuter = train.select(avg(col(label)).plus(stddev(col(label)))).first().getDouble(0);
 		double leftOuter = train.select(avg(col(label)).minus(stddev(col(label)))).first().getDouble(0);
 		train = train.where(col(label).$less$eq(rightOuter)).where(col(label).$greater$eq(leftOuter));
 
-		// Train-test-split
 		Dataset<Row>[] datasets = train.randomSplit(verhouding, 42);
 		Dataset<Row> trainSetSplit = datasets[0];
 		Dataset<Row> trainTestSplit = datasets[1];
 		System.out.printf("Lengte trainingset: %d\n", trainSetSplit.count());
 		System.out.printf("Lengte training-testset: %d\n", trainTestSplit.count());
 
-		// Lineaire Regressie
-		// Aanmaken transformers en modellen voor de pipeline.
+		/*
+		 * Lineaire regressie
+		 */
 		StringIndexer indexer = new StringIndexer().setHandleInvalid("keep").setInputCol("store_and_fwd_flag")
 				.setOutputCol("flag_ind");
 
@@ -304,9 +300,7 @@ public class TaxiTripRegression {
 				.setOutputCol("features");
 
 		MinMaxScaler minMax = new MinMaxScaler().setInputCol(assembler.getOutputCol()).setOutputCol("scaledFeatures");
-
 		LinearRegression linReg = new LinearRegression().setLabelCol(label).setFeaturesCol(minMax.getOutputCol());
-
 		Pipeline pipelineLinReg = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, linReg });
 
 		// Het model trainen
@@ -321,11 +315,12 @@ public class TaxiTripRegression {
 		// waarden?
 		getRangeDataFrame(trainedLinReg).show();
 
-		// Voorspelling maken
+		// Voorspellingen maken + eerste vijf tonen + naar csv
 		Dataset<Row> predictionsLinReg = model.transform(test);
 		predictionsLinReg.show();
+		createSubmission(predictionsLinReg, "submissionLinearRegression");
 
-		// Nodig voor de volgende modellen: regEval
+		// Nodig voor de volgende modellen
 		RegressionEvaluator regEval = new RegressionEvaluator().setLabelCol(label).setMetricName(metric);
 
 		/*
@@ -339,23 +334,28 @@ public class TaxiTripRegression {
 		ParamMap[] paramGridGLR = new ParamGridBuilder().addGrid(glr.maxIter(), new int[] { 15, 20, 25 })
 				.addGrid(glr.regParam(), new double[] { 0.6, 0.9 }).build();
 
-		TrainValidationSplit trainValidationSplitGLR = new TrainValidationSplit()
-				.setEstimator(glr)
-				.setEvaluator(regEval)
-				.setEstimatorParamMaps(paramGridGLR)
-				.setTrainRatio(verhouding[0]);
+		TrainValidationSplit trainValidationSplitGLR = new TrainValidationSplit().setEstimator(glr)
+				.setEvaluator(regEval).setEstimatorParamMaps(paramGridGLR).setTrainRatio(verhouding[0]);
 
-		Pipeline pipelineGLR = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, trainValidationSplitGLR});
+		Pipeline pipelineGLR = new Pipeline()
+				.setStages(new PipelineStage[] { indexer, assembler, minMax, trainValidationSplitGLR });
 
 		PipelineModel pipelineModelGLR = pipelineGLR.fit(trainSetSplit);
+
+		System.out.printf("Ideale parameters:\nMax Iter: %s\nReg params: %s",
+				trainValidationSplitGLR.getEstimatorParamMaps()[0].get(glr.maxIter()).toString(),
+				trainValidationSplitGLR.getEstimatorParamMaps()[1].get(glr.regParam()).toString());
+
 		Dataset<Row> trainedGLR = pipelineModelGLR.transform(trainTestSplit);
-		
+
 		printRegressionEvaluation(trainedGLR);
 		getRangeDataFrame(trainedGLR).show();
 
+		// Voorspellingen maken + eerste vijf tonen + naar csv
 		Dataset<Row> predictionsGLR = pipelineModelGLR.transform(test);
 		predictionsGLR.select(prediction).as("voorspelling GLR").show(5);
-		
+		createSubmission(predictionsGLR, "submissionGLR");
+
 		/*
 		 * Gradient-boost regressor
 		 */
@@ -363,54 +363,50 @@ public class TaxiTripRegression {
 
 		GBTRegressor gbt = new GBTRegressor().setLabelCol(label).setFeaturesCol(minMax.getOutputCol()).setMaxIter(10);
 
-		
-
 		ParamMap[] paramGridGBT = new ParamGridBuilder().addGrid(gbt.maxIter(), new int[] { 15, 20, 25 }).build();
 
-		TrainValidationSplit trainValidationSplitGBT = new TrainValidationSplit()
-				.setEstimator(gbt)
-				.setEvaluator(regEval)
-				.setEstimatorParamMaps(paramGridGBT)
-				.setTrainRatio(verhouding[0]);
-		
-		Pipeline pipelineGBT = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, trainValidationSplitGBT });
+		TrainValidationSplit trainValidationSplitGBT = new TrainValidationSplit().setEstimator(gbt)
+				.setEvaluator(regEval).setEstimatorParamMaps(paramGridGBT).setTrainRatio(verhouding[0]);
+
+		Pipeline pipelineGBT = new Pipeline()
+				.setStages(new PipelineStage[] { indexer, assembler, minMax, trainValidationSplitGBT });
 
 		PipelineModel pipelineModelGBT = pipelineGBT.fit(trainSetSplit);
+
+		System.out.printf("Ideale parameters:\nMax Iter: %s",
+				trainValidationSplitGBT.getEstimatorParamMaps()[0].get(gbt.maxIter()).toString());
+
 		Dataset<Row> trainedGBT = pipelineModelGBT.transform(trainTestSplit);
-		
+
 		printRegressionEvaluation(trainedGBT);
 		getRangeDataFrame(trainedGBT).show();
 
+		// Voorspellingen maken + eerste vijf tonen + naar csv
 		Dataset<Row> predictionsGBT = pipelineModelGBT.transform(test);
 		predictionsGBT.select(prediction).as("voorspelling GBT").show(5);
+		createSubmission(predictionsGBT, "submissionGBT");
 
 		/*
 		 * Random Forest Regressie
 		 */
-
 		System.out.printf("\n_-* Random Forest Regression *-_\n");
 		RandomForestRegressor rfr = new RandomForestRegressor().setLabelCol(label)
 				.setFeaturesCol(minMax.getOutputCol());
-		
-		ParamMap[] paramGridRFR = new ParamGridBuilder()
-				.addGrid(rfr.maxDepth(), new int[] { 5, 10, 15 })
-				.addGrid(rfr.numTrees(), new int[] { 10, 15, 20 })
-				.build();
 
-		CrossValidator cvRFR = new CrossValidator()
-				.setEstimator(rfr)
-				.setEvaluator(regEval)
+		ParamMap[] paramGridRFR = new ParamGridBuilder().addGrid(rfr.maxDepth(), new int[] { 5, 10, 15 })
+				.addGrid(rfr.numTrees(), new int[] { 50, 80 }).build();
+
+		CrossValidator cvRFR = new CrossValidator().setEstimator(rfr).setEvaluator(regEval)
 				.setEstimatorParamMaps(paramGridRFR);
 
 		Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, cvRFR });
 
-		/*
-		 * Parameter Grid for the Random Forest Regressor. Two parameters: the max depth
-		 * + number of trees. Parameters were based of the standard value and finetuned
-		 * with checking the optimal parameters.
-		 */
-
 		PipelineModel pipelineModelRFR = pipelineRFR.fit(trainSetSplit);
+
+		System.out.printf("Ideale parameters:\nMax depth: %s\nNumber of trees: %s",
+				cvRFR.getEstimatorParamMaps()[0].get(rfr.maxDepth()).toString(),
+				cvRFR.getEstimatorParamMaps()[1].get(rfr.numTrees()).toString());
+
 		Dataset<Row> trainedRFR = pipelineModelRFR.transform(trainTestSplit);
 
 		printRegressionEvaluation(trainedRFR);
@@ -418,6 +414,9 @@ public class TaxiTripRegression {
 
 		Dataset<Row> predictionsRFR = pipelineModelRFR.transform(test);
 		predictionsRFR.select(prediction).as("voorspelling RFR").show(5);
+
+		// csv maken met ID + prediction
+		createSubmission(predictionsRFR, "submissionRFR");
 
 		spark.stop();
 	}

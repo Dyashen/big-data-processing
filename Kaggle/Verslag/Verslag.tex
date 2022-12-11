@@ -22,7 +22,7 @@
 	keywordstyle=[4]\color{RoyalBlue},
 	keywords=[5]{label, prediction, verhouding, metric, spark},
 	keywordstyle=[5]\color{Aquamarine}\bfseries,
-	keywords=[6]{getTraining, getTest, clean, haversine, speed, printcorrelation, getarearoccurve, printconfusionmatrixmetrics, printregressionevaluation, getrangedataframe, getdata},
+	keywords=[6]{getTraining, getTest, clean, haversine, speed, printcorrelation, getarearoccurve, printconfusionmatrixmetrics, printregressionevaluation, getrangedataframe, getdata, createsubmission, adddistance, addspeed},
 	keywordstyle=[6]\color{OliveGreen}\bfseries,
 	keywords=[7]{where, select, first, orderby, groupby, count, show, drop, mean, sum, fit, transform, randomsplit, getdouble, withcolumn, union, sample, columns, weightedprecision, weightedrecall, accuracy},
 	keywordstyle=[7]\color{PineGreen},
@@ -85,9 +85,11 @@
 
 \chapter{Inleiding}
 
-Tijdens het opleidingsonderdeel 'Distributed Databases' maakten wij kennis met Apache Spark. Spark biedt een data-analysetechnologie aan gericht op grootschalige gegevensverwerking. Deze technologie wordt aangeboden voor Java, Python, R en Scala. Voor dit opleidingsonderdeel gebruiken we Java als programmeertaal. Spark heeft pakketten dat zich richt op andere aspecten binnen dataverwerking, één daarvan is MLLib. MLLib biedt \textit{machine learning} technieken aan (ML). Wij kregen opdracht om via het platform Kaggle deel te nemen aan ML-gerichte competities, met het doel om zo meer vertrouwd te raken met ML en Spark.
+Tijdens het opleidingsonderdeel 'Distributed Databases' maakten wij kennis met Apache Spark. Spark biedt een data-analysetechnologie aan gericht op grootschalige gegevensverwerking. Deze technologie wordt aangeboden voor Java, Python, R en Scala. Voor dit opleidingsonderdeel gebruiken we Java als programmeertaal. Spark heeft pakketten die zich richten op andere aspecten binnen dataverwerking, één daarvan is \textit{MLLib}. \textit{MLLib} biedt \textit{machine learning} technieken aan (ML). Wij kregen opdracht om via het platform Kaggle deel te nemen aan ML-gerichte competities, met het doel om zo meer vertrouwd te raken met ML en Spark.
 
-In dit verslag nemen wij u mee in de wereld van ML met gebruik van Spark. Wij willen u met volle plezier enkele concrete casussen tonen die gebruik maken van de verschillende regressie- en classificatiemethoden.
+In dit verslag nemen wij u mee in de wereld van Spark-ML. Wij tonen u met volle plezier drie concrete voorbeelden die verschillende regressie- en classificatiemethoden \textit{highlighten}. U kan de gemaakte oefeningen digitaal terugvinden op deze link \footnote{GitHub repository: https://github.com/Dyashen/Distributed\_Databases/tree/main/Kaggle}. 
+
+Deze opdracht was een proces van zelfstudie. De gehanteerde technieken zijn gebaseerd op de documentatie van Apache Spark \footnote{Apache Spark documentatie: https://spark.apache.org/docs/latest/} en van Spark MLLib \footnote{Spark MLLib documentatie: https://spark.apache.org/docs/latest/ml-guide.html}.
 
 Allereerst willen wij de tijdsduratie van een taxi-rit in downtown New York berekenen met regressie. Vervolgens detecteren wij kredietkaartfraude met behulp van binaire classificatie. Als derde oefening willen wij op basis van tekstinhoud achterhalen of een Tweet gerelateerd is aan een ramp. Tot slot geven wij u onze bevindingen mee van het MLLib pakket. Hier leggen we de aanpak van Spark en Sci-kit Learn, een pakket dat we in het opleidingsonderdeel Machine Learning zagen, parallel tegenover elkaar.
 
@@ -97,14 +99,13 @@ Allereerst willen wij de tijdsduratie van een taxi-rit in downtown New York bere
 
 Als eerste opdracht maakten wij de "New York City Taxi Trip Duration" wedstrijd. De competitie voorziet twee datasets: een training- en een testset. Het doel is om de totale tijdsduur van een taxirit in seconden te berekenen. Deze competitie kiest de inzending met de kleinste \textit{Root Mean Square Log Error} (RMSLE). Volgende kolommen werden gegeven: 
 \begin{itemize}
-	\item De verkopersID
+	\item Het ID en het verkopersnummer.
 	\item Het aantal passagiers in een taxi.
-	\item De longitude en latitude van het vertrekpunt.
-	\item De longitude en latitude van het aankomstpunt.
+	\item De longitude en latitude van het vertrek- en aankomstpunt.
 	\item De pick-up en drop-off tijd.
 \end{itemize}
 
-De competitie kan u terugvinden op deze \href{http://bit.ly/3umBKN5}{link}. Wij namen inspiratie uit vooral de officiële documentatie en uit één notebook. De code, in \textit{Python}, kan u \href{http://bit.ly/3F2Aofj}{hier} terugvinden.
+De competitie kan u terugvinden op deze link. \footnote{Link naar competitie: http://bit.ly/3umBKN5}. Wij namen inspiratie uit vooral de officiële documentatie en uit één notebook. De code, in \textit{Python}, kan u hier \footnote{Link naar gevolgde notebook: http://bit.ly/3F2Aofj} terugvinden.
 
 \subsection*{Algemeen}
 Wij declareren \textit{final} variabelen. Deze worden meermaals gebruikt en worden niet aangepast doorheen de applicatie. Deze variabelen hebben een andere waarde bij de volgende twee oefeningen, maar ze komen in ieder model aan bod. De verhouding is de ratio waarop we de trainingset splitsen. De label is de kolom waarop ons model zal voorspellen. De prediction houdt de naam van de prediction-kolom bij. We houden de metriek bij dat we nodig hebben. Als laatste geven wij de metriek mee. Voorlopig kijken we naar het model met de beste RMSE waarde, daarop berekenen we de RMSLE.
@@ -257,51 +258,57 @@ private static Dataset<Row> clean(Dataset<Row> dataframe) {
 De coördinaten van het vertrek- en aankomstpunt liggen te dicht bij elkaar. Daarnaast bieden deze vier waarden weinig inbreng aan het model. Daarom berekenen wij de afstand tussen de vertrek- en aankomstcoördinaten met de \textit{haversine}-formule, ofwel de formule om de grootcirkelafstand te berekenen. Deze formule dient om de afstand op een bol oppervlak te berekenen. Hiervoor maken we een \textit{user-defined-function} (UDF) aan dat vier parameters opvraagt: \textit{de pickup longitude, pickup latitude, de dropoff-longitude en de dropoff-latitude}. We volgen de wiskundige formule, in drie aparte stappen. Wiskundige bewerkingen, indien mogelijk zoals de vierkantswortel, doen we met de Math-library van Java.
 
 \begin{lstlisting}[language=Java]
+private static Dataset<Row> addDistance(Dataset<Row> dataframe) {
+	return dataframe
+		.withColumn("distance", call_udf("haversine", 
+			col("pickup_latitude"), col("pickup_longitude"), 
+			col("dropoff_latitude"), col("dropoff_longitude")))
+		.drop("pickup_longitude", "dropoff_longitude", "pickup_latitude", "dropoff_latitude");
+}
+
 UDF4<Double, Double, Double, Double, Double> haversine = new UDF4<>() {
 	public Double call(Double pickupLatitude, Double pickupLongitude, Double dropoffLatitude,
 	Double dropoffLongitude) throws Exception {
 		
 		double radius = 6371 * 1.1; // Radius van de Aarde
-		
-		double lat1 = pickupLatitude;
-		double lon1 = pickupLongitude;
-		
-		double lat2 = dropoffLatitude;
-		double lon2 = dropoffLongitude;
+		double lat1 = pickupLatitude;double lon1 = pickupLongitude; // pick-up
+		double lat2 = dropoffLatitude;double lon2 = dropoffLongitude; // drop-off
 		
 		double deltaLat = Math.toRadians(lat2 - lat1);
 		double deltaLon = Math.toRadians(lon2 - lon1);
 		
-		// Formule om de grootcirkelafstand te berekenen.
 		double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-		
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		
 		double d = radius * c;
-		
 		return d;
 	}
 };
+spark.udf().register("haversine", haversine, DataTypes.DoubleType);
+train = addDistance(train); test = addDistance(test);
 \end{lstlisting}
 
 Wij willen ook de gemiddelde snelheid van een taxi in \textit{miles} per hour (mph) bekijken. Voor deze berekening maken wij een tweede UDF aan met als input-parameters: de totale afgelegde afstand en de totale tijdsduur van een rit. De output is de gemiddelde snelheid van een taxi per rit als kommagetal. De testset ontbreekt de verlopen tijd van een taxirit, dus we gebruiken deze kolom enkel als extra statistiek bij het analyseren van de data.
 
 \begin{lstlisting}[language=Java]
+private static Dataset<Row> addSpeed(Dataset<Row> dataframe) {
+		return dataframe.withColumn("speed", call_udf("speed", col("distance"), col(label)));
+	}
+
 UDF2<Double, Double, Double> speed = new UDF2<>() {
 	public Double call(Double distance, Double time) throws Exception {
 		return distance / (time / 3600);
-	}
-};
+}};
+spark.udf().register("speed", speed, DataTypes.DoubleType);
+
 \end{lstlisting}
 
 Als tussentijdse controle tonen wij, in de terminal, de gemiddelde snelheid en gemiddelde afstand per dag en uur. Zo controleren we de transformaties voor: \textit{distance, speed, hour en day}. Hieronder ziet u de gemiddelde afstand/snelheid per dag of per uur. 
 
 \begin{lstlisting}[language=Java]
-	train.groupBy("hour").mean("speed").orderBy("hour").show();
-	train.groupBy("day").mean("speed").orderBy("day").show();
-	
-	train.groupBy("hour").sum("distance").orderBy("hour").show();
-	train.groupBy("day").sum("distance").orderBy("day").show();
+train.groupBy("hour").mean("speed").orderBy("hour").show();
+train.groupBy("day").mean("speed").orderBy("day").show();
+train.groupBy("hour").sum("distance").orderBy("hour").show();
+train.groupBy("day").sum("distance").orderBy("day").show();
 \end{lstlisting}
 
 \newpage
@@ -322,7 +329,7 @@ Voor de pipeline werken we met vier stappen:
 	
 \end{enumerate}
 
-Hieronder vindt u de pipeline voor het lineaire regressiemodel. Dit model vindt u terug in de \textit{main}-methode.
+Hieronder vindt u de pipeline voor het lineaire regressiemodel. De volgende code vindt u terug in de \textit{main}-methode.
 
 \begin{lstlisting}[language=Java]
 StringIndexer indexer = new StringIndexer()
@@ -347,7 +354,7 @@ LinearRegression linReg = new LinearRegression()
 Pipeline pipelineLinReg = new Pipeline()
 	.setStages(new PipelineStage[] {
 		 indexer, assembler, minMax, linReg 
-	 });
+	});
 
 PipelineModel model = pipelineLinReg.fit(trainSetSplit);
 Dataset<Row> trainedLinReg = model.transform(trainTestSplit);
@@ -356,9 +363,9 @@ Dataset<Row> trainedLinReg = model.transform(trainTestSplit);
 Bij \textit{machine learning} splitsen we de trainingsset in twee delen op. We stellen een vaste verhouding in door middel van een \textit{final} variabele. Wij kiezen voor de verhouding [80\% - 20\%]. Met de ingebouwde \textit{randomSplit} methode splitsen we de dataframe. 
 
 \begin{lstlisting}[language=Java]
-	Dataset<Row>[] datasets = train.randomSplit(verhouding, 42);
-	Dataset<Row> trainSetSplit = datasets[0];
-	Dataset<Row> trainTestSplit = datasets[1];
+Dataset<Row>[] datasets = train.randomSplit(verhouding, 42);
+Dataset<Row> trainSetSplit = datasets[0];
+Dataset<Row> trainTestSplit = datasets[1];
 \end{lstlisting}
 
 \newpage
@@ -367,7 +374,7 @@ Bij \textit{machine learning} splitsen we de trainingsset in twee delen op. We s
 
 Om het meest optimale model te vinden, moeten we finetunen. In Spark pakken wij dit aan met een \textit{ParamGridBuilder}. Dit is het equivalent van werken met een \textit{GridSearch} in \textit{Sci-kit Learn}. Wij geven verschillende waarden per hyperparameter mee. Iedere combinatie zal worden getest. Hoe meer parameters, hoe langer de uitvoertijd van de applicatie. 
 
-We passen crossvalidatie toe op ons model. Het beste model kiezen gebeurt op basis van een metriek. Zoals eerder gezegd willen we de beste RMSE hebben. Hieronder een voorbeeld van een RFR-pipeline met . We geven mee dat we voor de pipeline dezelfde objecten gebruiken als hierboven. Het \textit{tweaken} gebeurt binnenin de pipeline.
+We passen crossvalidatie toe op ons model. Het beste model kiezen gebeurt op basis van een metriek. Zoals eerder gezegd willen we de beste RMSE hebben. We geven mee dat we voor de pipeline dezelfde objecten gebruiken als hierboven. Het \textit{tweaken} gebeurt binnenin de pipeline. Hieronder een voorbeeld van een RFR-pipeline.
 
 \begin{lstlisting}[language=Java]
 RandomForestRegressor rfr = new RandomForestRegressor()
@@ -384,49 +391,39 @@ CrossValidator cvRFR = new CrossValidator()
 	.setEvaluator(regEval)
 	.setEstimatorParamMaps(paramGridRFR);
 
-Pipeline pipelineRFR = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, cvRFR });
+Pipeline pipelineRFR = new Pipeline()
+	.setStages(new PipelineStage[] { indexer, assembler, minMax, cvRFR });
+
 PipelineModel pipelineModelRFR = pipelineRFR.fit(trainSetSplit);
 Dataset<Row> trainedRFR = pipelineModelRFR.transform(trainTestSplit);
-
-printRegressionEvaluation(trainedRFR);
-getRangeDataFrame(trainedRFR).show();
-
-Dataset<Row> predictionsRFR = pipelineModelRFR.transform(test);
-predictionsRFR.select(prediction).as("voorspelling RFR").show(5);
 \end{lstlisting}
 
-
-Een alternatief voor crossvalidatie is \textit{trainvalidationsplit} (TVS). Het verschil is dat TVS hier één datasetpaar maakt, terwijl crossvalidatie afhankelijk is van het aantal \textit{folds}. Dit gebruiken we bij GLR en GBR.
+Een alternatief voor crossvalidatie is \textit{trainvalidationsplit} (TVS). Het verschil is dat TVS hier één datasetpaar maakt, terwijl crossvalidatie afhankelijk is van het aantal \textit{folds}. Dit gebruiken we bij GLR en GBR. Hieronder ziet u de pipeline voor het GLR-model.
 
 \begin{lstlisting}[language=Java]
 GeneralizedLinearRegression glr = new GeneralizedLinearRegression()
 	.setFamily("gaussian")
 	.setLink("identity")
 	.setLabelCol(label)
-	.setFeaturesCol(minMax.getOutputCol()).setMaxIter(10).setRegParam(0.3);
+	.setFeaturesCol(minMax.getOutputCol())
+	.setMaxIter(10).setRegParam(0.3);
 
 ParamMap[] paramGridGLR = new ParamGridBuilder()
 	.addGrid(glr.maxIter(), new int[] { 15, 20, 25 })
-	.addGrid(glr.regParam(), new double[] { 0.6, 0.9 }).build();
+	.addGrid(glr.regParam(), new double[] { 0.6, 0.9 })
+	.build();
 
 TrainValidationSplit trainValidationSplitGLR = new TrainValidationSplit()
-	.setEstimator(glr).setEvaluator(regEval)
+	.setEstimator(glr)
+	.setEvaluator(regEval)
 	.setEstimatorParamMaps(paramGridGLR)
-	.setTrainRatio(0.8);
+	.setTrainRatio(verhouding[0]);
 
 Pipeline pipelineGLR = new Pipeline().setStages(new PipelineStage[] { indexer, assembler, minMax, trainValidationSplitGLR});
 
 PipelineModel pipelineModelGLR = pipelineGLR.fit(trainSetSplit);
 Dataset<Row> trainedGLR = pipelineModelGLR.transform(trainTestSplit);
-
-printRegressionEvaluation(trainedRFR);
-getRangeDataFrame(trainedRFR).show();
-
-Dataset<Row> predictionsGLR = pipelineModelGLR.transform(test);
-predictionsGLR.select(prediction).as("voorspelling GLR").show(5);
 \end{lstlisting}
-
-
 
 \newpage
 
@@ -475,6 +472,24 @@ private static void printRegressionEvaluation(Dataset<Row> dataframe) {
 }
 \end{lstlisting}
 
+Tussen de \textit{fit} en de \textit{transform} printen we de meest optimale hyperparameters uit. De beste combinatie wordt achterhaald door of het \textit{crossvalidatiemodel}, ofwel de \textit{traintestvalidation}. Hieronder een voorbeeld van de \textit{traintestvalidation}. We moeten rekening houden met de volgorde waarin we de parameters toevoegen aan de ParamGridBuilder. Die volgorde komt overeen met de index van de parameters in de \textit{ParamMap-array}.
+
+\begin{lstlisting}[language=Java]
+System.out.printf("Ideale parameters:\nMax Iter: %s\nReg params: %s", 	
+	trainValidationSplitGLR.getEstimatorParamMaps()[0].get(glr.maxIter()).toString(),
+	trainValidationSplitGLR.getEstimatorParamMaps()[1].get(glr.regParam()).toString()
+);
+\end{lstlisting}
+
+Hieronder een voorbeeld van hoe we de optimale hyperparameters ophalen bij een crossvalidatiemodel.
+
+\begin{lstlisting}[language=Java]
+System.out.printf("Ideale parameters:\nMax depth: %s\nNumber of trees: %s", 	
+	cvRFR.getEstimatorParamMaps()[0].get(rfr.maxDepth()).toString(),
+	cvRFR.getEstimatorParamMaps()[1].get(rfr.numTrees()).toString()
+);
+\end{lstlisting}
+
 \newpage
 
 Als laatste evaluatie willen we kijken naar de marge tussen de verschillende voorspelde waarden en de effectieve waarden. Zo weten we hoe sterk het model afwijkt en ook in hoeveel gevallen het in die mate afwijkt van de echte waarden. We werken met de volgende bereiken:
@@ -493,14 +508,29 @@ private static Dataset<Row> getRangeDataFrame(Dataset<Row> dataframe) {
 		abs(col("prediction").minus(col("trip_duration"))));
 	
 	Dataset<Row> range = dataframe
-	.withColumn("range",
-		 when(col("margin").leq(50), "0-50")
-		.when(col("margin").leq(200), "50-200")
-		.when(col("margin").leq(500), "200-500")
-		.when(col("margin").leq(5000), "500-5000")
-		.otherwise("5000+"));	
+		.withColumn("range",
+			 when(col("margin").leq(50), "0-50")
+			.when(col("margin").leq(200), "50-200")
+			.when(col("margin").leq(500), "200-500")
+			.when(col("margin").leq(5000), "500-5000")
+			.otherwise("5000+"));	
 	return range.groupBy("range").count();
 }
+\end{lstlisting}
+
+\subsection*{Inzending}
+
+Voor de opdracht gaan we alle voorspellingen opslaan en koppelen aan het ID. We hergebruiken deze code, dus we plaatsen dit in een functie. Bij het opslaan geven we een savemode mee. De \textit{Overwrite} zorgt ervoor dat we geen foutmelding krijgen als de map al bestaat. Het resultaat wordt telkens overgeschreven. We geven u mee dat deze code herhaalt wordt voor alle oefeningen. In het verslag vermelden we enkel hier deze functie.
+
+\begin{lstlisting}[language=Java]
+private static void createSubmission(Dataset<Row> dataframe, String fnaam) {
+	String output = "src/main/resources/" + fnaam + ".csv";
+	dataframe = dataframe.select("id","prediction");
+	dataframe.write().mode(SaveMode.Overwrite).csv(output);
+}
+
+// In de main-methode
+createSubmission(predictedLogReg, "submissionLogReg");
 \end{lstlisting}
 
 \subsection*{Conclusie}
@@ -513,7 +543,7 @@ De resultaten van ons model vielen in lijn met andere \textit{notebooks} die dez
 
 \subsection*{Probleemstelling}
 
-Tijdens het zoeken van een classificatieprobleem stuiten wij ons op deze dataset. De dataset werd voor een competitie gebruikt, maar wij hadden geen toegang hiertoe. Deze dataset bestaat uit ongeveer 25.000 rijen. We hebben hier twee klassen: echte en fraudulente kredietkaarttransacties. We pakken dit probleem aan met een binair classificatiemodel. De dataset kan u \href{http://bit.ly/3iM6zIB}{hier} terugvinden. Voor deze oefening baseerden wij ons vooral op de nodige officiële documentatie om een classificatieprobleem in Spark aan te pakken. Wij namen inspiratie uit één notebook, dat u op deze \href{https://bit.ly/3Y9Kmo6}{link} kan terugvinden.
+Tijdens het zoeken van een classificatieprobleem stuiten wij ons op deze dataset. Deze dataset bestaat uit circa 25.000 rijen. We hebben hier twee klassen: echte en fraudulente kredietkaarttransacties. We pakken dit probleem aan met een binair classificatiemodel. De dataset kan u hier \footnote{Link naar competitie: http://bit.ly/3iM6zIB} terugvinden. Voor deze oefening baseerden wij ons vooral op de nodige officiële documentatie om een classificatieprobleem in Spark aan te pakken. Wij namen inspiratie uit het notebook dat u hier \footnote{Link naar gevolgde notebook: https://bit.ly/3Y9Kmo6} kan terugvinden.
 
 \subsection*{Data ophalen}
 
@@ -522,14 +552,14 @@ Voor deze opdracht krijgen we één dataset, namelijk \textit{creditcard.csv}. W
 \begin{lstlisting}[language=Java]
 private static Dataset<Row> getData() {
 	return spark.read()
-		.option("header", true).option("inferSchema", true)
-		.csv("src/main/resources/creditcard.csv");
-}
+		.option("header", true)
+		.option("inferSchema", true)
+		.csv("src/main/resources/creditcard.csv");}
 \end{lstlisting}
 
 \subsection*{Data Cleanen}
 
-De oorspronkelijke dataset is \textit{skewed}. Bij het bestuderen van de dataset merken we op dat 99.83\% van alle transacties echt zijn, terwijl enkel 0.71\% wél fraudulent is. Dit pakken we aan met een \textit{clean}-methode. Zonder deze methode hebben we een grotere kans op \textit{overfitting}, want het model neemt aan dat de meeste transacties echt zullen zijn. Als remedie maken we een \textit{sub-sample} van de volledige dataframe. We voorzien een 50:50 ratio tussen echte en fraudulente transacties.
+De oorspronkelijke dataset is \textit{skewed}. Bij het bestuderen van de dataset merken we op dat 99.83\% van alle transacties echt zijn, terwijl enkel 0.71\% wél fraudulent is. Dit pakken we aan met een \textit{clean}-methode. Zonder deze methode hebben we een grotere kans op \textit{overfitting}, want het model neemt aan dat de meeste transacties echt zullen zijn. We lossen dit op door een \textit{sub-sample} te maken van de volledige dataframe. We voorzien een 50:50 ratio tussen echte en fraudulente transacties.
 
 \begin{lstlisting}[language=Java]
 private static Dataset<Row> createSubSample(Dataset<Row> dataframe) {
@@ -539,8 +569,7 @@ private static Dataset<Row> createSubSample(Dataset<Row> dataframe) {
 	long lengte = nietFraudulent.count();
 	Dataset<Row> fraudulent = dataframe.where(col(label).equalTo(0)).limit((int) lengte);
 	dataframe = nietFraudulent.union(fraudulent);
-	return dataframe.sample(1.0);
-}
+	return dataframe.sample(1.0);}
 \end{lstlisting}
 
 \subsection*{Pipeline}
@@ -558,42 +587,48 @@ for (String kolom : creditCardSubSample.columns()) {
 }
 \end{lstlisting}
 
-Het model bevat 28 features. Zelf kunnen we niet achterhalen welke er noodzakelijk zijn. Als uitprobeersel, en toepassing van een techniek uit de lessen \textit{Business Intelligence}, passen wij PCA toe aan de pipeline. Zo voorzien we \textit{dimensionality reduction} op op onze features. Zo behouden we enkel de features nodig voor het model. Voor de binaire classificatie keken wij naar drie verschillende classificatiemodellen: \textit{Random Forest, Lineaire SVM en logistische regressie}. Het tunen van de parameters doen we met een \textit{ParamGridBuilder}. 
+Het model bevat 28 features. Zelf weten we niet welke er noodzakelijk zijn. Als experiment, en toepassing van een techniek uit de lessen \textit{Business Intelligence}, passen wij PCA toe aan de pipeline. Zo voorzien we \textit{dimensionality reduction} op op onze features. Zo behouden we enkel de features nodig voor het model. Voor de binaire classificatie keken wij naar drie verschillende classificatiemodellen: \textit{Random Forest, Lineaire SVM en logistische regressie}. Hyperparameters tunen doen we met een \textit{ParamGridBuilder}. 
 
 \begin{lstlisting}[language=Java]
 VectorAssembler assembler = new VectorAssembler()
-	.setInputCols(arrFeatures).setOutputCol("features");
-	
+	.setInputCols(arrFeatures)
+	.setOutputCol("features");
+
 MinMaxScaler minmax = new MinMaxScaler()
 	.setMax(1.0).setMin(0.0)
-	.setInputCol("features")
+	.setInputCol(assembler.getOutputCol())
 	.setOutputCol("scaledFeatures");
 	
-PCA pca = new PCA()
-	.setInputCol("scaledFeatures")
-	.setOutputCol("pcaFeatures")
-	.setK(3);
+PCA pca = new PCA().setInputCol(minmax.getOutputCol()).setOutputCol("pcaFeatures").setK(3);
 
-LinearSVC svc = new LinearSVC();
+RandomForestClassifier rfc = new RandomForestClassifier()
+	.setLabelCol(label)
+	.setFeaturesCol(pca.getOutputCol());
 
-Pipeline pipelineSVM = new Pipeline()
-	.setStages(new PipelineStage[] { assembler, minmax, pca, rfc });
-
-ParamMap[] paramGridSVM = new ParamGridBuilder()
-	.addGrid(svc.maxIter(), new int[] { 5, 10, 15 })
-	.addGrid(svc.regParam(), new double[] { 0.1, 0.2, 0.3 })
-	.addGrid(pca.k(), new int[] { 3, 6, 9 })
+ParamMap[] paramGridRFC = new ParamGridBuilder()
+	.addGrid(rfc.maxDepth(), new int[] { 3, 7, 9 })
+	.addGrid(rfc.numTrees(), new int[] { 40, 60, 80 }).addGrid(pca.k(), new int[] { 3, 6, 9 })
 	.build();
 
-CrossValidator cvSVM = new CrossValidator()
-	.setEstimator(pipelineSVM)
-	.setEvaluator(new BinaryClassificationEvaluator()
-	.setLabelCol(label))
-	.setEstimatorParamMaps(paramGridSVM);
+CrossValidator cvRFC = new CrossValidator().setEstimator(rfc)
+	.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
+	.setEstimatorParamMaps(paramGridRFC)
+	.setNumFolds(3);
 
-CrossValidatorModel cvmSVM = cvSVM.fit(trainingSet);
+Pipeline pipelineRFC = new Pipeline().setStages(new PipelineStage[] 
+	{ assembler, minmax, pca, cvRFC }
+);
 
-Dataset<Row> predictionsSVM = cvmSVM.transform(testSet);
+PipelineModel pipelineModelRFC = pipelineRFC.fit(trainSetSplit);
+
+System.out.printf("Ideale parameters:\nMax depth: %s\nNum trees: %s\nk: %s", 	
+	cvRFC.getEstimatorParamMaps()[0].get(rfc.maxDepth()).toString(),
+	cvRFC.getEstimatorParamMaps()[1].get(rfc.numTrees()).toString(),
+	cvRFC.getEstimatorParamMaps()[2].get(pca.k()).toString()
+);
+
+Dataset<Row> predictionsRFC = pipelineModelRFC.transform(trainTestSplit);
+createSubmission(predictionsRFC, "submissionRFC");
 \end{lstlisting}
 
 \newpage
@@ -634,24 +669,32 @@ private static void printConfusionMatrixMetrics(Dataset<Row> dataframe) {
 }
 \end{lstlisting}
 
-Met een \textit{group-by} kunnen we een \textit{confusion matrix} opstellen. In de \textit{main}-methode spreken we de functies als volgt aan.
+Met een \textit{group-by} kunnen we een \textit{confusion matrix} opstellen. In de \textit{main}-methode spreken we de functies als volgt aan. Hieronder tonen we de evaluatie bij het logistische regressiemodel. De code is gelijkaardig aan de andere modellen.
 
 \begin{lstlisting}[language=Java]
+System.out.printf("Ideale parameters:\nThreshold: %s\nMax Iterations: %s\nk: %s", 	
+	cvLogReg.getEstimatorParamMaps()[0].get(lr.threshold()).toString(),
+	cvLogReg.getEstimatorParamMaps()[1].get(lr.maxIter()).toString(),
+	cvLogReg.getEstimatorParamMaps()[2].get(pca.k()).toString()
+); // beste hyperparameters opvragen
+
 System.out.printf("\n\nLogistische Regressie\n");
 printConfusionMatrixMetrics(predictionsLogReg);
 System.out.printf("Area ROC curve: %.4f\n", getAreaROCCurve(predictionsLogReg));
-predictionsRFC.groupBy(col(label), col(prediction)).count().show(); 
+predictionsRFC.groupBy(col(label), col(prediction)).count().show(); // confusion matrix
 \end{lstlisting}
 
 \subsection*{Bevindingen}
 
-Wij merken op dat zowel de Random Forest als de Lineaire SVM even sterk scoort. Het logistische regressiemodel daarentegen komt net iets te kort. Zo zijn er véél meer \textit{False Positives} vergeleken met de {False Negatives}. Dit wilt zeggen dat het model veel sneller een transactie goed zal keuren, terwijl het eigenlijk een fraudulente transactie is. Na hyperparameter tuning vonden wij geen oplossing. Onze eigen inbreng, PCA, heeft een kleine invloed gelaten op het model. Zo is de \textit{precision} met een kleine fractie verhoogd. 
+Wij merken op dat zowel de Random Forest als de Lineaire SVM even sterk scoort. Het logistische regressiemodel daarentegen komt net iets te kort. Zo zijn er véél meer \textit{False Positives} vergeleken met de {False Negatives}. Dit wilt zeggen dat het model veel sneller een transactie goed zal keuren, terwijl het eigenlijk een fraudulente transactie is.
+
+Het logistische regressiemodel is optimaal op een threshold van 75\%, hoogstens vijf iteraties en een k van 3. Het lineaire SVM-model is optimaal op hoogstens vijf iteraties met een \textit{reg params} van 0.2 en een k van 3. Het RFC-model is optimaal op een maximale diepte van 3, 60 bomen en een k van 3. Onze eigen inbreng, PCA, heeft een kleine invloed gelaten op het model. Zo is de \textit{precision} met een kleine fractie verhoogd. 
 
 \chapter{De inhoud van tweets detecteren met binaire NLP-classificatie.}
 
 \subsection*{Probleemstelling}
 
-Sociale media is een actueel onderwerp. Dubbelzinnige teksten spelen een grote rol. Voor deze opdracht moeten we, op basis van gegeven Engelstalige Tweets, achterhalen of een Tweet gerelateerd is aan een ramp of niet. De dubbelzinnigheid van een zin is een obstakel voor ons model. Zo kan een \textit{tweet} zeggen \textit{'look at the sky it was ablaze'} terwijl het woord \textit{ablaze} een andere context heeft. In deze zin is er een spreekwoordelijke betekenis. De tekst is ruw. Zo zijn er woorden en symbolen dat ons model kan hinderen. De link naar de competitie kan u \href{https://www.kaggle.com/c/nlp-getting-started}{hier} terugvinden. Wij baseerden ons vooral op de documentatie.
+Sociale media is een actueel onderwerp. Dubbelzinnige teksten spelen een grote rol. Voor deze opdracht moeten we, op basis van gegeven Engelstalige Tweets, achterhalen of een Tweet gerelateerd is aan een ramp of niet. De dubbelzinnigheid van een zin is een obstakel voor ons model. Zo kan een \textit{tweet} zeggen \textit{'look at the sky it was ablaze'} terwijl het woord \textit{ablaze} een andere context heeft. In deze zin is er een spreekwoordelijke betekenis. De tekst is ruw. Zo zijn er woorden en symbolen dat ons model kan hinderen. De link naar de competitie kan u hier \footnote{Link naar competitie: https://www.kaggle.com/c/nlp-getting-started} terugvinden. Wij baseerden ons vooral op de documentatie.
 
 \subsection*{Data ophalen}
 
@@ -744,25 +787,18 @@ StopWordsRemover remover = new StopWordsRemover()
 	.setInputCol(tokenizer.getOutputCol())
 	.setOutputCol("filtered");
 
-CountVectorizer vectorizer = new CountVectorizer()
-	.setInputCol(remover.getOutputCol())
-	.setOutputCol("features")
-	.setVocabSize(10000)
-	.setMinDF(5);
-
 HashingTF htf = new HashingTF()
 	.setInputCol(remover.getOutputCol())
 	.setOutputCol("hashedFeatures");
 
 LogisticRegression lr = new LogisticRegression()
-	.setFeaturesCol(htf.getOutputCol())
+	.setFeaturesCol(hashingTF.getOutputCol())
 	.setLabelCol(label)
-	.setMaxIter(10)
-	.setRegParam(0.001);
+	.setMaxIter(10).setRegParam(0.001);
 
 ParamMap[] paramGridLogReg = new ParamGridBuilder()
-	.addGrid(lr.maxIter(), new int[] { 400 })
-	.addGrid(lr.threshold(), new double[] { 0.7, 0.8, 0.9 })
+	.addGrid(lr.maxIter(), new int[] { 30, 40, 50})
+	.addGrid(lr.threshold(), new double[] { 0.8, 0.85 })
 	.build();
 
 CrossValidator cvLogReg = new CrossValidator()
@@ -770,10 +806,13 @@ CrossValidator cvLogReg = new CrossValidator()
 	.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
 	.setEstimatorParamMaps(paramGridLogReg);
 
-Pipeline pipelineLogReg = new Pipeline().setStages(new PipelineStage[] { tokenizer, remover, hashingTF, cvLogReg});
+Pipeline pipelineLogReg = new Pipeline()
+	.setStages(new PipelineStage[] 
+		{ tokenizer, remover, htf, cvLogReg }
+	);
 \end{lstlisting}
 
-Hieronder ziet u ons tweede model: een \textit{RandomForestClassifier} dat \textit{CountVectorizer} gebruikt om de features naar één vector om te zetten.
+Hieronder ziet u ons tweede model: een \textit{RFC}-model dat \textit{CountVectorizer} gebruikt om de features naar één vector om te zetten.
 
 \begin{lstlisting}[language=Java]
 RandomForestClassifier rfc = new RandomForestClassifier()
@@ -812,9 +851,9 @@ We evalueren het model op basis van de volgende metrieken:
 	\item De confusion matrix printen we uit met door een \textit{groupby} uit te voeren op het dataframe met de voorspelde waarden.
 \end{itemize}
 
-\begin{lstlisting}[language=Java]
+Net zoals bij de voorbije twee oefeningen printen we de ideale hyperparameters uit.
 
-// binnen klasse DisasterTweetClassification	
+\begin{lstlisting}[language=Java]
 private static double getAreaROCCurve(Dataset<Row> dataframe) {
 	return new BinaryClassificationEvaluator().setLabelCol(label).evaluate(dataframe);
 }
@@ -830,15 +869,26 @@ private static void printConfusionMatrixMetrics(Dataset<Row> dataframe) {
 	System.out.printf("Nauwkeurigheid: %.5f \n", metrics.accuracy());
 }
 
-// .. in Main-methode
+// in main-methode
 PipelineModel pipelineModelLogReg = pipelineLogReg.fit(trainSetSplit);
+
+System.out.printf("Ideale parameters:\nMax Iter: %s\nReg params: %s", 	
+	cvLogReg.getEstimatorParamMaps()[0].get(lr.maxIter()).toString(),
+	cvLogReg.getEstimatorParamMaps()[1].get(lr.threshold()).toString()
+);
+
 Dataset<Row> predictedLogReg = pipelineModelLogReg.transform(trainTestSplit);
-printConfusionMatrixMetrics(predictedLogReg);
+printConfusionMatrixEssence(predictedLogReg);
 System.out.printf("Area ROC Curve: %.4f\n", getAreaROCCurve(predictedLogReg));
+
 predictedLogReg.groupBy(col(label), col(prediction)).count().show();
 \end{lstlisting}
 
+
+
 \subsection*{Bevindingen}
+
+Het logistische regressiemodel is optimaal op 30 maximale iteraties en een \textit{reg params} van 0.85. De diepte van het RFC-model moet hoogstens 4 zijn met 30 bomen om een optimaal resultaat te bekomen. Het finetunen deden we door \textit{trial \& error}. We vergroten of verkleinen de parameters stelselmatig.
 
 Beide modellen scoren hier even sterk. Noch het verschil tussen de \textit{HashingTF} en \textit{CountVectorizer}, noch het verschil tussen logistische regressie en \textit{Random Forest Classification} valt hier op. Er is een aanvaardbaar evenwicht tussen de \textit{false negatives} en \textit{false positives}.
 

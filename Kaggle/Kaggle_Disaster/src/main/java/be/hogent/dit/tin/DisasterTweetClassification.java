@@ -22,6 +22,7 @@ import org.apache.spark.ml.tuning.ParamGridBuilder;
 import org.apache.spark.mllib.evaluation.MulticlassMetrics;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
@@ -33,7 +34,8 @@ public class DisasterTweetClassification {
 	private static final String label = "target";
 	private static final String prediction = "prediction";
 
-	private static SparkSession spark = SparkSession.builder().appName("DisasterTweet").master("local[1]").getOrCreate();
+	private static SparkSession spark = SparkSession.builder().appName("DisasterTweet").master("local[1]")
+			.getOrCreate();
 
 	/*
 	 * Een dataset opsplitsen naargelang een verhouding. De verhouding moeten twee
@@ -88,6 +90,12 @@ public class DisasterTweetClassification {
 		System.out.printf("Nauwkeurigheid: %.5f \n", metrics.accuracy());
 	}
 
+	private static void createSubmission(Dataset<Row> dataframe, String fnaam) {
+		String output = "src/main/resources/" + fnaam + ".csv";
+		dataframe = dataframe.select("id", "prediction");
+		dataframe.write().mode(SaveMode.Overwrite).csv(output);
+	}
+
 	public static void main(String[] args) {
 
 		spark.sparkContext().setLogLevel("ERROR");
@@ -135,8 +143,8 @@ public class DisasterTweetClassification {
 		LogisticRegression lr = new LogisticRegression().setFeaturesCol(hashingTF.getOutputCol()).setLabelCol(label)
 				.setMaxIter(10).setRegParam(0.001);
 
-		ParamMap[] paramGridLogReg = new ParamGridBuilder().addGrid(lr.maxIter(), new int[] { 400 })
-				.addGrid(lr.threshold(), new double[] { 0.7, 0.8, 0.9 }).build();
+		ParamMap[] paramGridLogReg = new ParamGridBuilder().addGrid(lr.maxIter(), new int[] { 30, 40, 50 })
+				.addGrid(lr.threshold(), new double[] { 0.8, 0.85 }).build();
 
 		CrossValidator cvLogReg = new CrossValidator().setEstimator(lr)
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
@@ -150,15 +158,22 @@ public class DisasterTweetClassification {
 		 */
 		System.out.printf("\n\nLog-Reg\n");
 		PipelineModel pipelineModelLogReg = pipelineLogReg.fit(trainSetSplit);
+
+		System.out.printf("Ideale parameters:\nMax Iter: %s\nReg params: %s",
+				cvLogReg.getEstimatorParamMaps()[0].get(lr.maxIter()).toString(),
+				cvLogReg.getEstimatorParamMaps()[1].get(lr.threshold()).toString());
+
 		Dataset<Row> predictedLogReg = pipelineModelLogReg.transform(trainTestSplit);
 		printConfusionMatrixEssence(predictedLogReg);
 		System.out.printf("Area ROC Curve: %.4f\n", getAreaROCCurve(predictedLogReg));
+
+		// voorspellingen
 		predictedLogReg.groupBy(col(label), col(prediction)).count().show();
+		createSubmission(predictedLogReg, "submissionLogReg");
 
 		/*
 		 * Random Forest Classifier
 		 */
-
 		System.out.printf("\n\nRandom Forest Classifier\n");
 
 		CountVectorizer vectorizer = new CountVectorizer().setInputCol(remover.getOutputCol()).setOutputCol("features")
@@ -167,8 +182,8 @@ public class DisasterTweetClassification {
 		RandomForestClassifier rfc = new RandomForestClassifier().setLabelCol(label)
 				.setFeaturesCol(vectorizer.getOutputCol()).setSeed(42);
 
-		ParamMap[] paramGridRFC = new ParamGridBuilder().addGrid(rfc.maxDepth(), new int[] { 5, 7, 10 })
-				.addGrid(rfc.numTrees(), new int[] { 40, 80 }).build();
+		ParamMap[] paramGridRFC = new ParamGridBuilder().addGrid(rfc.maxDepth(), new int[] { 2, 4, 5 })
+				.addGrid(rfc.numTrees(), new int[] { 20, 30, 40 }).build();
 
 		CrossValidator cvRFC = new CrossValidator().setEstimator(rfc)
 				.setEvaluator(new BinaryClassificationEvaluator().setLabelCol(label))
@@ -178,10 +193,16 @@ public class DisasterTweetClassification {
 
 		PipelineModel pipelineModelRFC = pipelineRFC.fit(trainSetSplit);
 
+		System.out.printf("Ideale parameters:\nMax depth: %s\nNumber of trees: %s",
+				cvRFC.getEstimatorParamMaps()[0].get(rfc.maxDepth()).toString(),
+				cvRFC.getEstimatorParamMaps()[1].get(rfc.numTrees()).toString());
+
 		Dataset<Row> predictedRFC = pipelineModelRFC.transform(trainTestSplit);
 		printConfusionMatrixEssence(predictedRFC);
 		System.out.printf("Area ROC Curve: %.4f\n", getAreaROCCurve(predictedRFC));
-		predictedLogReg.groupBy(col(label), col("prediction")).count().show();
+
+		predictedRFC.groupBy(col(label), col("prediction")).count().show();
+		createSubmission(predictedRFC, "submissionRFC");
 
 	}
 }
