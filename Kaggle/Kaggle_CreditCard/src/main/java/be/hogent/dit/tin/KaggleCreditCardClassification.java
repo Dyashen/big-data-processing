@@ -36,22 +36,22 @@ public class KaggleCreditCardClassification {
 		return spark.read().option("header", true).option("inferSchema", true).csv("src/main/resources/creditcard.csv");
 	}
 
-	private static Dataset<Row> createSubSample(Dataset<Row> dataset) {
-		dataset = dataset.sample(1.0);
-		dataset = dataset.orderBy(rand());
-		Dataset<Row> nietFraudulent = dataset.where(col(label).equalTo(1));
+	private static Dataset<Row> createSubSample(Dataset<Row> dataframe) {
+		dataframe = dataframe.sample(1.0);
+		dataframe = dataframe.orderBy(rand());
+		Dataset<Row> nietFraudulent = dataframe.where(col(label).equalTo(1));
 		long lengte = nietFraudulent.count();
-		Dataset<Row> fraudulent = dataset.where(col(label).equalTo(0)).limit((int) lengte);
-		dataset = nietFraudulent.union(fraudulent);
-		return dataset.sample(1.0);
+		Dataset<Row> fraudulent = dataframe.where(col(label).equalTo(0)).limit((int) lengte);
+		dataframe = nietFraudulent.union(fraudulent);
+		return dataframe.sample(1.0);
 	}
 
-	private static double getAreaROCCurve(Dataset<Row> predictions) {
-		return new BinaryClassificationEvaluator().setLabelCol(label).evaluate(predictions);
+	private static double getAreaROCCurve(Dataset<Row> dataframe) {
+		return new BinaryClassificationEvaluator().setLabelCol(label).evaluate(dataframe);
 	}
 
-	private static void printCorrelation(Dataset<Row> dataset) {
-		Row r1 = Correlation.corr(dataset, "pcaFeatures").head();
+	private static void printCorrelation(Dataset<Row> dataframe) {
+		Row r1 = Correlation.corr(dataframe, "pcaFeatures").head();
 		System.out.printf("\n\nCorrelation Matrix\n");
 		Matrix matrix = r1.getAs(0);
 		for (int i = 0; i < matrix.numRows(); i++) {
@@ -62,11 +62,11 @@ public class KaggleCreditCardClassification {
 		}
 	}
 
-	private static void printConfusionMatrixMetrics(Dataset<Row> predictions_and_labels) {
-		Dataset<Row> preds_and_labels = predictions_and_labels.select(prediction, label).orderBy(prediction)
+	private static void printConfusionMatrixMetrics(Dataset<Row> dataframe) {
+		dataframe = dataframe.select(prediction, label).orderBy(prediction)
 				.withColumn(label, col(label).cast("double"));
 
-		MulticlassMetrics metrics = new MulticlassMetrics(preds_and_labels);
+		MulticlassMetrics metrics = new MulticlassMetrics(dataframe);
 		System.out.printf("Precision: %.5f \n", metrics.weightedPrecision());
 		System.out.printf("Recall: %.5f \n", metrics.weightedRecall());
 		System.out.printf("Recall: %.5f \n", metrics.accuracy());
@@ -76,14 +76,14 @@ public class KaggleCreditCardClassification {
 
 		spark.sparkContext().setLogLevel("ERROR");
 
-		Dataset<Row> data = getData();
+		Dataset<Row> creditCardDataset = getData();
 
-		data.show();
-		data.groupBy(label).count().show();
+		creditCardDataset.show();
+		creditCardDataset.groupBy(label).count().show();
 
 		// Sub-sample maken
-		data = createSubSample(data);
-		data.groupBy(label).count().show();
+		Dataset<Row> creditCardSubSample = createSubSample(creditCardDataset);
+		creditCardSubSample.groupBy(label).count().show();
 
 		/*
 		 * Alle features opslaan in een String array. Alle nodige features beginnen met
@@ -92,7 +92,7 @@ public class KaggleCreditCardClassification {
 		 */
 		String[] arrFeatures = new String[28];
 		int teller = 0;
-		for (String kolom : data.columns()) {
+		for (String kolom : creditCardSubSample.columns()) {
 			if (kolom.startsWith("V")) {
 				arrFeatures[teller] = kolom;
 				teller++;
@@ -111,8 +111,7 @@ public class KaggleCreditCardClassification {
 				.setOutputCol("scaledFeatures");
 		PCA pca = new PCA().setInputCol(minmax.getOutputCol()).setOutputCol("pcaFeatures").setK(3);
 
-		Dataset<Row>[] datasets = data.randomSplit(verhouding);
-
+		Dataset<Row>[] datasets = creditCardSubSample.randomSplit(verhouding);
 		Dataset<Row> trainSetSplit = datasets[0];
 		Dataset<Row> trainTestSplit = datasets[1];
 

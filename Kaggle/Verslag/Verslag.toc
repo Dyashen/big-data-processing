@@ -1,7 +1,6 @@
 \babel@toc {dutch}{}\relax 
 \contentsline {chapter}{\numberline {1}Inleiding}{3}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Tijd van een taxi-verplaatsing voorspellen met regressie.}{4}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Credit Card fraude achterhalen met binaire classificatie. }{12}{chapter.3}%
+\contentsline {chapter}{\numberline {3}Kredietkaartfraude bestrijden met binaire classificatie. }{12}{chapter.3}%
 \contentsline {chapter}{\numberline {4}De inhoud van tweets detecteren met binaire NLP-classificatie.}{15}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Bevindingen ML met Spark.}{18}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusie}{19}{chapter.6}%
+\contentsline {chapter}{\numberline {5}Conclusie}{19}{chapter.5}%
