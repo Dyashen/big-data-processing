@@ -1,0 +1,61 @@
+\babel@toc {dutch}{}\relax 
+\contentsline {chapter}{\numberline {1}Gedistribueerde databanksystemen}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Inleiding}{4}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Breed beeld}{4}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}De nood aan schaalbaarheid}{4}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Kenmerken}{5}{subsection.1.1.3}%
+\contentsline {section}{\numberline {1.2}Soorten systemen}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}CAP-theorem}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Struikelblokken}{5}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Fabels over gedistribueerde systemen}{6}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}Problemen met gedistribueerde netwerken}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Partial Failure}{6}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Niet-betrouwbare netwerken}{6}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Niet-betrouwbare tijdsindicaties}{7}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Onderlinge onzekerheid}{7}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}Replication en partitioning}{7}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Partitionering}{7}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Replication}{7}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Replication-lag}{8}{subsection.1.4.3}%
+\contentsline {subsection}{\numberline {1.4.4}Replicatiefouten}{8}{subsection.1.4.4}%
+\contentsline {subsection}{\numberline {1.4.5}Replicatie en partitionering combineren}{9}{subsection.1.4.5}%
+\contentsline {section}{\numberline {1.5}Request routing}{11}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Hadoop Filesystem}{12}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Inleiding}{12}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Hadoop stack}{12}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Hadoop filesystem}{12}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Designprincipes}{12}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Anti-patterns}{13}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Hadoop-onderdelen}{13}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}NameNode}{13}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}DataNode}{14}{subsection.2.2.5}%
+\contentsline {section}{\numberline {2.3}Single-point-of-failure}{14}{section.2.3}%
+\contentsline {section}{\numberline {2.4}MapReduce}{14}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Mapping}{14}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Shuffling}{14}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Reduce}{15}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}Spark}{16}{chapter.3}%
+\contentsline {subsection}{\numberline {3.0.1}Spark Structured Streaming}{16}{subsection.3.0.1}%
+\contentsline {section}{\numberline {3.1}Code}{16}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Input source}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Transform data}{17}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Output}{17}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Processing Details}{17}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Query starten}{17}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Sources \& Sinks}{17}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Map to overlapping windows}{18}{subsection.3.2.6}%
+\contentsline {subsection}{\numberline {3.2.7}Join streams}{18}{subsection.3.2.7}%
+\contentsline {subsection}{\numberline {3.2.8}Stream-Stream joins}{18}{subsection.3.2.8}%
+\contentsline {chapter}{\numberline {4}Kafka}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Transporting data}{19}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Topics}{19}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Partitions}{19}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Kenmerken}{19}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Rollen}{19}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Broker}{19}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Leader}{20}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Follower}{20}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Data Replication}{20}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Producer}{20}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Consumer}{20}{subsection.4.6.2}%
+\contentsline {section}{\numberline {4.7}Labo}{20}{section.4.7}%

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  11 DEC 2022 14:33
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  21 DEC 2022 10:59
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -6770,10 +6770,10 @@ Package rerunfilecheck Info: File `Verslag.out' has not changed.
 (rerunfilecheck)             Checksum: 01FE1A0711B1BFFE05113A68AD35FB66;1239.
  ) 
 Here is how much of TeX's memory you used:
- 14612 strings out of 410532
- 278226 string characters out of 2813299
+ 14605 strings out of 410532
+ 278139 string characters out of 2813299
  1184062 words of memory out of 3000000
- 35598 multiletter control sequences out of 15000+600000
+ 35591 multiletter control sequences out of 15000+600000
  473795 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  72i,8n,85p,964b,1363s stack positions out of 10000i,1000n,20000p,200000b,80000s

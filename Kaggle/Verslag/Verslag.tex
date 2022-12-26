@@ -97,7 +97,7 @@ Allereerst willen wij de tijdsduratie van een taxi-rit in downtown New York bere
 
 \subsection*{Probleemstelling}
 
-Als eerste opdracht maakten wij de "New York City Taxi Trip Duration" wedstrijd. De competitie voorziet twee datasets: een training- en een testset. Het doel is om de totale tijdsduur van een taxirit in seconden te berekenen. Deze competitie kiest de inzending met de kleinste \textit{Root Mean Square Log Error} (RMSLE). Volgende kolommen werden gegeven: 
+Als eerste opdracht maakten wij de \textit{New York City Taxi Trip Duration}  wedstrijd. De competitie voorziet twee datasets: een training- en een testset. Het doel is om de totale tijdsduur van een taxirit in seconden te berekenen. Deze competitie kiest de inzending met de kleinste \textit{Root Mean Square Log Error} (RMSLE). Volgende kolommen werden gegeven: 
 \begin{itemize}
 	\item Het ID en het verkopersnummer.
 	\item Het aantal passagiers in een taxi.
@@ -108,7 +108,7 @@ Als eerste opdracht maakten wij de "New York City Taxi Trip Duration" wedstrijd.
 De competitie kan u terugvinden op deze link. \footnote{Link naar competitie: http://bit.ly/3umBKN5}. Wij namen inspiratie uit vooral de officiële documentatie en uit één notebook. De code, in \textit{Python}, kan u hier \footnote{Link naar gevolgde notebook: http://bit.ly/3F2Aofj} terugvinden.
 
 \subsection*{Algemeen}
-Wij declareren \textit{final} variabelen. Deze worden meermaals gebruikt en worden niet aangepast doorheen de applicatie. Deze variabelen hebben een andere waarde bij de volgende twee oefeningen, maar ze komen in ieder model aan bod. De verhouding is de ratio waarop we de trainingset splitsen. De label is de kolom waarop ons model zal voorspellen. De prediction houdt de naam van de prediction-kolom bij. We houden de metriek bij dat we nodig hebben. Als laatste geven wij de metriek mee. Voorlopig kijken we naar het model met de beste RMSE waarde, daarop berekenen we de RMSLE.
+Wij declareren \textit{final} variabelen. Deze worden meermaals gebruikt en worden niet aangepast doorheen de applicatie. Deze variabelen hebben een andere waarde bij de volgende twee oefeningen, maar ze komen in ieder model aan bod. De verhouding is de ratio waarop we de trainingset splitsen. Het label is de kolom waarop ons model zal voorspellen. De prediction houdt de naam van de prediction-kolom bij. We houden de metriek bij die we nodig hebben. Als laatste geven wij de metriek mee. Voorlopig kijken we naar het model met de beste RMSE waarde, daarop berekenen we de RMSLE.
 
 \begin{lstlisting}[language=Java]
 private static final double[] verhouding = { 0.8, 0.2 };
