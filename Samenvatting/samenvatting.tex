@@ -939,7 +939,15 @@ public	static void main(String[] args){
 
 \subsection{Een bestaande dataframe lezen}
 
-Een datafraem wordt vaak gelezen uit een externe bron, zoals JSON, CSV, Parquet of Kafka output. Het Spark-object bezit een methode \textit{read()}. Deze methode geeft een DataFrameReader-object terug, wat nodig is om een bron in te lezen. Veronderstel dat we hier met dezelfde dataset te maken hebben, maar enkel al vooraf opgeslaan in een csv-bestand.
+Een dataframe wordt vaak gelezen uit een externe bron, zoals JSON, CSV, Parquet of Kafka output. Het Spark-object bezit een methode \textit{read()}. Deze methode geeft een DataFrameReader-object terug, wat nodig is om een bron in te lezen. Veronderstel dat we hier met dezelfde dataset te maken hebben, maar enkel al vooraf opgeslaan in een csv-bestand.
+
+\begin{enumerate}
+	\item Spark-object aanmaken.
+	\item Schema maken door een lijst van StructFields te maken én die dan te gieten in een StructType-object.
+	\item Het CSV-bestand wordt ingelezen. Net zoals het aanmaken, gebeurt het inlezen ook met het Spark-object. In het CSV-bestand is er een header, vandaar dat er eerst de optie 'header:true' wordt meegeven. Vervolgens wordt het schema meegegeven én uiteindelijk het pad waar de CSV kan worden teruggevonden.
+	\item Net zoals daarnet wordt er gegroepeerd op naam. Per naam wordt de gemiddelde leeftijd teruggegeven.
+	\item Het dataframe wordt in de terminal getoond.
+\end{enumerate}
 
 \begin{lstlisting}[language=Java]
 public static void main(String[] args){
@@ -954,10 +962,203 @@ public static void main(String[] args){
 			DataTypes.createStructField("age",DataTypes.IntegerType, true);
 	)
 	
+	StructType schema = DataTypes.createStructType(fields);
 	
-
-
+	Dataset<Row> df = spark.read()
+						.option("header", true)
+						.schema(schema)
+						.csv("src/main/resources/PersonenMetLeeftijd.csv");
+	
+	Dataset<Row> result = df.groupby("name").avg("age");
+	
+	result.show();
+	
+	spark.close();
 }
+\end{lstlisting}
+
+\subsubsection{Schema overerven}
+
+In de vorige twee berekeningen werd er een schema zelf, door de ontwikkelaar, aangemaakt. Dit is vrijblijvend, want Spark kan ook een schema overerven. Hieronder is er een alternatieve methode op stap twee van het vorige voorbeeld. Deze methode is minder efficiënt, want Spark moet zelf achterhalen wat de meest geschikte datatypes zijn. Daarnaast gaat Spark lijn per lijn door de volledige dataset heen. Wel kan je de workload minimaliseren door het schema op te bouwen o.b.v. een deel van de volledige dataset. Dit is een deelse oplossing, want er kunnen nog steeds problemen voorkomen bij de gekozen datatypes. Daarom is het aangeraden om zelf een schema op te bouwen.
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> df  = spark.read()
+						.option("header", true)
+						.option("inferSchema", true)
+						.option("samplingRation", 0.0001)
+						.csv("src/main/resources/PersonenMetLeeftijd.csv)
+\end{lstlisting}
+
+\subsection{Een dataframe uitschrijven naar een nieuw bestand.}
+
+In de volgende code wordt er verondersteld dat er een Spark-object is aangemaakt, een schema is opgesteld én een dataset al is ingelezen. De dataset werd opgeslaan als DataFrame onder de naam 'result'.
+
+\begin{enumerate}
+	\item Het pad wordt tweemaal gebruikt, dus dat wordt opgeslaan onder een variabele. Het pad kan zowel relatief als absoluut zijn. In dit voorbeeld is het pad absoluut.
+	\item Er zijn drie opties:
+	\begin{enumerate}
+		\item De inhoud van de dataframe wordt uitgeschreven naar een parquet-bestand. Dit bestand is een must bij een column-oriented databankstructuur.
+		\item Vervolgens wordt de mode meegegeven. Bij het uitschrijven wordt er een map gegenereerd. In die map kan het parquet-bestand worden teruggevonden.
+		\item Als laatste moet er een outputpad worden meegegeven. 
+	\end{enumerate}
+	\item Puur uit controle wordt het net aangemaakte bestand ingelezen door Spark. De outputpad, waar het parquet-bestand werd opgeslaan, dient nu als inputpad.
+	\item Het Spark-object wordt gesloten.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+String path = "file:///C:/tmp/personen";
+
+df.write()
+	.format("parquet")
+	.mode("overwrite")
+	.save(path);
+	
+Dataset<Row> dfParquet = spark.read().parquet(path);
+
+spark.close();
+\end{lstlisting}
+
+\section{Dataframe-kolommen inlezen, toevoegen en verwijderen.}
+
+\subsubsection{Kolommen toevoegen}
+Een dataframe bestaat uit kolommen. Sommige functies vragen de naam van een kolom op als String, maar andere functies vereisen dat je een object van de klasse 'Column' meegeeft. In het volgende voorbeeld wordt er een extra kolom aangemaakt. De kolom is een berekening op de leeftijdskolom. 
+
+\begin{enumerate}
+	\item Bovenaan komen de imports. De klasse 'functions' is met een kleine letter geschreven, daarmee een uitzondering op de regel om alle klassen met een hoofdletter te laten starten.
+	\item Er worden twee kolommen aan de dataset toegevoegd. Een expressie of where-clausule wordt meegegeven met de \textit{expr(...)}-functie.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+import org.apache.spark.sql.Column;
+import static org.apache.spark.sql.functions.col;
+
+df = df.withColumn("ageNextYear2", expr("age + 1"))
+			.withColumn("over30", expr("age > 30"));
+\end{lstlisting}
+
+\subsubsection{Kolommen selecteren}
+Tot nu toe werden alle kolommen van de dataframes bij de keuze betrokken. Spark laat de ontwikkelaar toe om kolommen, net zoals bij SQL, te kiezen. Hieronder wordt er een voorbeeld gegeven van de verschillende kolommen. Er wordt verondersteld dat er al een spark-object is aangemaakt én dat het pad in een String 'inputpath' wordt bijgehouden.
+
+\begin{enumerate}
+	\item Er wordt een nieuwe dataset opgehaald. De dataset is opgeslaan in een CSV-bestand. Het bevat vijf kolommen: id, score, naam, jaartal en kwartaal. Enkel bij dit voorbeeld wordt het schema overgeërfd. 
+	\item De dataset wordt in de terminal getoond. Alle vijf kolommen worden weergegeven.
+	\item Met de \textit{select}-functie worden enkel de score, jaartal en kwartaalkolommen opgehaald. Een dataframe is \textit{immutable}, dus het object moet worden overschreven.
+	\item De dataset bestaat nu uit drie kolommen. 'Id' en 'naam' zijn niet meer terug te vinden in de dataset.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> df = spark.read()
+						.option("header",true)
+						.option("inferSchema",true)
+						.option("sampleRation", 0.001)
+						.csv(inputpath);
+
+df.show();
+
+df = df.select("score","jaartal","kwartaal");
+
+df.show();
+\end{lstlisting}
+
+\subsubsection{Kolommen verwijderen}
+
+Een kolom kan op een passieve wijze worden weggelaten door de kolom niet in een \textit{select} te betrekken. In sommige gevallen, bijvoorbeeld bij een groot aantal kolommen, is het handiger om één specifieke kolom te verwijderen, in plaats van een select uit te voeren. De gouden regel is dat dataframes immutable zijn, dus hier moet de nieuwe versie van de dataframe opnieuw wordt toegekend.
+
+\begin{lstlisting}
+df = df.drop("id","naam");
+\end{lstlisting}
+
+\subsubsection{Kolommen hernoemen}
+
+Kolomnamen kunnen worden aangepast. Bij het toevoegen wordt er vaak een standaardnaam toegekend aan een kolom, bijvoorbeeld \textit{count} of \textit{sum}. Hieronder wordt de kolom met de naam \textit{count} aangepast naar \textit{aantalRijen}. Na een berekening kan je ook de \textit{alias}-functie gebruiken. 
+
+\begin{lstlisting}[language=Java]
+df = df.withColumnRenamed("count","aantalRijen");
+df = df.count().alias("aantalRijen");
+\end{lstlisting}
+
+\subsection{Dataframes filteren}
+
+\subsubsection{Voorbeelden van de studentendataset}
+
+\begin{enumerate}
+	\item Hou een dataset bij met alle rijen die een score hebben van 'A+'.
+	\item Hou een dataset bij met alle rijen waarvan de score 'B' is én de score werd behaald in het jaar 2010 of 2011.
+	\item Neem de dataset van nummer 3 en behoud enkel de unieke rijen.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> dfAplus = df.select()
+						.where(col("grade")
+						.equalTo("A+");
+						
+Dataset<Row> dfB1011 = df.select()
+						.where(col("grade").equalTo("B")
+										.and(col("year").isin(2010,2011)));
+						
+Dataset<Row> dfUniekB1011 = dfB1011.distinct();
+\end{lstlisting}
+
+\subsection{Aggregaties uitvoeren op dataframes}
+
+\subsubsection{Voorbeelden van de studenten-dataset}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> dfCountPerJaar = df.select("year")
+			.groupby("year")
+			.count()
+			.orderBy(desc("count"));
+			
+Dataset<Row> dfStatisticsPerJaarEnOnderwerp = df.select("year","subject","score")
+			.groupby("year","subject")
+			.agg(max("score"), min("score"), avg("score"))
+			
+\end{lstlisting}
+
+\subsubsection{Voorbeelden van de ViewingFigures-oefening}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> chaptersPerCourse = chaptersDF
+									.drop("chapterId")
+									.groupBy("courseId").count()
+									.withColumnRenamed("count", "chapters");
+\end{lstlisting}
+
+
+\subsection{User Defined Functions}
+
+User Defined Functions of UDF's worden ingezet wanneer een berekening de ingebouwde functies van Spark overstijgt. De berekening maken is mogelijk, maar de logica is te complex en vereist daarmee een aparte aanpak. Bij een UDF zijn er drie stappen:
+
+\begin{enumerate}
+	\item UDF schrijven.
+	\item UDF registreren.
+	\item UDF oproepen.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+UDF1<Double, Integer> score = new UDF1<Double, Integer>() {
+	public Integer call(Double percent) throws Exception {
+		if (percent > 0.9) {
+			return 10;
+		} else if (percent > 0.5) {
+			return 6;
+		} else if (percent > 0.25) {
+			return 2;
+		} else {
+			return 0;
+		}
+	}
+};
+
+spark.udf().register("berekenScore", score, DataTypes.IntegerType);
+
+
+Dataset<Row> result = percentageDF
+	.withColumn("score",  call_udf("berekenScore",col("percentage")))
+	.drop("percentage")
+	.groupBy("courseId").agg(sum("score").as("total"))
+	.join(titleDF, "courseId")
+	.orderBy(desc("total"));
 \end{lstlisting}
 
 \chapter{Spark Streaming}

@@ -92,28 +92,41 @@
 \contentsline {section}{\numberline {3.4}Spark-applicaties schrijven}{30}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Een dataframe met nieuwe waarden aanmaken.}{30}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Een bestaande dataframe lezen}{31}{subsection.3.4.2}%
-\contentsline {chapter}{\numberline {4}Spark Streaming}{32}{chapter.4}%
-\contentsline {subsection}{\numberline {4.0.1}Spark Structured Streaming}{32}{subsection.4.0.1}%
-\contentsline {section}{\numberline {4.1}Code}{32}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Input source}{32}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Transform data}{33}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Output}{33}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Processing Details}{33}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Query starten}{33}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Sources \& Sinks}{33}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Map to overlapping windows}{34}{subsection.4.2.6}%
-\contentsline {subsection}{\numberline {4.2.7}Join streams}{34}{subsection.4.2.7}%
-\contentsline {subsection}{\numberline {4.2.8}Stream-Stream joins}{34}{subsection.4.2.8}%
-\contentsline {chapter}{\numberline {5}Kafka}{35}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Transporting data}{35}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Topics}{35}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Partitions}{35}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Kenmerken}{35}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Rollen}{35}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Broker}{35}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Leader}{36}{subsection.5.5.2}%
-\contentsline {subsection}{\numberline {5.5.3}Follower}{36}{subsection.5.5.3}%
-\contentsline {section}{\numberline {5.6}Data Replication}{36}{section.5.6}%
-\contentsline {subsection}{\numberline {5.6.1}Producer}{36}{subsection.5.6.1}%
-\contentsline {subsection}{\numberline {5.6.2}Consumer}{36}{subsection.5.6.2}%
-\contentsline {section}{\numberline {5.7}Labo}{36}{section.5.7}%
+\contentsline {subsubsection}{Schema overerven}{32}{section*.33}%
+\contentsline {subsection}{\numberline {3.4.3}Een dataframe uitschrijven naar een nieuw bestand.}{32}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Dataframe-kolommen inlezen, toevoegen en verwijderen.}{33}{section.3.5}%
+\contentsline {subsubsection}{Kolommen toevoegen}{33}{section*.34}%
+\contentsline {subsubsection}{Kolommen selecteren}{33}{section*.35}%
+\contentsline {subsubsection}{Kolommen verwijderen}{34}{section*.36}%
+\contentsline {subsubsection}{Kolommen hernoemen}{34}{section*.37}%
+\contentsline {subsection}{\numberline {3.5.1}Dataframes filteren}{34}{subsection.3.5.1}%
+\contentsline {subsubsection}{Voorbeelden van de studentendataset}{34}{section*.38}%
+\contentsline {subsection}{\numberline {3.5.2}Aggregaties uitvoeren op dataframes}{34}{subsection.3.5.2}%
+\contentsline {subsubsection}{Voorbeelden van de studenten-dataset}{34}{section*.39}%
+\contentsline {subsubsection}{Voorbeelden van de ViewingFigures-oefening}{35}{section*.40}%
+\contentsline {subsection}{\numberline {3.5.3}User Defined Functions}{35}{subsection.3.5.3}%
+\contentsline {chapter}{\numberline {4}Spark Streaming}{36}{chapter.4}%
+\contentsline {subsection}{\numberline {4.0.1}Spark Structured Streaming}{36}{subsection.4.0.1}%
+\contentsline {section}{\numberline {4.1}Code}{36}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Input source}{36}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Transform data}{37}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Output}{37}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Processing Details}{37}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Query starten}{37}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Sources \& Sinks}{37}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Map to overlapping windows}{38}{subsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.2.7}Join streams}{38}{subsection.4.2.7}%
+\contentsline {subsection}{\numberline {4.2.8}Stream-Stream joins}{38}{subsection.4.2.8}%
+\contentsline {chapter}{\numberline {5}Kafka}{39}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Transporting data}{39}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Topics}{39}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Partitions}{39}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Kenmerken}{39}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Rollen}{39}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Broker}{39}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Leader}{40}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Follower}{40}{subsection.5.5.3}%
+\contentsline {section}{\numberline {5.6}Data Replication}{40}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Producer}{40}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Consumer}{40}{subsection.5.6.2}%
+\contentsline {section}{\numberline {5.7}Labo}{40}{section.5.7}%
