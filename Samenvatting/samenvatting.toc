@@ -16,46 +16,104 @@
 \contentsline {section}{\numberline {1.4}Replication en partitioning}{7}{section.1.4}%
 \contentsline {subsection}{\numberline {1.4.1}Partitionering}{7}{subsection.1.4.1}%
 \contentsline {subsection}{\numberline {1.4.2}Replication}{7}{subsection.1.4.2}%
-\contentsline {subsection}{\numberline {1.4.3}Replication-lag}{8}{subsection.1.4.3}%
-\contentsline {subsection}{\numberline {1.4.4}Replicatiefouten}{8}{subsection.1.4.4}%
-\contentsline {subsection}{\numberline {1.4.5}Replicatie en partitionering combineren}{9}{subsection.1.4.5}%
+\contentsline {subsubsection}{Replication-lag}{8}{section*.2}%
+\contentsline {subsubsection}{Replicatiefouten}{8}{section*.3}%
+\contentsline {subsection}{\numberline {1.4.3}Replicatie en partitionering combineren}{9}{subsection.1.4.3}%
 \contentsline {section}{\numberline {1.5}Request routing}{11}{section.1.5}%
 \contentsline {chapter}{\numberline {2}Hadoop Filesystem}{12}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Inleiding}{12}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Hadoop stack}{12}{subsection.2.1.1}%
 \contentsline {section}{\numberline {2.2}Hadoop filesystem}{12}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Designprincipes}{12}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Anti-patterns}{13}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Hadoop-onderdelen}{13}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}NameNode}{13}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}DataNode}{14}{subsection.2.2.5}%
-\contentsline {section}{\numberline {2.3}Single-point-of-failure}{14}{section.2.3}%
-\contentsline {section}{\numberline {2.4}MapReduce}{14}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Mapping}{14}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Shuffling}{14}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Reduce}{15}{subsection.2.4.3}%
-\contentsline {chapter}{\numberline {3}Spark}{16}{chapter.3}%
-\contentsline {subsection}{\numberline {3.0.1}Spark Structured Streaming}{16}{subsection.3.0.1}%
-\contentsline {section}{\numberline {3.1}Code}{16}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Input source}{16}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Transform data}{17}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Output}{17}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Processing Details}{17}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Query starten}{17}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Sources \& Sinks}{17}{subsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.2.6}Map to overlapping windows}{18}{subsection.3.2.6}%
-\contentsline {subsection}{\numberline {3.2.7}Join streams}{18}{subsection.3.2.7}%
-\contentsline {subsection}{\numberline {3.2.8}Stream-Stream joins}{18}{subsection.3.2.8}%
-\contentsline {chapter}{\numberline {4}Kafka}{19}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Transporting data}{19}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Topics}{19}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Partitions}{19}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Kenmerken}{19}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Rollen}{19}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Broker}{19}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Leader}{20}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Follower}{20}{subsection.4.5.3}%
-\contentsline {section}{\numberline {4.6}Data Replication}{20}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Producer}{20}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Consumer}{20}{subsection.4.6.2}%
-\contentsline {section}{\numberline {4.7}Labo}{20}{section.4.7}%
+\contentsline {subsubsection}{Algemeen}{12}{section*.4}%
+\contentsline {subsubsection}{Designprincipes}{12}{section*.5}%
+\contentsline {subsubsection}{Anti-patterns}{13}{section*.6}%
+\contentsline {section}{\numberline {2.3}Hadoop-onderdelen}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}NameNode}{14}{subsection.2.3.1}%
+\contentsline {subsubsection}{Opslag voor metadata}{14}{section*.7}%
+\contentsline {subsubsection}{Werking NameNode}{14}{section*.8}%
+\contentsline {subsection}{\numberline {2.3.2}DataNode}{15}{subsection.2.3.2}%
+\contentsline {subsubsection}{Werking DataNode}{15}{section*.9}%
+\contentsline {section}{\numberline {2.4}Single-point-of-failure}{15}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Bescherming NameNode}{16}{subsection.2.4.1}%
+\contentsline {section}{\numberline {2.5}HDFS Blokken}{16}{section.2.5}%
+\contentsline {subsubsection}{Preventie}{16}{section*.10}%
+\contentsline {section}{\numberline {2.6}Anatomy}{16}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Anatomy of a File Read}{16}{subsection.2.6.1}%
+\contentsline {subsubsection}{Rollen}{17}{section*.11}%
+\contentsline {subsection}{\numberline {2.6.2}Anatomy of a File Write}{17}{subsection.2.6.2}%
+\contentsline {subsubsection}{Rollen}{18}{section*.12}%
+\contentsline {subsubsection}{Foutafhandeling}{19}{section*.13}%
+\contentsline {section}{\numberline {2.7}Command-Line}{19}{section.2.7}%
+\contentsline {subsubsection}{Kopiëren en ophalen}{19}{section*.14}%
+\contentsline {subsubsection}{Nieuwe elementen aanmaken}{19}{section*.15}%
+\contentsline {section}{\numberline {2.8}MapReduce}{20}{section.2.8}%
+\contentsline {subsubsection}{Voordelen van MapReduce}{20}{section*.16}%
+\contentsline {subsection}{\numberline {2.8.1}Data Flow}{20}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Mapping}{20}{subsection.2.8.2}%
+\contentsline {subsubsection}{Voorbeeld luchttemperatuur}{21}{section*.17}%
+\contentsline {subsection}{\numberline {2.8.3}Shuffling}{21}{subsection.2.8.3}%
+\contentsline {subsection}{\numberline {2.8.4}Reduce}{21}{subsection.2.8.4}%
+\contentsline {subsubsection}{Voorbeeld luchttemperatuur}{21}{section*.18}%
+\contentsline {section}{\numberline {2.9}Java MapReduce}{21}{section.2.9}%
+\contentsline {subsubsection}{WordCount-oefening}{22}{section*.19}%
+\contentsline {subsection}{\numberline {2.9.1}Mapper-klasse}{23}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}Reduce-klasse}{23}{subsection.2.9.2}%
+\contentsline {subsection}{\numberline {2.9.3}Main-methode}{23}{subsection.2.9.3}%
+\contentsline {subsubsection}{Inputpaden}{23}{section*.20}%
+\contentsline {subsubsection}{Outputpaden}{23}{section*.21}%
+\contentsline {subsubsection}{Afwerking}{23}{section*.22}%
+\contentsline {subsection}{\numberline {2.9.4}Development Environment}{24}{subsection.2.9.4}%
+\contentsline {subsubsection}{POM-file}{24}{section*.23}%
+\contentsline {subsubsection}{JAR genereren}{24}{section*.24}%
+\contentsline {subsubsection}{JAR in een Hadoop NameNode plaatsen.}{24}{section*.25}%
+\contentsline {section}{\numberline {2.10}YARN}{24}{section.2.10}%
+\contentsline {subsection}{\numberline {2.10.1}Algemeen}{24}{subsection.2.10.1}%
+\contentsline {subsubsection}{Extra ondersteuning}{24}{section*.26}%
+\contentsline {subsection}{\numberline {2.10.2}Core Services}{25}{subsection.2.10.2}%
+\contentsline {subsection}{\numberline {2.10.3}YARN Application run}{25}{subsection.2.10.3}%
+\contentsline {subsection}{\numberline {2.10.4}Resource requests}{26}{subsection.2.10.4}%
+\contentsline {subsection}{\numberline {2.10.5}Scheduling}{26}{subsection.2.10.5}%
+\contentsline {subsubsection}{Verschillende schedulers}{26}{section*.27}%
+\contentsline {chapter}{\numberline {3}Spark}{27}{chapter.3}%
+\contentsline {subsubsection}{Vooraf}{27}{section*.28}%
+\contentsline {subsubsection}{Algemene voordelen}{27}{section*.29}%
+\contentsline {section}{\numberline {3.1}Spark Application Architecture}{27}{section.3.1}%
+\contentsline {subsubsection}{Partitionering}{28}{section*.30}%
+\contentsline {section}{\numberline {3.2}Spark in Java}{28}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Dataframe}{28}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Transformaties}{28}{subsection.3.2.2}%
+\contentsline {subsubsection}{Lazy Evaluation}{29}{section*.31}%
+\contentsline {subsection}{\numberline {3.2.3}Acties}{29}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Physical plan}{29}{subsection.3.2.4}%
+\contentsline {subsubsection}{Het belang van een physical plan}{29}{section*.32}%
+\contentsline {section}{\numberline {3.3}Spark Libraries}{29}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Integratie met opslagsystemen}{30}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Resilient Distributed Dataset}{30}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Spark-applicaties schrijven}{30}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Een dataframe met nieuwe waarden aanmaken.}{30}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Een bestaande dataframe lezen}{31}{subsection.3.4.2}%
+\contentsline {chapter}{\numberline {4}Spark Streaming}{32}{chapter.4}%
+\contentsline {subsection}{\numberline {4.0.1}Spark Structured Streaming}{32}{subsection.4.0.1}%
+\contentsline {section}{\numberline {4.1}Code}{32}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Input source}{32}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Transform data}{33}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Output}{33}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Processing Details}{33}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Query starten}{33}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Sources \& Sinks}{33}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Map to overlapping windows}{34}{subsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.2.7}Join streams}{34}{subsection.4.2.7}%
+\contentsline {subsection}{\numberline {4.2.8}Stream-Stream joins}{34}{subsection.4.2.8}%
+\contentsline {chapter}{\numberline {5}Kafka}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Transporting data}{35}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Topics}{35}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Partitions}{35}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Kenmerken}{35}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Rollen}{35}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Broker}{35}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Leader}{36}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Follower}{36}{subsection.5.5.3}%
+\contentsline {section}{\numberline {5.6}Data Replication}{36}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Producer}{36}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Consumer}{36}{subsection.5.6.2}%
+\contentsline {section}{\numberline {5.7}Labo}{36}{section.5.7}%

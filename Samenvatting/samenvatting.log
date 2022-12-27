@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  26 DEC 2022 17:50
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  27 DEC 2022 18:26
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -635,370 +635,67 @@ File: ../images/Screenshot_217.png Graphic file (type bmp)
 <../images/Screenshot_217.png>
  [11]
 Hoofdstuk 2.
+File: images/hadoop-ecosystem-layers.png Graphic file (type bmp)
+<images/hadoop-ecosystem-layers.png>
 [12
 
 ]
-Overfull \hbox (0.99023pt too wide) in paragraph at lines 339--340
+Overfull \hbox (0.99023pt too wide) in paragraph at lines 340--341
 []\TU/Montserrat(0)/m/n/10 HDFS is bedoeld om een historiek uit te bouwen. De d
 ata wordt ingezet in data-analyse,
  []
 
-[13] [14] [15]
-Hoofdstuk 3.
+[13] [14]
+File: images/hdfs-components-namenode-datanode-datanode.png Graphic file (type 
+bmp)
+<images/hdfs-components-namenode-datanode-datanode.png>
+ [15]
+samenvatting.tex:429: Too many }'s.
+l.429 \end{itemize}}
+                    
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
 
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 421.
+[16]
+File: images/HDFS-Read.png Graphic file (type bmp)
+<images/HDFS-Read.png>
+ [17]
+File: images/HDFS-Write.png Graphic file (type bmp)
+<images/HDFS-Write.png>
+ [18]
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
 
-samenvatting.tex:435: You can't use `macro parameter character #' in vertical m
-ode.
-l.435 #
-       ## Output modes
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-samenvatting.tex:435: You can't use `macro parameter character #' in vertical m
-ode.
-l.435 ##
-        # Output modes
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-samenvatting.tex:435: You can't use `macro parameter character #' in vertical m
-ode.
-l.435 ###
-          Output modes
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-samenvatting.tex:444: Misplaced alignment tab character &.
-l.444 * Nieuwe rijen &
-                       oude rijen.
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
+samenvatting.tex:522: Package Listings Error: Couldn't load requested language.
 
 
-samenvatting.tex:467: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
+See the Listings package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.467 Dataset<
-              Row> df = spark.readStream()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+l.522 \begin{lstlisting}[language=Hadoop]
+                                         
+The following languages weren't loadable:
+    ,hadoop$
+This may cause errors in the sequel.
 
 
-samenvatting.tex:468: Package xcolor Error: Undefined color `commentsColor'.
+samenvatting.tex:522: Package Listings Error: language hadoop undefined.
 
-See the xcolor package documentation for explanation.
+See the Listings package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.468 ^^I
-         .format("socket")             // lezen van een socket
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:469: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.469 ^^I
-         .option("host", "localhost")  // optie: host
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:470: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.470 ^^I
-         .option("port", 9999)         // optie: poortnummer
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:471: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.471 ^^I
-         .load();
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[16
-
-]
-
-samenvatting.tex:491: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.491 Dataset<
-              Row> counts = ....
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:491: Package xcolor Error: Undefined color `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.491 Dataset<Row> counts = ...
-                               .
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:492: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.492 DataStreamWriter<
-                       Row> writer = counts.writeStream()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:493: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.493 ^^I
-         .format("console")
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:493: Package xcolor Error: Undefined color `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.493 ^^I.format(
-                 "console")
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:493: Package xcolor Error: Undefined color `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.493 ^^I.format("c
-                   onsole")
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:493: Package xcolor Error: Undefined color `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.493 ^^I.format("console")
-                           
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:493: Package xcolor Error: Undefined color `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.493 ^^I.format("console")
-                           
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:494: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.494 ^^I
-         .outputMode(OutputMode.Complete());
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:510: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.510 DataStreamWriter<
-                       Row> writer = counts.writeStream()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:511: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.511 ^^I
-         .format("console")
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:511: Package xcolor Error: Undefined color `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.511 ^^I.format(
-                 "console")
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:511: Package xcolor Error: Undefined color `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.511 ^^I.format("c
-                   onsole")
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:511: Package xcolor Error: Undefined color `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.511 ^^I.format("console")
-                           
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:511: Package xcolor Error: Undefined color `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.511 ^^I.format("console")
-                           
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:512: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.512 ^^I
-         .outputMode(OutputMode.Complete())
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:513: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.513 ^^I
-         .trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:520: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.520 StreamingQuery 
-                     streamingQuery = writer.start();
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:521: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.521 try{
-          
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:521: Package xcolor Error: Undefined color `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.521 try{
-          
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:522: Package xcolor Error: Undefined color `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.522 ^^I
-         
-Try typing  <return>  to proceed.
+l.522 \begin{lstlisting}[language=Hadoop]
+                                         
+The language is not loadable. Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
@@ -1008,20 +705,8 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.523 ^^I
-         } except {
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting.tex:523: Package xcolor Error: Undefined color `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.523 ^^I} except 
-                  {
+l.523 // 
+         Lokaal --> HDFS
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -1032,36 +717,2022 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.524 ^^I
-         
+l.524 hadoop 
+             fs --copyFromLocal input/docs.txt hdfs://localhost/user/dylan/d...
+
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-samenvatting.tex:525: Package xcolor Error: Undefined color `commentsColor'.
+samenvatting.tex:524: Package xcolor Error: Undefined color `keywordsColor'.
 
 See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.525 };
-        
+l.524 hadoop fs --copyFromLocal input/
+                                      docs.txt hdfs://localhost/user/dylan/d...
+
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (0.87111pt too wide) in paragraph at lines 547--550
+samenvatting.tex:526: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.526 // 
+         Alles in een Hadoop map bekijken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:526: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.526 // 
+         Alles in een Hadoop map bekijken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:526: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.526 // Alles in 
+                  een Hadoop map bekijken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:526: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.526 // Alles in een Hadoop map 
+                                 bekijken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:527: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.527 hadoop 
+             fs -ls .
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:529: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.529 // 
+         HDFS naar Lokaal
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:529: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.529 // 
+         HDFS naar Lokaal
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:530: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.530 hadoop 
+             fs --copyToLocal hdfs://localhost/user/dylan/docs.txt output/do...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:535: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.535 // 
+         Bestand aanmaken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:536: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.536 hadoop 
+             fs -touch docs.txt
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:538: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.538 // 
+         Directory aanmaken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:538: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.538 // 
+         Directory aanmaken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:539: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.539 hadoop 
+             fs -mkdir input
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:539: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.539 hadoop fs -mkdir input
+                            
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[19] [20] [21]
+File: images/mapper-reducer-mapreduce-job-flow.png Graphic file (type bmp)
+<images/mapper-reducer-mapreduce-job-flow.png>
+
+
+samenvatting.tex:607: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.607 public 
+             class WordCount {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:608: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.608 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:609: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.609 ^^I
+         public static class TokenizerMapper
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:610: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.610 ^^I
+         extends Mapper<Object, Text, Text, IntWritable>{
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:611: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.611 ^^I
+         ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:612: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.612 ^^I
+         ^^Iprivate final static IntWritable one = new IntWritable(1);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:613: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.613 ^^I
+         ^^Iprivate Text word = new Text();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:614: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.614 ^^I
+         ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:615: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.615 ^^I
+         ^^Ipublic void map(Object key, Text value, Context context
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:616: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.616 ^^I
+         ^^I) throws IOException, InterruptedException {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:617: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.617 ^^I
+         ^^I^^IStringTokenizer itr = new StringTokenizer(value.toString());
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:618: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.618 ^^I
+         ^^I^^Iwhile (itr.hasMoreTokens()) {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:619: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.619 ^^I
+         ^^I^^I^^Iword.set(itr.nextToken());
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:620: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.620 ^^I
+         ^^I^^I^^Icontext.write(word, one);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:621: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.621 ^^I
+         ^^I^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:622: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.622 ^^I
+         ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:623: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.623 ^^I
+         }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:624: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.624 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:625: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.625 ^^I
+         public static class IntSumReducer
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:626: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.626 ^^I
+         extends Reducer<Text,IntWritable,Text,IntWritable> {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:627: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.627 ^^I
+         ^^Iprivate IntWritable result = new IntWritable();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:628: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.628 ^^I
+         ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:629: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.629 ^^I
+         ^^Ipublic void reduce(Text key, Iterable<IntWritable> values,
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:630: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.630 ^^I
+         ^^IContext context
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:631: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.631 ^^I
+         ^^I) throws IOException, InterruptedException {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:632: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.632 ^^I
+         ^^I^^Iint sum = 0;
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:633: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.633 ^^I
+         ^^I^^Ifor (IntWritable val : values) {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:634: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.634 ^^I
+         ^^I^^I^^Isum += val.get();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:635: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.635 ^^I
+         ^^I^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:636: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.636 ^^I
+         ^^I^^Iresult.set(sum);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:637: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.637 ^^I
+         ^^I^^Icontext.write(key, result);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:638: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.638 ^^I
+         ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:639: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.639 ^^I
+         }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:640: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.640 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:641: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.641 ^^I
+         public static void main(String[] args) throws Exception {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:642: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.642 ^^I
+         ^^IConfiguration conf = new Configuration();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:643: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.643 ^^I
+         ^^IJob job = Job.getInstance(conf, "word count");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:644: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.644 ^^I
+         ^^Ijob.setJarByClass(WordCount.class);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:645: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.645 ^^I
+         ^^Ijob.setMapperClass(TokenizerMapper.class);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:646: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646 ^^I
+         ^^Ijob.setCombinerClass(IntSumReducer.class);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:647: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.647 ^^I
+         ^^Ijob.setReducerClass(IntSumReducer.class);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:648: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.648 ^^I
+         ^^Ijob.setOutputKeyClass(Text.class);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:649: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.649 ^^I
+         ^^Ijob.setOutputValueClass(IntWritable.class);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:650: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.650 ^^I
+         ^^IFileInputFormat.addInputPath(job, new Path(args[0]));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[22]
+
+samenvatting.tex:651: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.651 ^^I
+         ^^IFileOutputFormat.setOutputPath(job, new Path(args[1]));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:652: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.652 ^^I
+         ^^ISystem.exit(job.waitForCompletion(true) ? 0 : 1);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:653: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.653 ^^I
+         }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:654: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.654 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[23]
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:700: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.700 // 
+         op de vagrantmachine
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:701: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.701 docker 
+             cp target/hadoop-example-1.0-SNAPSHOT.jar namenode:/
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:702: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.702 docker 
+             exec -it namenode bash
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:702: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.702 docker exec 
+                  -it namenode bash
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:703: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.703 ls 
+         -l hadoop-example-1.0-SNAPSHOT.jar
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:705: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.705 // 
+         in de hadoop-shell
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:705: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.705 // 
+         in de hadoop-shell
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:705: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.705 // in 
+            de hadoop-shell
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:706: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.706 hadoop 
+             fs -mkdir input/ncdc
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:707: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.707 hadoop 
+             fs -copyFromLocal 190? input/ncdc
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:708: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.708 hadoop 
+             fs -ls input/ncdc
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:710: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.710 // 
+         het uitvoeren van de JAR in de hadoop-shell
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:710: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.710 // 
+         het uitvoeren van de JAR in de hadoop-shell
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:710: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.710 // het uitvoeren van de JAR in 
+                                     de hadoop-shell
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:711: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.711 hadoop 
+             jar hadoop-example-1.0-SNAPSHOT.jar be.hogent.dit.tin.MaxTemper...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:713: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.713 // 
+         resultaat bekijken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:713: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.713 // 
+         resultaat bekijken
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:714: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.714 hadoop 
+             fs -cat output/ncdc/part-r-00000
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:714: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.714 hadoop fs -cat 
+                     output/ncdc/part-r-00000
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[24]
+File: images/yarn-daemons-hadoop-architecture.png Graphic file (type bmp)
+<images/yarn-daemons-hadoop-architecture.png>
+ [25] [26]
+Hoofdstuk 3.
+
+Overfull \hbox (3.14354pt too wide) in paragraph at lines 777--778
+[]\TU/Montserrat(0)/m/n/10 Mogelijk om te draaien in een groot aantal deploymen
+t-omgevingen, zoals on-premises
+ []
+
+
+Overfull \hbox (2.75554pt too wide) in paragraph at lines 795--796
+[]\TU/Montserrat(0)/m/n/10 Bij een Spark-applicatie is de \TU/Montserrat(0)/m/i
+t/10 driverprocess \TU/Montserrat(0)/m/n/10 hetgeen wat de applicatiecode doet 
+draaien.
+ []
+
+File: images/Screenshot_258.png Graphic file (type bmp)
+<images/Screenshot_258.png>
+[27
+
+]
+Overfull \hbox (0.34106pt too wide) in paragraph at lines 821--822
+\TU/Montserrat(0)/m/n/10 Deze transformaties verlopen \TU/Montserrat(0)/m/it/10
+ lazy evaluated\TU/Montserrat(0)/m/n/10 . Het onderscheid tussen \TU/Montserrat
+(0)/m/it/10 wide \TU/Montserrat(0)/m/n/10 en \TU/Montserrat(0)/m/it/10 narrow \
+TU/Montserrat(0)/m/n/10 trans-
+ []
+
+[28]
+Overfull \hbox (5.26108pt too wide) in paragraph at lines 866--867
+\TU/Montserrat(0)/m/n/10 Dit is puur informatief. Spark bevat meerdere librarie
+s om data-analyse of data-berekeningen
+ []
+
+[29]
+Overfull \hbox (21.23935pt too wide) in paragraph at lines 880--881
+[]\TU/Montserrat(0)/m/n/10 HDFS is de populairste keuze voor Big Data, zowel ge
+structureerde als non-gestructureerde
+ []
+
+
+samenvatting.tex:908: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.908 public^^I
+               static void main(String[] args){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:909: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.909 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:910: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.910 ^^I
+         SparkSession spark = SparkSession.builder()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[30]
+
+samenvatting.tex:911: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.911 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I^^I.appName("applicatiePersonenMetLeeftijd")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:912: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.912 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I^^I.master("local[*]")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:913: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.913 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I^^I.getOrCreate();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:914: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.914 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:915: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.915 ^^I
+         List<Row> inMemory = new ArrayList<>();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:916: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.916 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:917: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.917 ^^I
+         inMemory.add(RowFactory.create("Brooke",20));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:918: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.918 ^^I
+         inMemory.add(RowFactory.create("Brooke",25));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:919: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.919 ^^I
+         inMemory.add(RowFactory.create("Denny",31));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:920: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.920 ^^I
+         inMemor.add(RowFactory.create("Jules",30));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:921: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.921 ^^I
+         inMemory.add(RowFactory.create("TD",35));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:922: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.922 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:923: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.923 ^^I
+         List<StructField> fields = Arrays.asList(
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:924: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.924 ^^I
+         ^^IDataTypes.createStructField("name",DataTypes.StringType, true),
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:925: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.925 ^^I
+         ^^IDataTypes.createStructField("age",DataTypes.IntegerType, true);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:926: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.926 ^^I
+         )
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:927: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.927 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:928: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.928 ^^I
+         StructType schema = DataTypes.createStructType(fields);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:929: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.929 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:930: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.930 ^^I
+         Dataset<Row> df = spark.createDataFrame(inMemory, schema);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:932: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.932 ^^I
+         Dataset<Row> result = df.groupby("name").avg("age");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:932: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.932 ^^I
+         Dataset<Row> result = df.groupby("name").avg("age");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:933: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.933 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:934: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.934 ^^I
+         result.show();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:935: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.935 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:936: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.936 ^^I
+         spark.close();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:937: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.937 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (24.1066pt too wide) in paragraph at lines 942--943
+\TU/Montserrat(0)/m/n/10 output. Het Spark-object bezit een methode \TU/Montser
+rat(0)/m/it/10 read()\TU/Montserrat(0)/m/n/10 . Deze methode geeft een DataFram
+eReader-
+ []
+
+
+samenvatting.tex:945: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.945 public 
+             static void main(String[] args){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:946: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.946 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:947: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.947 ^^I
+         SparkSession spark = SparkSession.builder()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:948: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.948 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I.appName("applicatiePersonenMetLeeftijd")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:949: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.949 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I.master("local[*]")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:950: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.950 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I.getOrCreate();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:951: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.951 ^^I
+         ^^I^^I^^I^^I^^I^^I^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:952: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.952 ^^I
+         List<StructField> fields = Arrays.asList(
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:953: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.953 ^^I
+         ^^I^^IDataTypes.createStructField("name",DataTypes.StringType, true),
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:954: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.954 ^^I
+         ^^I^^IDataTypes.createStructField("age",DataTypes.IntegerType, true);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:955: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.955 ^^I
+         )
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:956: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.956 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:957: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.957 ^^I
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:960: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.960 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:960: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.960 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:960: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.960 }
+       
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[31]
+Hoofdstuk 4.
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 969.
+
+samenvatting.tex:983: You can't use `macro parameter character #' in vertical m
+ode.
+l.983 #
+       ## Output modes
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+samenvatting.tex:983: You can't use `macro parameter character #' in vertical m
+ode.
+l.983 ##
+        # Output modes
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+samenvatting.tex:983: You can't use `macro parameter character #' in vertical m
+ode.
+l.983 ###
+          Output modes
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+samenvatting.tex:1015: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1015 Dataset<
+               Row> df = spark.readStream()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1016: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1016 ^^I
+          .format("socket")             // lezen van een socket
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1017: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1017 ^^I
+          .option("host", "localhost")  // optie: host
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1018: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1018 ^^I
+          .option("port", 9999)         // optie: poortnummer
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1019: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1019 ^^I
+          .load();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[32
+
+]
+
+samenvatting.tex:1039: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1039 Dataset<
+               Row> counts = ....
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1039: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1039 Dataset<Row> counts = ...
+                                .
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1040: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1040 DataStreamWriter<
+                        Row> writer = counts.writeStream()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1041: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1041 ^^I
+          .format("console")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1041: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1041 ^^I.format(
+                  "console")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1041: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1041 ^^I.format("c
+                    onsole")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1041: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1041 ^^I.format("console")
+                            
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1041: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1041 ^^I.format("console")
+                            
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1042: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1042 ^^I
+          .outputMode(OutputMode.Complete());
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1054: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1054 DataStreamWriter<
+                        Row> writer = counts.writeStream()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1055: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1055 ^^I
+          .format("console")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1055: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1055 ^^I.format(
+                  "console")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1055: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1055 ^^I.format("c
+                    onsole")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1055: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1055 ^^I.format("console")
+                            
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1055: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1055 ^^I.format("console")
+                            
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1056: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1056 ^^I
+          .outputMode(OutputMode.Complete())
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1057: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1057 ^^I
+          .trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1064: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1064 StreamingQuery 
+                      streamingQuery = writer.start();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1065: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1065 try{
+           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1065: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1065 try{
+           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1066: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1066 ^^I
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1067: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1067 ^^I
+          } except {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1067: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1067 ^^I} except 
+                   {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1068: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1068 ^^I
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1069: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1069 };
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (0.87111pt too wide) in paragraph at lines 1091--1094
 \TU/Montserrat(0)/m/n/10 Iedere timestamp wordt naar een windows gemapt. * grou
 pby op interval en word * truncate
  []
 
-[17] [18]
-Hoofdstuk 4.
-[19
+[33] [34]
+Hoofdstuk 5.
+[35
 
 ]
-samenvatting.tex:684: Misplaced alignment tab character &.
-l.684 ...getal als je replication factor (vb.: 2 &
+samenvatting.tex:1228: Misplaced alignment tab character &.
+l.1228 ...etal als je replication factor (vb.: 2 &
                                                    2), want dan verwacht je ...
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -1070,65 +2741,65 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-samenvatting.tex:697: You can't use `macro parameter character #' in vertical m
-ode.
-l.697 #
-       # Delivery Semantics
+samenvatting.tex:1241: You can't use `macro parameter character #' in vertical 
+mode.
+l.1241 #
+        # Delivery Semantics
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
-samenvatting.tex:697: You can't use `macro parameter character #' in vertical m
-ode.
-l.697 ##
-         Delivery Semantics
+samenvatting.tex:1241: You can't use `macro parameter character #' in vertical 
+mode.
+l.1241 ##
+          Delivery Semantics
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
-samenvatting.tex:702: You can't use `macro parameter character #' in vertical m
-ode.
-l.702 #
-       # Zookeeper
+samenvatting.tex:1246: You can't use `macro parameter character #' in vertical 
+mode.
+l.1246 #
+        # Zookeeper
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
-samenvatting.tex:702: You can't use `macro parameter character #' in vertical m
-ode.
-l.702 ##
-         Zookeeper
+samenvatting.tex:1246: You can't use `macro parameter character #' in vertical 
+mode.
+l.1246 ##
+          Zookeeper
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
 If you're in the wrong mode, you might be able to
 return to the right one by typing `I}' or `I$' or `I\par'.
 
 
-Overfull \hbox (44.61885pt too wide) in paragraph at lines 710--715
+Overfull \hbox (44.61885pt too wide) in paragraph at lines 1254--1259
 []\TU/Montserrat(0)/m/n/10 “‘cmd kafka-topics –bootstrap-server kafka1:19092 –l
 ist kafka-topics –bootstrap-server kafka2:19093
  []
 
-[20]
-Overfull \hbox (14.99216pt too wide) in paragraph at lines 728--732
+[36]
+Overfull \hbox (14.99216pt too wide) in paragraph at lines 1272--1276
 []\TU/Montserrat(0)/m/n/10 Nieuwe messages toevoegen: “‘cmd kafka-console-produ
 cer –bootstrap-server kafka1:19092
  []
 
-[21] (samenvatting.aux)
+[37] (samenvatting.aux)
 Package rerunfilecheck Info: File `samenvatting.out' has not changed.
-(rerunfilecheck)             Checksum: 1E61BEA2722FE26206EA9FC6A73FF2B6;8059.
+(rerunfilecheck)             Checksum: 8FB397D43E3E368B401FFED22E12DCBC;12087.
  ) 
 Here is how much of TeX's memory you used:
- 14985 strings out of 410532
- 284360 string characters out of 2813299
- 907811 words of memory out of 3000000
- 35950 multiletter control sequences out of 15000+600000
- 473803 words of font info for 83 fonts, out of 8000000 for 9000
+ 15275 strings out of 410532
+ 289588 string characters out of 2813299
+ 1096095 words of memory out of 3000000
+ 36219 multiletter control sequences out of 15000+600000
+ 473811 words of font info for 84 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,6n,85p,970b,1363s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,6n,85p,970b,2058s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on samenvatting.pdf (21 pages).
+Output written on samenvatting.pdf (37 pages).

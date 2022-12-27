@@ -229,7 +229,7 @@ Replicatie is het maken en onderhouden van verschillende kopieën op meerdere kn
 	\item  Multi-leader replication bouwt verder op single-leader replication. Meerdere nodes worden in verschillende datacenters geplaatst.
 \end{enumerate}
 
-\subsection{Replication-lag}
+\subsubsection{Replication-lag}
 
 Leaders zijn niet statisch. Deze kunnen veranderen door clients te promoveren tot leader. Als een leader verandert, dan is er de kans op replication-lag. Dit is wanneer een volger wordt gepromoveerd tot leader.
 
@@ -240,7 +240,7 @@ Replication kan synchroon of asynchroon verlopen. Synchroon is wanneer je wacht 
  	\caption{Het verschil tussen synchrone en asynchrone replication. Bij synchroon wacht je niet op bevestiging. Synchrone replicatie gaat direct door naar de target storage. Asynchrone replication wacht op bevestiging van de volgers op de source.}
 \end{figure}
 
-\subsection{Replicatiefouten}
+\subsubsection{Replicatiefouten}
 
 Fouten bij synchrone replicatie zijn minder voorkomend, maar de techniek kan gedwarsboomd worden. Zo heb je nog steeds een probleem wanneer een write-operation niet kan worden afgewerkt als één van de volgers niet online is. Je wacht tot de bevestiging van de volgers.
 
@@ -268,8 +268,6 @@ De twee vaak voorkomende fouten bij asynchrone replicatie zijn monotonic read en
 \end{figure}
 
 \subsection{Replicatie en partitionering combineren}
-
-
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{../images/Screenshot_215.png}
@@ -324,15 +322,18 @@ Een pure hadoop-stack bestaat uit vier onderdelen:
 
 \section{Hadoop filesystem}
 
-\subsection{Designprincipes}
+\subsubsection{Algemeen}
 
 Een filesystem laat toe om data op te slaan en weer op te halen. Er zijn drie soorten data: files, mappen en metadata. Metadata is de info over de mappen of bestanden, zoals file length en permissies. Een filesystem zorgt ervoor dat de data toegankelijk is. De consistentie in filesystems wordt bewaard door middel van een logsysteem. 
 
-De data wordt opgeslaan in een cluster van gewone machines. De focus van HDFS ligt op riante hoeveelheden data op te slaan. Er wordt gewerkt met veel groepen van machines. Als er één machine zou kapot gaan, dan neemt een andere machine over. Er is weinig vertraging.
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/hadoop-ecosystem-layers.png}
+	\caption{Het Hadoop ecosysteem. Onderaan staat Hadoop FileSystem. Daarboven is er YARN, wat instaat voor het resourcemanagement. Boven het filesystem en de resourcemanager staan er de processing services, waaronder Spark en MapReduce. API's komen in deze samenvatting niet aan bod.}
+\end{figure}
 
-Write-once-read-many-times (WORM) betekent dat gegevens één keer worden geschreven en vervolgens vele keren worden gelezen, maar niet wordt gewijzigd of verwijderd. HDFS ondersteunt deze techniek om zo een hoge fouttolerantie te kunnen bieden en doorvoer te kunnen bieden. 
+\subsubsection{Designprincipes}
 
-Er zijn verschillende redenen waarom er geen bestanden worden gewijzigd of verwijderd.
+De data wordt opgeslaan in een cluster van gewone machines. De focus van HDFS ligt op riante hoeveelheden data op te slaan. Er wordt gewerkt met veel groepen van machines. Als er één machine zou kapot gaan, dan neemt een andere machine over. Er is weinig vertraging. Write-once-read-many-times (WORM) betekent dat gegevens één keer worden geschreven en vervolgens vele keren worden gelezen, maar niet wordt gewijzigd of verwijderd. HDFS ondersteunt deze techniek om zo een hoge fouttolerantie te kunnen bieden en doorvoer te kunnen bieden. Er zijn twee algemene redenen waarom er geen bestanden worden gewijzigd of verwijderd.
 
 \begin{itemize}
 	\item HDFS is bedoeld om grote hoeveelheden data op te slaan. Verwijderen en wijzigen vergt kostbare energie. Daarnaast is HDFS fouttolerant, want het systeem moet blijven werken zelfs al vallen er nodes uit. Als een bestand wordt verwijderd, dan beïnvloedt dit de integriteit van de data.
@@ -343,7 +344,7 @@ Het principe is 'write-once, read-many-times'. Een bestand wordt eenmalig gemaak
 
 Er is sprake van \textbf{append-only fashion}. De gegevens kunnen enkel achteraan worden toegevoegd en niet tussenin of helemaal vooraan. Deze werkwijze helpt om de prestaties en betrouwbaarheid van HDFS te verbeteren, omdat het aantal wijzigingen aan gegevens beperkt. 
 
-\subsection{Anti-patterns}
+\subsubsection{Anti-patterns}
 
 Er zijn enkele situaties waarbij HDFS \textit{overkill} of ongeschikt is als oplossing:
 
@@ -357,7 +358,7 @@ Er zijn enkele situaties waarbij HDFS \textit{overkill} of ongeschikt is als opl
 * Append-only fashion: Als je inhoud vooraan of in het midden wilt toevoegen.
 
 
-\subsection{Hadoop-onderdelen}
+\section{Hadoop-onderdelen}
 
 HDFS heeft twee componenten:
 
@@ -370,25 +371,173 @@ Kort samengevat is de namenode de node dat het bestandssysteem beheert en bijhou
 
 \subsection{NameNode}
 
-Een NameNode (NN) weet uit welke blokken de data bestaat en houdt bij op welke datanodes de blokken staan. Locaties worden niet persistent bijgehouden. Onderling weten ze dit door middel van \textit{heartbeats}.  Als je een file wilt hernoemen, dan lukt dat ook. Bij een cluster heb je altijd één NN.
+Een NameNode (NN) is de centrale coördinator. weet uit welke blokken de data bestaat en houdt bij op welke datanodes de blokken staan. Locaties worden niet persistent bijgehouden. Onderling weten ze dit door middel van \textit{heartbeats}.  Als je een file wilt hernoemen, dan lukt dat ook. Bij een cluster heb je altijd één NN.
 
-Dit is één computer die de filesystem-namespace zal managen. Die houdt bij wat de metadata is, de structuur van de directory. Metadata wordt in het RAM bijgehouden. Het is snel, maar vluchtig. De informatie moet worden bijgehouden.
+De NN heeft de volgende rollen:
 
-1.  
-1.1. De NameSpace Image is de directory structuur, dus alles met de inhoud van de directory. Terwijl het systeem loopt wordt het opgebouwd.
-1.2. De edit logs: Dit is een append-log. Telkens als er iets verandert komt er informatie bij. Als de NN opnieuw zou opstarten, dan wordt de image en edit log gelezen. Daarna worden de veranderingen van de edit log toegepast op de namespace image om zo een nieuwe namespace image te maken. Daarna wordt een nieuwe edit log gestart.
+\begin{itemize}
+	\item Het beheerde de filesystem namespace.
+	\item Het koppelt de datablokken aan de DataNodes.
+	\item Het handelt de filesystemverzoeken, zoals het openen/sluiten en hernoemen van bestanden of mappen.
+	\item Het gidst de client naar de best passende DataNode.
+\end{itemize}
+
+\subsubsection{Opslag voor metadata}
+
+De NameNode slaat metadata over het filesystem op in twee bestanden: de namespace image en de edit log. De \textit{namespace image} bevat informatie over de structuur van het filesystem (metadata), waaronder de directoryboom en de bestanden en mappen die het bevat. De metadata wordt in het RAM bijgehouden. Daarmee is het snel, maar vluchtig. Terwijl het systeem loopt wordt het opgebouwd, maar de informatie is niet persistent. 
+
+De \textit{edit log} bevat een opname van alle wijzigingen in het filesystem, zoals het maken of verwijderen van bestanden en mappen. Dit is een append-log. Telkens als er iets verandert, dan wordt er informatie toegevoegd. Als de NN opnieuw zou opstarten, dan wordt de image en edit log gelezen. Daarna worden de veranderingen van de edit log toegepast op de namespace image om zo een nieuwe namespace image te maken. Daarna wordt een nieuwe edit log gestart.
+
+\subsubsection{Werking NameNode}
+
+De NameNode communiceert met de DataNodes om bij te houden op welke DataNodes welke datablokken worden opgeslagen. Daarnaast zorgt de NN ervoor dat de data beschikbaar en consistent is over een cluster. Wanneer een client data in HDFS wil raadplegen, stuurt hij een verzoek naar de NameNode, die vervolgens bepaalt op welke DataNode de gevraagde datablok staat en de client naar die DataNode stuurt.
 
 \subsection{DataNode}
 
-Waar wordt de datablokken opgeslaan? 
-Op een DataNode. Als je iets leest is het altijd direct op de DataNode. De DN's luisteren direct naar de NN. Elk blok heeft een replicatiefactor. De replicatiefactor wijst op hoeveel systemen het bestand beschikbaar moet staan. Een HDFS heeft veel DataNodes.
+De DataNodes (DN) stellen de servers voor die de werkelijke datablokken opslaan. Ze zijn verantwoordelijk voor het afhandelen van lees- en schrijfverzoeken voor het maken/verwijderen en hermaken van datablokken. Deze acties gebeuren volgens de instructies van de NN. Alle instructies worden gegeven met een \textit{block report}, wat een periodieke rapportering is van de NN.
+
+Een DN heeft de volgende functies:
+
+\begin{itemize}
+	\item Direct luisteren naar instructies van de NN.
+	\item Lees- en schrijfverzoeken afhandelen.
+	\item Het maken, verwijderen of repliceren van datablokken.
+\end{itemize}
+
+Een DN is het werkpaard van een HDFS-cluster, want ze beheren en slaan de data op die in een cluster kan worden teruggevonden. In het werkveld zijn er riante hoeveelheden DN's aanwezig. Alles wat de client leest is afkomstig van een DN. Elk blok heeft een replicatiefactor. De replicatiefactor wijst op hoeveel systemen het bestand beschikbaar moet staan. Een HDFS heeft veel DataNodes.
+
+\subsubsection{Werking DataNode}
+
+Wanneer een client data in HDFS wil raadplegen, stuurt hij een verzoek naar de NameNode, die vervolgens bepaalt op welke DataNode de gevraagde datablok staat en de client naar die DataNode stuurt. De DataNode haalt vervolgens de gevraagde datablok op en stuurt deze terug naar de client.
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/hdfs-components-namenode-datanode-datanode.png}
+	\caption{De verschillende componenten van HDFS, waaronder DataNodes en NameNodes.}
+\end{figure}
 
 \section{Single-point-of-failure}
 
-Als één NN uitvalt, of als de NS Image uitvalt, dan heb je een probleem. Je systeem werkt niet meer. Je zal alle data nog hebben op de DN. Alle blokken hebben random verwijzingen. Je weet niet meer waarvan de data komt of waarnaar de data gaat.
+Als één NN uitvalt, of als de NS Image uitvalt, dan zullen de datablokken niet meer toegankelijk zijn. Alle data zal wél blijven bestaan op de DN. Alle blokken hebben random verwijzingen. Als client ben je er niet van bewust waarvan de data komt en waartoe die gaat. 
 
-De meest voor de hand liggende manier is om regelmatig een backup te nemen. In praktische systemen
-De tweede optie is een secondary NN. Zolang je een systeem niet herstart wordt je edit log langer en groter. Dit is niet ideaal, want als het neemt zowel plaats in alsook zal het opstarten van een NS image langer duren. In latere versie van Hadoop hebben ze een secondary NN toegevoegd. Een secondary NN is een proces dat op een andere computer loopt en dat de veranderingen van de edit log verwerkt in de huidige namespace.
+\subsection{Bescherming NameNode}
+
+Er zijn twee manieren om het NN te beschermen:
+
+\begin{itemize}
+	\item De meest voor de hand liggende manier is om regelmatig een backup te nemen. Hadoop kan worden geconfigureerd om metadata op meerdere filesystems op een synchrone en atomaire manier te schrijven. 
+	\item De tweede optie is een secondary NN. Zolang je een systeem niet herstart wordt je edit log langer en groter. Dit is niet ideaal, want als het neemt zowel plaats in alsook zal het opstarten van een NS image langer duren. In latere versie van Hadoop hebben ze een secondary NN toegevoegd. Een secondary NN is een proces dat op een andere computer loopt en dat de veranderingen van de edit log verwerkt in de huidige namespace.
+\end{itemize}}
+
+\section{HDFS Blokken}
+
+Datablokken hebben niets te maken met "blokken" op een traditionele harde schijf. De datablokken op een Hadoop FS verwijzen naar de stukken data waarin een bestand wordt verdeeld voor opslag. De standaardgrootte van een bestand is 128MB, dus relatief groot. Door een bestand in blokgroottet te verdelen, kan het in HDFS worden opgeslagen, zelfs als het groter is dan elke enkele schijf in een cluster. Het laatste blok van een bestand kan kleiner zijn dan de standaardblokgrootte als het bestand niet een exact veelvoud is van de blokgrootte.
+
+\subsubsection{Preventie}
+
+Om dataverlies te voorkomen, wordt voor elk bestand in HDFS een replicatiefactor ingesteld. Deze waard steld het aantal replicants voor. Een replicant is een 'dubbel' van een bestand. HDFS zal \textit{proberen} om het aantal replicanten te laten overeenkomen met de opgestelde replicatiefactor. Verschillende bestanden kunnen afwijkende replicatiefactoren hebben. De factor hangt af van de gewenste redundantie en bescherming.
+
+\section{Anatomy}
+
+\subsection{Anatomy of a File Read}
+
+Het proces om een bestand uit HDFS te lezen, omvat de volgende stappen:
+
+\begin{enumerate}
+	\item De Client maakt een oproep naar een instantie van het HDFS.
+	\item De instantie maakt gebruik van Remote Procedure Calls (RPC) naar de NN om de lcoaties van de eerste paar blokken in het bestand te achterhalen. Voor elke blok geeft de NN de adressen van de DN's die een kopie hebben van dat blok. Die adressen zijn gesorteerd op afstand van de DN tot de client. De HDFS geeft een \textit{DataInputStream}-object terug naar de client. Dit object bevat een \textit{DFSInputStream}-object, die de Input/Output tussen de DN en de NN beheert.
+	\item De client roept een leesoperatie op de stream. Het \textit{DFSInputStream}-object verbindt automatisch met de DN voor de volgede blok. Dit gebeurt transparant met de client, wie denkt dat het een continue stream aan het lezen is. 
+	\item Eenmaal de client klaar is met lezen, dan stuurt de client een een \textit{close} op de \textit{FSDataInputStream}.
+\end{enumerate}
+
+De client contacteert de DN direct om data op te halen. De NN gidst de client richting de meest optimale verbinding met een datablok. De NN geeft géén data, maar het verleent enkel richting door de locaties van de block requests terug te geven. Deze locaties staan in het RAM-geheugen, daarom gebeurt dit proces heel snel.
+
+\subsubsection{Rollen}
+
+\begin{itemize}
+	\item De \textit{DistributedFileSystem} is een Java-klasse die een interface voorziet om met het HDFS te kunnen interrageren. Met dit interface kan een client toegang tot een bestand krijgen of een bestand manipuleren. De DFS communiceert met de NN om acties uit te voeren. De DFS gebruikt RPC's om verzoeken naar de NN te versturen en te ontvangen. De meest gebruikte functies zijn: 
+	\begin{itemize}
+		\item 'open' om een bestaand bestand te openen: een inputstream wordt teruggegeven.
+		\item 'create' om een nieuw bestand aan te maken: een outputstream wordt teruggegeven om data in het bestand te schrijven
+		\item 'delete' om een bestand te verwijderen
+		\item 'mkdirs' om een nieuwe directory te maken
+		\item 'listStatus' om een lijst van bestanden en directory statussen, van een gespecifeerd pad, terug te krijgen
+	\end{itemize}
+	\item De DFSInputStream is een interne klasse dat gebruikt wordt om data uit een bestand te lezen. Het verbindt met het passende DN, daarnaast streamt het de data terug naar de client.
+	\item De DataInputStream is een klasse dat een interface voorziet om datatypes uit te lezen. Het wordt gebruikt om data van eender welke inputstream te lezen, inclusief een DFSInputStream.
+	\item Een FSDataInputStream is een klasse die de DFSInputStream inkapselt en extra functionaliteit aanbiedt. Het wordt gebruikt om eender welke data te lezen van een bestand in HDFS.
+\end{itemize}
+
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/HDFS-Read.png}
+	\caption{File read schema opgehaald van Javatpoint (2022)}
+\end{figure}
+
+\subsection{Anatomy of a File Write}
+
+Het proces om een nieuw bestand in HDFS te maken, omvat de volgende stappen:
+
+\begin{enumerate}
+	\item De client roept een \textit{create} of \textit{delete} aan op de \textit{DistributedFileSystem}.
+	\item Het HDFS maakt een RPC-oproep om een nieuw bestand in de namespace van het filesystem te maken, zonder blokken die eraan gekoppeld zijn. De NN voert controles uit, waaronder kijken of het bestand bestaat of kijken naar de machtigingen van de client. Als alle controles slagen, dan maakt de NN een record van het nieuwe bestand. Zo niet, dan faalt de \textit{file creation} en dan krijgt de client een \textit{IO-exception} te zien.
+	\item Het HDFS geeft een \textit{FSDataOutputStream} terug aan de client. Dit object bestaat uit een \textit{DFSOutputStream}, die de communicatie met de DN's en de NN beheerst.
+	\item Als de client gegevens schrijft, dan wordt de \textit{DFSOutputStream} in pakketten gesplitst. Deze pakketten worden naar een \textit{data queue} geschreven. Deze wachtrij wordt doorgestuurd naar een \textit{DataStreamer}. Dit object vraagt om beurt aan de NN om nieuwe blokken te alloceren, dit met een lijst van geschikte DN's om de replicaties op te slaan.
+	\item De lijst van DN's vormt een pipeline.
+	\item Het \textit{DataStreamer}-object streamt de pakketten naar de eerste DN in de pipeline, die elk pakket opslaat en doorstuurt naar de tweede DN in de pipeline. De tweede DN herhaalt dit, de derde DN herhaalt dit, enzovoort.
+	\item De \textit{DFSOutputStream} onderhoudt een \textit{acknowledgement queue}. Dit terwijl pakketten worden bevestigd door de DN's. De pakketten worden van de \textit{ack queue} verwijderd als ze door alle DN's in de pipeline zijn bevestigd.
+	\item Eenmaal de client klaar is met het schrijven van gegevens, roept de client \textit{close} aan op de stream. Dit spoelt alle overblijvende pakketten naar de DN-pipeline en wacht op bevestigingen voordat hij contact opneemt met de NN. De NN weet al uit welke blokken het bestand bestaat, dus deze node moet enkel wachten tot de blokken gerepliceerd zijn voordat de node succesvol terugkomt.
+\end{enumerate}
+
+\subsubsection{Rollen}
+\begin{itemize}
+	\item De \textit{DistributedFileSystem} is een Java-klasse die een interface voorziet om met het HDFS te kunnen interrageren. Met dit interface kan een client toegang tot een bestand krijgen of een bestand manipuleren. De DFS communiceert met de NN om acties uit te voeren. De DFS gebruikt RPC's om verzoeken naar de NN te versturen en te ontvangen. De meest gebruikte functies zijn: 
+	\begin{itemize}
+		\item 'open' om een bestaand bestand te openen: een inputstream wordt teruggegeven.
+		\item 'create' om een nieuw bestand aan te maken: een outputstream wordt teruggegeven om data in het bestand te schrijven
+		\item 'delete' om een bestand te verwijderen
+		\item 'mkdirs' om een nieuwe directory te maken
+		\item 'listStatus' om een lijst van bestanden en directory statussen, van een gespecifeerd pad, terug te krijgen 
+	\end{itemize}
+	\item De \textit{DataStreamer} is verantwoordelijk voor het streamen van data vanuit de client naar de verschillende DN's in een cluster. Het wordt gebruikt wanneer een gebruiker wilt schrijven naar een bestand in een HDFS. Dit object vraagt de blokallocaties aan de NN, zo wordt er een lijst bijgehouden van geschikte DN's.
+	\item Een \textit{DFSOutputStream} is een interne klassie die gebruikt wordt om data te schrijven naar een bestand. Het splitst de data in pakketten, streamt de pakketten naar de DN's en verzekert dat de data op een betrouwbare manier wordt afgehandeld.
+	\item De \textit{FSOutputStream} is een publieke lasse dat een interface voorziet voor clients om data uit te schrijven naar een bestand in een HDFS. Het inkapselt de \textit{DFSOutputStream} en synchroniseert de data stream.
+\end{itemize}
+
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/HDFS-Write.png}
+	\caption{File Write schema opgehaald van Javatpoint (2022)}
+\end{figure}
+
+\subsubsection{Foutafhandeling}
+
+Bij het falen van een DN, terwijl er data naartoe wordt geschreven, dan worden er enkele acties afgehandeld. De client weet wat er achter de schermen gebeurt bij zo een afhandeling. Sommige blokken kunnen \textit{under-replicated} zijn, maar de NN zal dit opmerken. De blokken zullen asynchroon worden gerepliceerd in de cluster. Dit proces herhaalt zich tot de replicatiefactor is behaald.
+
+\section{Command-Line}
+
+De CLI voor HDFS biedt een reeks commando's aan om te communiceren met een HDFS-cluster. Deze taal heeft gelijkenissen met de Bash-taal. Om een lijst te krijgen met beschikbare commando's en opties, kan je het commando "hadoop fs -help" gebruiken.
+
+\subsubsection{Kopiëren en ophalen}
+
+\begin{lstlisting}[language=Hadoop]
+// Lokaal --> HDFS
+hadoop fs --copyFromLocal input/docs.txt hdfs://localhost/user/dylan/docs.txt
+
+// Alles in een Hadoop map bekijken
+hadoop fs -ls .
+
+// HDFS naar Lokaal
+hadoop fs --copyToLocal hdfs://localhost/user/dylan/docs.txt output/docs.txt
+\end{lstlisting}
+
+\subsubsection{Nieuwe elementen aanmaken}
+\begin{lstlisting}
+// Bestand aanmaken
+hadoop fs -touch docs.txt
+
+// Directory aanmaken
+hadoop fs -mkdir input
+\end{lstlisting}
 
 \section{MapReduce}
 
@@ -400,9 +549,28 @@ Hadoop MapReduce is een programma dat wordt gebruikt voor het verwerken van grot
 	\item Reduce
 \end{enumerate}
 
+\subsubsection{Voordelen van MapReduce}
+
+MapReduce vereist geen kennis van parallelisatie, data distributie en fouttolerantie binnen het programmeren. Dit gebeurt automatisch over een riant aantal machines gespreid. Alle details rond partitionering van de input-data, scheduling en foutafhandeling wordt al afgehandeld. Bij MapReduce kan de programmeur focussen op de logica van de applicatie en het is zo makkelijker om parallele programma's te schrijven die schaalbaar, efficiënt en fouttolerant zijn. Bij MapReduce is \textit{re-execution} het belangrijkste mechanisme. Als een taak faalt, dan zal het framework automatisch de taak opnieuw proberen op een nieuwe machine.
+
+\subsection{Data Flow}
+
+ Het framework zal iedere split aan een \textit{map task} toekennen. Deze task
+
+\begin{enumerate}
+	\item Bij een MapReduce job wordt de inputdata over verschillende \textit{chunks} of \textit{inputsplits} heen verdeeld. De \textit{map job} zal het deel lijn per lijn bekijken. Iedere mapper zal een deel van het bestand te zien krijgen.
+	\item Het framework zal iedere split aan een \textit{map task} toekennen. De \textit{map task} verwerkt de data en genereert een set van key-value paren.
+	\item Het framework verzamelt en groepeert de waarden met dezelfde key. Deze groeperingen worden doorgegeven aan de \textit{reduce task}.
+	\item De \textit{reduce task} verwerkt de keys met hun waarden. De output is een verzameling van key-value paren. Deze output wordt naar een outputbestand in HDFS geschreven.
+\end{enumerate}
+
 \subsection{Mapping}
 
 De Mapper in Hadoop MapReduce is een programma dat wordt gebruikt om gegevens te verdelen over meerdere computers in een cluster, zodat ze parallel kunnen worden verwerkt. De Mapper leest de gegevens in en verdeelt ze in kleinere stukjes, die vervolgens naar de verschillende computers in het cluster worden gestuurd om te worden verwerkt. Dit maakt het mogelijk om grote hoeveelheden gegevens snel te verwerken en te analyseren. De Mapper is het eerste onderdeel van het MapReduce-proces en zorgt ervoor dat de gegevens op een gestructureerde manier worden verwerkt.
+
+\subsubsection{Voorbeeld luchttemperatuur}
+
+De mapfunctie zal ieder inputrecord verwerken. Ieder record bestaat uit lijnen tekst. Bij het verwerken worden de jaar- en luchttemperatuurvelden uit het bestand gehaald. Het filter recors met ontbrekende of verdachte temperaturen. De mapfunctie zal key-value paren voor ieder record gaan genereren. De key is het jaar en de value is de luchttemperatuur. De mapfunctie geeft de key-value paren aan de shuffle \& sort fase.
 
 \subsection{Shuffling}
 
@@ -410,9 +578,389 @@ De Shuffle-fase in Hadoop MapReduce is een belangrijk onderdeel van het MapReduc
 
 \subsection{Reduce}
 
-De Reducer in Hadoop MapReduce is een programma dat wordt gebruikt om de gegevens te verzamelen en samen te voegen die door de Mapper zijn verwerkt. Dit gebeurt op basis van sleutels die aan de gegevens zijn toegekend, zodat de Reducer de gegevens kan groeperen en verwerken om de uiteindelijke resultaten te produceren. De Reducer kan bijvoorbeeld worden gebruikt om totale aantallen te berekenen of gemiddelden te berekenen voor een bepaalde groep gegevens. Het is een belangrijk onderdeel van het MapReduce-proces omdat het ervoor zorgt dat de gegevens op een gestructureerde manier worden verwerkt en geanalyseerd.
+In een MapReduce job zal de input van de reducefunctie uit key-value paren bestaan. Die werden aangemaakt door de mapfunctie en doorgegeven aan de shuffle \& sort fase. De reducefuntie verwerkt iedere key met de toebehorende waarden. Uiteindelijk is de laatste stap in de MapReduce om een output te maken. De reducer wordt bijvoorbeeld gebruikt om totale aantallen te berekenen of gemiddelden te berekenen voor een bepaalde groep gegevens. Het is een belangrijk onderdeel van het MapReduce-proces omdat het ervoor zorgt dat de gegevens op een gestructureerde manier worden verwerkt en geanalyseerd.
+
+
+\subsubsection{Voorbeeld luchttemperatuur}
+
+De reducefunctie zal, van de shuffle \& sort fase, een verzameling van key-value paren ontvangen. De key is hier het jaar, en de value is de luchttemperatuur. De reducefunctie itereert door de temperatuurwaarden van ieder jaar en het neemt de maximale waarde. Dit hoort tot de finale uitvoer. De finale uitvoer bestaat uit een set key-value paren, waarbij de key het jaar is en de waarde de grootste luchttemperatuur die werd opgenomen in dat jaar.
+
+\section{Java MapReduce}
+
+Java werd gekozen omdat dit de meest prevalente taal is voor MapReduce. Een MapReduce applicatie bestaat uit drie onderdelen:
+
+\begin{enumerate}
+	\item Het schrijven van de mapfunctie. De mapfunctie zal iedere input record verwerken en maakt hierop een verzameling van key-value paren. De mapper-klasse wordt ge-\textit{extend} en enkel de \textit{map()}-methode wordt overerfd. De \textit{map()}-methode vraagt een sleutel als inputwaarde op. Dit is regelmatig de lijn waarop tekst voorkomt. Op basis van deze invoer maakt het een verzameling van key-value paren.
+	\item Het schrijven van de reducefunctie. De reducefunctie verwerkt iedere key met de toebehorende waarden. Je moet de Reducer-klasse \textit{extenden} en de \textit{reduce()}-methode overerven. De input bij deze methode is een sleutel en een set waarden dat de verzameling van output key-value paren gaat maken.
+	\item Boilerplate-code schrijven. Dit is de code die specifieert hoe de MapReduce job moet draaien. Iedere fase, inclusief extra-reduce fasen, moeten aan bod komen. Alles van job configuratie, input en outputpaden instellen en \textit{job running} moet in de boilerplate code terug te vinden zijn. 
+	\item In sommige gevallen kan je ook een combinerfunctie schrijven. Deze gelijkt sterk op een reducefunctie en wordt op de output van de \textit{map task} toegepast. De combinerfunctie wordt gebruikt om het aantal data, dat tussen de mapper en de reducer bevindt, aan te passen. Zo wordt het proces efficiënter behandeld. Voor een combiner moet je de Reducer-klasse \textit{extenden} en de \textit{reduce()}-methode overerven, net zoals bij de reducefunctie.
+\end{enumerate}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/mapper-reducer-mapreduce-job-flow.png}
+	\caption{Een vereenvoudigde versie van de job-flow bij MapReduce.}
+\end{figure}
+
+\subsubsection{WordCount-oefening}
+
+\begin{lstlisting}[language=Java]
+public class WordCount {
+	
+	public static class TokenizerMapper
+	extends Mapper<Object, Text, Text, IntWritable>{
+		
+		private final static IntWritable one = new IntWritable(1);
+		private Text word = new Text();
+		
+		public void map(Object key, Text value, Context context
+		) throws IOException, InterruptedException {
+			StringTokenizer itr = new StringTokenizer(value.toString());
+			while (itr.hasMoreTokens()) {
+				word.set(itr.nextToken());
+				context.write(word, one);
+			}
+		}
+	}
+	
+	public static class IntSumReducer
+	extends Reducer<Text,IntWritable,Text,IntWritable> {
+		private IntWritable result = new IntWritable();
+		
+		public void reduce(Text key, Iterable<IntWritable> values,
+		Context context
+		) throws IOException, InterruptedException {
+			int sum = 0;
+			for (IntWritable val : values) {
+				sum += val.get();
+			}
+			result.set(sum);
+			context.write(key, result);
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		Configuration conf = new Configuration();
+		Job job = Job.getInstance(conf, "word count");
+		job.setJarByClass(WordCount.class);
+		job.setMapperClass(TokenizerMapper.class);
+		job.setCombinerClass(IntSumReducer.class);
+		job.setReducerClass(IntSumReducer.class);
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
+	}
+}
+\end{lstlisting}
+
+\subsection{Mapper-klasse}
+
+De mapperklasse is een generieke klasse dat vier typeparameters heeft. De mapfunctie zal bij ieder input record een verzameling key-value paren aanmaken. Hier zal de key het regelnummer zijn. De value zal de toebehorende tekst op de regel zijn.
+\begin{itemize}
+	\item De input key type is een Object.
+	\item De input value type is een Text.
+	\item De output key type is een Text. Dit is de volledige tekst dat op een lijn terug te vinden is. representeert het woord waarop er geteld word.
+	\item De output value type is een IntWritable. Dit is het aantal voorkomens van het toebehorende woord.
+\end{itemize}
+
+\subsection{Reduce-klasse}
+
+De reduceklasse verwerkt iedere key en de toebehorende waardeN. De outputkey zal hier het woord zijn, en de outputvalue zal hier het aantal voorkomens van een woord in een bestand zijn. 
+
+\subsection{Main-methode}
+
+De main-methode zal een Job-object aanmaken. Dit object geeft aan hoe de job moet worden gedraaid. De \textit{setJarByClass}-methode specifieert het JAR-bestand dat de klassen bevat in de job. Hadoop gebruikt deze informatie om het meest passende JAR-bestand terug te vinden. Vervolgens worden de input- en outputpaden toegelicht. 
+
+\subsubsection{Inputpaden}
+Het inputpad wordt bepaald door \textit{addInputPath} van het object \textit{FileInputFormat}. De input kan hier één bestand, maar ook meerdere bestanden in een directory zijn. Globbing is ook mogelijk.
+
+\subsubsection{Outputpaden}
+
+Het outputpad wordt bepaald door \textit{addOutputPath} van het object \textit{FileOutputFormat}. De outputfile of directory mag, voor het uitvoeren van de job, niet bestaan! Deze voorzorg wordt genomen om \textit{data loss} te voorkomen.
+
+\subsubsection{Afwerking}
+
+De \textit{waitForCompletion}-methode wacht tot de job is afgerond. Bij het al dan niet succesvol afwerken zal de job een boolean teruggeven. 
+
+\subsection{Development Environment}
+
+\subsubsection{POM-file}
+Alle projecten worden van het formaat 'Maven' zijn. Dit wordt vlot in Eclipse aangemaakt. De \textit{dependencies} moeten de nodige MapReduce en Hadoop plugins bevatten. Alle dependencies kan de ontwikkelaar terugvinden in het \textit{pom.xml} bestand. Dit bestand is het configuratiebestand van Maven.
+
+\subsubsection{JAR genereren}
+
+Om te kijken of alle dependencies en properties correct zijn ingesteld, moet de ontwikkelaar een JAR maken. Dit door te rechtermuisklikken op de POM-file, vervolgens moet een nieuwe build worden aangemaakt.  In de uitvoer krijgt de ontwikkelaar een \textit{build failure} of een \textit{build success}.
+
+\subsubsection{JAR in een Hadoop NameNode plaatsen.}
+
+Het JAR-bestand wordt in de vagrantmap geplaatst. Er wordt verondersteld dat de Hadoop-container aan het draaien is. De JAR-file wordt naar een NN-cluster doorgestuurd met de volgende commando's.
+
+\begin{lstlisting}[language=Bash]
+// op de vagrantmachine
+docker cp target/hadoop-example-1.0-SNAPSHOT.jar namenode:/
+docker exec -it namenode bash
+ls -l hadoop-example-1.0-SNAPSHOT.jar
+
+// in de hadoop-shell
+hadoop fs -mkdir input/ncdc
+hadoop fs -copyFromLocal 190? input/ncdc
+hadoop fs -ls input/ncdc
+
+// het uitvoeren van de JAR in de hadoop-shell
+hadoop jar hadoop-example-1.0-SNAPSHOT.jar be.hogent.dit.tin.MaxTemperature input/ncdc output/ncdc
+
+// resultaat bekijken
+hadoop fs -cat output/ncdc/part-r-00000
+\end{lstlisting}
+
+\section{YARN}
+
+\subsection{Algemeen}
+
+YARN is een resourcemanager voor Hadoop-clusters. Deze daemon onderhoudt het toewijzen van CPU, geheugen en middelen aan verschillende toepassingen die op de cluster draaien. YARN biedt API's om mideelen op een cluster te verzoeken te gebruiken, maar deze API's worden niet door de gebruiker gebriukt. In plaats daarvan schrijven gebruikers naar \textit{higher-level} API's die door \textit{distributed computing frameworks} worden aangeboden. Voorbeelden hiervan zijn: MapReduce, Spark en Flink. Deze high-level API's verbergen de details van resourcemanagers. Zo kunnen programmeurs focussen op de logica.
+
+\subsubsection{Extra ondersteuning}
+
+YARN biedt ook ondersteuning voor het inplannen en uitvoeren van toepassingen op de cluster, alsook het monitoren van de status van die toepassingen. Gebruikers kunnen zo een groot aantal toepassingen uitvoeren op deen Hadoop-cluster, waaronder \textit{batch processing}, \textit{stream processing}, \textit{machine learning} en \textit{interactive SQL}.
+
+\subsection{Core Services}
+
+YARN biedt \textit{core services} aan van twee types \textit{long-term daemon processes}: 
+
+\begin{itemize}
+	\item Er is slechts één resourcemanager (RM) per Hadoop-cluster. Deze is verantwoordelijk voor het beheren van middelengebruik per cluster. De RM ontvangt \textit{resource requests} van \textit{application masters} en bepaalt vervolgens welke nodes op de cluster beschikbare middelen hebben om deze verzoeken te vervullen.
+	\item Er is één actieve nodemanager (NM) op elke node van een Hadoop-cluster. De NM is verantwoordelijk voor het monitoren en opstarten van de containers op een node. Een container is een \textit{ligth-weight execution environment} die een toepassingsspecifiek proces uitvoert met een beperkt aantal middelen, zoals geheugen en CPU. Containers in YARN zijn niet gerelateerd aan de containers dat Docker heeft.
+\end{itemize}
+
+De RM en NM werken samen om middelen toe te wijzen en applicaties uit te voeren op een Hadoop-cluster. Gebruikers kunnen hun toepassingen aan YARN voorstellen via high-level API's.
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/yarn-daemons-hadoop-architecture.png}
+	\caption{YARN architectuur met daemon services.}
+\end{figure}
+
+\subsection{YARN Application run}
+
+\begin{enumerate}
+	\item Een client neemt contact op met de RM en vraagt om een \textit{application-master-process} op te starten.
+	\item De RM zoekt een NM die de \textit{application-master} in een contianer kan starten. Alles daarna is afhankelijk van de toepassing. Bij een berekening moet er een waarde naar de client worden teruggestuurd. Bij MapReduce moet er een gedistribueerde bewerking worden uitgevoerd, want alle woorden zijn verspreid over verschillende containers. YARN zelf biedt géén manier om onderdelen van een toepassing met elkaar te laten communiceren.
+\end{enumerate}
+
+\subsection{Resource requests}
+
+In een YARN resourcemanager wordt een resource request verstuurd om een specifieke taak mogelijk te maken. Deze request bevat een gepast aantal bewerkingsmiddelen, zoals CPU en geheugen. Deze requests bevatten \textit{locality constraints}. Dit geeft aan waartoe de middelen moeten beschikbaar worden gesteld. Als een container een HDFS blok moet verwerken, dan moet de resource request toelichten dat een container op één van de nodes, waar er een replica is, moet worden geplaatst. Zo wordt de data doorvoer geminimaliseerd én de snelheid van de applicatie wordt verbeterd.
+
+\subsection{Scheduling}
+
+De scheduler bepaalt of de middelen beschikbaar zijn en, indien mogelijk, worden de middelen toegekend aan de toepassing. Als een cluster druk is, met andere woorden zijn de middelen niet direct beschikbaar, dan zal de scheduler de \textit{resource requests} tijdelijk \textit{on-hold} plaatsen. Nadien worden de middelen aan de applicatie toegekend.
+
+\subsubsection{Verschillende schedulers}
+
+Er zijn verschillende schedulers in YARN:
+
+\begin{itemize}
+	\item FIFO, of \textit{first-in, first-out} zal de middelen aan applicaties toekennen in de volgorde waarin de scheduler de request kreeg. \textit{First come, first served}.
+	\item \textit{Capacity scheduler} laat administrators toe om specifieke middelen te reserveren voor gepaste types toepassingen. 
+	\item \textit{Fair scheduler} zal de resources op een eerlijke manier proberen te verdelen over alle applicaties heen. Hier zijn er verschillende factoren zoals de noden aan middelen en voorafgaand gebruik voor iedere applicatie.
+\end{itemize}
 
 \chapter{Spark}
+
+\subsubsection{Vooraf}
+
+Voor de komst waren er een aantal programmeermodellen gericht op filesystemclusters. De meeste waren gespecialiseerd, waaronder MapReduce, Storm, Impala en Pregel. Spark werd ontworpen om sneller en flexibeler te zijn dan de vooraf genoemde modellen. Sindsdien is het een populaire keze geworden voor een heleboel dataverwerkingstaken, waaronder \textit{batch processing}, streamverwerking, \textit{machine learning} en gegevensanalyse. Het biedt een aantal voordelen t.o.v. andere clustercomputersystemen, zoals: 
+
+\begin{itemize}
+	\item Flexibele en expressieve API
+	\item Ondersteuning voor een breed aantal gegevensbronnen en formaten
+	\item Mogelijk om te draaien in een groot aantal deployment-omgevingen, zoals on-premises clusters, cloudgebaseerde clusters en zelfs op één enkele machine.
+\end{itemize}
+
+\subsubsection{Algemene voordelen}
+
+Spark is generiek en algemeen. Een analoge uitleg is om Spark een smartphone te noemen, terwijl andere modellen eerder een GPS, mobiele telefoon of digitale camera zijn. Spark is een \textit{jack-of-all-trades}. daarom brengt het drie voordelen met zich mee:
+
+\begin{itemize}
+	\item Toepassingen zijn makkelijker te ontwikkelen, want ze maken gebruik van een gecentraliseerde API.
+	\item Het is efficiënter om verwerkingstaken te combineren. Voor Spark moeten pipelines vaak de gegevens wegschrijven naar opslag om ze door te geven aan een andere engine. Spark kan diverse functies uitvoeren op dezelfde gegevens, vaak in het geheugen.
+	\item Spark maakt nieuwe toepassingen mogelijk, bijvoorbeeld interactieve queries op het streamen van ML.
+\end{itemize}
+
+\section{Spark Application Architecture}
+
+Er zijn drie belangrijke rollen:
+
+\begin{itemize}
+	\item Bij een Spark-applicatie is de \textit{driverprocess} hetgeen wat de applicatiecode doet draaien. Dit proces onderhoudt de informatie van de Spark-applicatie, beantwoordt de input van de gebruiker en verdeeld het werk over de \textit{executors}.
+	\item Een executorprocess gaat het werk uitvoeren dat hen werd toegekend. De staat van de actie (geslaagd/niet geslaagd) wordt gerapporteerd aan het driverproces.
+	\item De \textit{clustermanager} houdt logs bij van de beschikbare resources en welke resources er aan de executors, indien mogelijk, kunnen worden gegeven. Spark ondersteunt verschillende clustermanagers, waaronder YARN, Mesos en Kubernetes.
+\end{itemize}
+
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[height=5cm]{images/Screenshot_258.png}
+	\end{center}
+		\caption{Opbouw en structuur van een Spark-applicatie}
+\end{figure}
+
+
+\subsubsection{Partitionering}
+
+Parallelle verwerking met Spark kan enkel gebeuren wanneer het systeem in verschillende clusters is opgebouwd. Een partitie is in dit geval een verzameling van rijen die op een fysieke machine in een cluster is opgeslaan. De partities van een DataFrame tonen hoe de data fysiek is verdeeld over de cluster heen. Het aantal partities is gebonden op het niveau van parallelisme in een Spark applicatie. Als je één partitie hebt, dan ga je een parallelisme van één hebben, zelfs al heb je meerdere executors. Omgekeerd ook, want als je meerdere partities hebt met één executor, dan zal je nog steeds een parallelisme van één hebben. De afweging maken tussen aantal partities en aantal executors speelt hier een rol op het vlak van snelheid.
+
+\section{Spark in Java}
+
+\subsection{Dataframe}
+
+Een dataframe is een gedistribueerde, in-memory tabel met benoemde kolommen en een schema. Het schema duidt elke specifiek datatype aan. Een dataframe is \textit{immutable}, dus eenmaal aangemaakt kan het object niet meer worden gewijzigd. Dataframes kunnen worden aangemaakt uit verschillende bronnen, zoals Hadoop InputFormats of CSV-bestanden. Verdere transformaties, zoals aggregaties en filteren, kunnen zeker toegepast worden op eender welk type formaat. In Java-code verwijzen we naar het object 'Dataset<>'. Tussen de diamandtekens plaatsen we het object 'Row'.
+
+\subsection{Transformaties}
+
+Er zijn verschillende types transformaties die op een dataframe kunnen worden uitgevoerd. Deze transformaties verlopen \textit{lazy evaluated}. Het onderscheid tussen \textit{wide} en \textit{narrow} transformaties wordt hier gemaakt:
+
+\begin{itemize}
+	\item Een narrow transformatie is wanneer het resultaat voor een partitie kan worden berekend met enkel de data van die partitie. Iedere inputpartitie contribueert tot minstens één outputpartite. Deze transformatie kan ook gebeuren aan de hand van een pipeline, zo hoeft er geen data naar de disk te worden geschreven. Narrow transformaties zijn snel en efficiënt.
+	\item Een wide transformatie heeft nood aan meerdere outputpartities. Sommige inputpartities zullen contribueren tot elk meerdere outputpartities. Hier is er nood aan een \textit{shuffle}, waarbij er een proces wordt toegevoegd. In dit proces worden de partities, over een cluster heen, onderling met elkaar uitgewisseld. Een shuffle vereist dat er resultaten naar de \textit{disk} wordt geschreven. Aangezien dit extra schrijfoperaties zijn, is het aangeraden om het aantal wide-transformaties zo minimaal mogelijk te houden.
+\end{itemize}
+
+\subsubsection{Lazy Evaluation}
+
+Spark maakt gebruik van Lazy evaluation, wat wilt zeggen dat een transformatie niet zal resulteren in een nieuwe dataframe. De return-waarde is wél een nieuw object dat het resultaat van de bewerking bijhoudt. De berekening is nog niet uitgevoerd. Bij het triggeren van een actie kijkt Spark naar de graph van alle transformaties die werden opgeroepen. Net zoals bij SQL wordt er een \textit{query execution plan} aangemaakt. Dit proces noemt \textit{query optimization}. Spark kan mogelijks meerdere filters en filters gaan samensteken, of het kan andere soorten optimizatie gaan toepassen om zo min mogelijk data te moeten verwerken.
+
+\subsection{Acties}
+
+Transformaties in Spark bouwen een logische transformatieplan op. Die geeft aan hoe de inputdata moet worden getransformeerd om de gewenste output te krijgen. Het transformatieplan wordt niet uitgevoerd tot de actie wordt getriggerd. Een actie geeft Spark de instructie om een resultaat of verzameling van transformaties te berekenen. Sommige voorbeelden van acties zijn:
+
+\begin{itemize}
+	\item Sommige rijen van een dataframe tonen.
+	\item Het aantal rijen van een dataframe optellen.
+	\item De dataframe opslaan als een native object, zoals een Java lijst.
+	\item Een dataframe schrijven naar een externe \textit{data sink}.
+\end{itemize}
+
+Eenmaal de actie is getriggerd, dan zal Spark het transformatieplan uitvoeren en de resultaat van de actie berekenen. 
+
+\subsection{Physical plan}
+Spark's Physical Plan wijst aan hoe de Spark-applicatie zal uitgevoerd worden op een cluster van machines. Dit omvat details zoals:
+\begin{itemize}
+	\item Welke transformaties moeten er worden uitgevoerd?
+	\item Hoe moet de data gepartitioneerd of geshuffled worden?
+	\item Hoe moeten de resultaten van de transformaties worden opgeslaan of geretourneerd?
+\end{itemize}
+
+\subsubsection{Het belang van een physical plan}
+
+Het \textit{physical plan} is belangrijk, want zo achterhalen ontwikkelaars hoe zij hun middelengebruik kunnen optimaliseren en het aantal data, dat tussen machines heen moet worden geschreven, kan geminimaliseerd worden. Verdere oplossingen zijn:
+
+\begin{itemize}
+	\item Debugging en troubleshooten.
+	\item Performance optimization
+	\item Resource management
+	\item Capaciteitsplanning
+\end{itemize}
+
+\section{Spark Libraries}
+
+Dit is puur informatief. Spark bevat meerdere libraries om data-analyse of data-berekeningen op uit te voeren.
+
+\begin{itemize}
+	\item SQL en dataframe
+	\item Spark Streaming
+	\item MLLib
+	\item GraphX
+\end{itemize}
+
+\subsection{Integratie met opslagsystemen}
+
+Spark is ontworpen om met verschillende externe systemen te werken. Het is \textit{storage-system agnostic}, wat wilt zeggen dat het met een breed gamma aan storage systemen kan werken. Enkele voorbeelden van Spark-geïntegreerde storage systemen zijn:
+
+\begin{itemize}
+	\item HDFS is de populairste keuze voor Big Data, zowel gestructureerde als non-gestructureerde data.
+	\item Key-value stores
+	\item Relationele databanken
+\end{itemize} 
+
+\subsection{Resilient Distributed Dataset}
+
+Voor Apache 2.0 werd er gewerkt met een Resilient Distributed Dataset of RDD object. Dit is een verzameling van objecten die parallel gemanipuleerd kunnen worden. Het is een fouttolerante werkwijze. RDD's zijn ook immutable en ze worden aangemaakt wanneer er wordt gelezen van een databron. RDD's zijn meer in de achtergrond verdwenen bij de nieuwere versies, maar ze blijven toegankelijk. RDD's komen in deze cursus niet meer aan bod.
+
+\section{Spark-applicaties schrijven}
+
+\subsection{Een dataframe met nieuwe waarden aanmaken.}
+
+Stap voor stap wordt de volgende code uitgelegd:
+
+\begin{enumerate}
+	\item Eerst wordt er een spark-object aangemaakt in de main-methode. Zonder deze kan de applicatie niet werken.
+	\item Er wordt een nieuwe lege lijst aangemaakt. We houden een Java-lijst bij van "Row's", ofwel de inhoud voor de dataframe.
+	\item We maken vijf nieuwe rijen aan. In iedere rij houden we twee waarden bij: tekst en een getal. Met de RowFactory wordt er een Row-object aangemaakt, om dan vervolgens aan de Java-lijst toe te voegen.
+	\item De komende twee stappen zijn optioneel, maar aan te raden. De ambitie is om een schema op te stellen. Het schema is een weergave van alle datatypes die in de dataframe aan bod komen. Zonder een schema moet Spark zelf uitvissen wat de datatypes zijn, en zelfs dan is er géén garantie dat het de juiste datatype is. In dit geval zijn er twee velden: naam in de vorm van een String en leeftijd in de vorm van een Integer. Deze lijst houdt de StructFields of schemavelden bij die in een schema moeten voorkomen. Dit is het schema nog niet!
+	\item Op basis van de lijst met datatypes wordt er een schema gemaakt. Het schema is van het type StructType.
+	\item Het dataframe wordt aangemaakt. Hiervoor komt het Spark-object van pas. Samen met de lijst van rijen als eerste parameter én het schema wordt het dataframe aangemaakt.
+	\item Vervolgens wordt de data gegroepeerd op basis van naam. Zo zijn er twee Brooke's in het dataframe. In het resultaat zal er maar één Brooke te vinden zijn, maar van de twee leeftijden wordt het gemiddelde genomen.
+	\item Het dataframe wordt in de terminal weergegeven. Alle kolommen, dus naam en leeftijd, worden weergegeven.
+	\item Optioneel, maar wel aangeraden om het Spark-object te sluiten.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+public	static void main(String[] args){
+	
+	SparkSession spark = SparkSession.builder()
+									.appName("applicatiePersonenMetLeeftijd")
+									.master("local[*]")
+									.getOrCreate();
+									
+	List<Row> inMemory = new ArrayList<>();
+	
+	inMemory.add(RowFactory.create("Brooke",20));
+	inMemory.add(RowFactory.create("Brooke",25));
+	inMemory.add(RowFactory.create("Denny",31));
+	inMemor.add(RowFactory.create("Jules",30));
+	inMemory.add(RowFactory.create("TD",35));
+	
+	List<StructField> fields = Arrays.asList(
+		DataTypes.createStructField("name",DataTypes.StringType, true),
+		DataTypes.createStructField("age",DataTypes.IntegerType, true);
+	)
+	
+	StructType schema = DataTypes.createStructType(fields);
+	
+	Dataset<Row> df = spark.createDataFrame(inMemory, schema);
+
+	Dataset<Row> result = df.groupby("name").avg("age");
+	
+	result.show();
+	
+	spark.close();
+}
+\end{lstlisting}
+
+\subsection{Een bestaande dataframe lezen}
+
+Een datafraem wordt vaak gelezen uit een externe bron, zoals JSON, CSV, Parquet of Kafka output. Het Spark-object bezit een methode \textit{read()}. Deze methode geeft een DataFrameReader-object terug, wat nodig is om een bron in te lezen. Veronderstel dat we hier met dezelfde dataset te maken hebben, maar enkel al vooraf opgeslaan in een csv-bestand.
+
+\begin{lstlisting}[language=Java]
+public static void main(String[] args){
+	
+	SparkSession spark = SparkSession.builder()
+								.appName("applicatiePersonenMetLeeftijd")
+								.master("local[*]")
+								.getOrCreate();
+								
+	List<StructField> fields = Arrays.asList(
+			DataTypes.createStructField("name",DataTypes.StringType, true),
+			DataTypes.createStructField("age",DataTypes.IntegerType, true);
+	)
+	
+	
+
+
+}
+\end{lstlisting}
+
+\chapter{Spark Streaming}
 
 Batch processing: 
 * Wanneer de winkel dichtgaat --> verslag van alles wat verkocht werd die dag = data in een batch
@@ -441,7 +989,7 @@ Append mode:
 * Niet mogelijk bij WordCount: het aantal voorkomens wordt niet lang bijgehouden.
 
 Update mode:
-* Nieuwe rijen & oude rijen.
+* Nieuwe rijen \& oude rijen.
 * Sommige "sinks" ondersteunen dit niet. Alles waar je de rijen naar toe schrijft.
 * Bestanden hebben geen interne structuur, eenmaal een bestand geschreven is dan is het moeilijk om dit aan te passen. Bijvoorbeeld als de vorige rij 5 kolommen heeft en nu komt er een rij met 6 ==> error.
 
@@ -493,10 +1041,6 @@ DataStreamWriter<Row> writer = counts.writeStream()
 	.format("console")
 	.outputMode(OutputMode.Complete());
 \end{lstlisting}
-
-```java
-
-```
 
 \subsection{Processing Details}
 
