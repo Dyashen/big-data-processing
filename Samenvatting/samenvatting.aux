@@ -146,30 +146,53 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Spark Streaming}{36}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.0.1}Spark Structured Streaming}{36}{subsection.4.0.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Code}{36}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Input source}{36}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Transform data}{37}{subsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Output}{37}{subsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Processing Details}{37}{subsection.4.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Query starten}{37}{subsection.4.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}Sources \& Sinks}{37}{subsection.4.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.6}Map to overlapping windows}{38}{subsection.4.2.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.7}Join streams}{38}{subsection.4.2.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.8}Stream-Stream joins}{38}{subsection.4.2.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Kafka}{39}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Stream Processing}{36}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Structured Spark batch processing}{36}{section*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Spark Stream Processing}{36}{subsection.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Data ophalen met sockets}{36}{section*.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Output sink}{37}{section*.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Outputmodes}{37}{subsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Voorbeeld stock prices}{37}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Code}{37}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Inputbron bepalen}{37}{subsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Data omzetten}{38}{subsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Outputsink -en modus bepalen}{38}{subsection.4.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Processingdetails bepalen}{38}{subsection.4.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Code}{39}{section*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}Query starten}{39}{subsection.4.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Sources \& Sinks}{39}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Bestanden lezen}{39}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Kafka-inhoud lezen}{40}{subsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Naar Kafka schrijven.}{40}{section*.46}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Tumbling event time. Learning Spark (2022)}}{41}{figure.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Aggregations with Event-Time windows}{41}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Tumbling windows}{41}{section*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Overlapping windows}{41}{section*.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{WordCount met time interval}{41}{section*.49}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Overlapping time windows. Learning Spark (2022)}}{42}{figure.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces De twee events komen aan tussen 12u20 en 12u25. Het watermark wordt gebruikt om het verschil tussen \textit  {late} en \textit  {too-late} aan te duiden. Opgehaald uit Databricks (2022)}}{43}{figure.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Watermarking}{43}{subsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Streaming joins}{43}{subsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Stream-static joins}{44}{section*.50}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Stream-Stream joins}{44}{subsection.4.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Buffering}{44}{section*.51}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Keeping the state bounded}{45}{section.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{State beperken}{45}{section*.52}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{State clean-up}{45}{section*.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Outer joins with watermarking}{45}{section*.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Kafka}{47}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Transporting data}{39}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Topics}{39}{section.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Partitions}{39}{section.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Kenmerken}{39}{section.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Rollen}{39}{section.5.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.1}Broker}{39}{subsection.5.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.2}Leader}{40}{subsection.5.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.3}Follower}{40}{subsection.5.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.6}Data Replication}{40}{section.5.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.1}Producer}{40}{subsection.5.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.2}Consumer}{40}{subsection.5.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.7}Labo}{40}{section.5.7}\protected@file@percent }
-\gdef \@abspage@last{41}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Transporting data}{47}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Topics}{47}{section.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Partitions}{47}{section.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Kenmerken}{47}{section.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Rollen}{47}{section.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.1}Broker}{47}{subsection.5.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.2}Leader}{48}{subsection.5.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5.3}Follower}{48}{subsection.5.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Data Replication}{48}{section.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.1}Producer}{48}{subsection.5.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.2}Consumer}{48}{subsection.5.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}Labo}{48}{section.5.7}\protected@file@percent }
+\gdef \@abspage@last{49}

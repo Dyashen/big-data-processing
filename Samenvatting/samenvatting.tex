@@ -1163,175 +1163,428 @@ Dataset<Row> result = percentageDF
 
 \chapter{Spark Streaming}
 
-Batch processing: 
-* Wanneer de winkel dichtgaat --> verslag van alles wat verkocht werd die dag = data in een batch
-* Moeilijk wanneer je iets real-time wilt doen. De status van de data is belangrijk.
+\section{Stream Processing}
 
-\subsection{Spark Structured Streaming}
+\subsubsection{Structured Spark batch processing}
 
-'Data is unbounded'.
+Voordien gebeurde alles bij Spark in één keer. Dit wordt ook batch processing genoemd en omvat de volgende drie kenmerken:
 
-* Nieuwe rijen worden continu achteraan toegevoegd.
-* Probleem: We houden geen oneindige tabel in het geheugen. 
-* ...
+\begin{itemize}
+	\item De data is bounded. De analogie wordt gemaakt met de logistiek bij de Colruyt. Wanneer de winkel dichtgaat, dan wordt er een verslag gemaakt van alles wat die dag werd verkocht. Bij een CSV of XML-bestand is de laatste rij gekend.
+	\item Er wordt géén data toegevoegd. Het lezen van data gebeurt in één batch. Werken met batches is geen ideale methode voor real-time dataverwerking.
+	\item Alle data wordt in een tabel bijgehouden.
+\end{itemize}
 
-Gelijkaardig aan een SQL API:
-* Unbounded table, maar het systeem denkt niet zo.
-* Eén API nodig om zowel batch als stream processing uit te voeren.
-* Je schrijft je query zoals je batch processing hebt.
-* Job triggeren om data te verkrijgen. Iedere keer als de job start, Spark zal kijken voor nieuwe data.
+\subsection{Spark Stream Processing}
 
-### Output modes
+Data wordt continu aan het systeem toegevoegd en moet in real-time worden verwerkt. Bijvoorbeeld bij een live dashboard. De status van de data is hier belangrijk. De data is niet-gebonden of \textit{unbounded}, wat wilt zeggen dat er continu rijen achteraan worden toegevoegd. Het probleem is dat er géén oneindige tabel in het geheugen is. Een stream bestaat uit drie kenmerken:
 
-Append mode:
-* Enkel nieuwe rijen toevoegen (resultaat)
-* Historiek / bestaande rijen worden niet getoond of aangepast.
-* Standaard
-* Niet mogelijk bij WordCount: het aantal voorkomens wordt niet lang bijgehouden.
+\begin{itemize}
+	\item Het is \textit{unbounded}, al denkt het systeem niet zo. Er is géén vast einde van de inputdata gekend en de stroom vloeit op een niet-gekende manier. Piekperioden, rustige momenten en alles tussenin zijn mogelijke scenario's.
+	\item Er wordt telkens data achteraan de inputdata toegevoegd. Iedere nieuwe record in een datastream wordt behandeld als een nieuwe rij. De rij wordt telkens aan de inputtabel achteraan toegevoegd. Het real-time aspect klinkt als een radicale verandering voor het programmeren, maar alle code wordt geschreven zoals ze voor een batch processing job werd geschreven. Deze job moet telkens getriggerd worden om data te verkrijgen. Pas bij de trigger kijkt Spark voor nieuwe data en die data wordt achteraan de inputdata toegevoegd.
+	\item Alle data wordt in een tabel bijgehouden.
+\end{itemize}
 
-Update mode:
-* Nieuwe rijen \& oude rijen.
-* Sommige "sinks" ondersteunen dit niet. Alles waar je de rijen naar toe schrijft.
-* Bestanden hebben geen interne structuur, eenmaal een bestand geschreven is dan is het moeilijk om dit aan te passen. Bijvoorbeeld als de vorige rij 5 kolommen heeft en nu komt er een rij met 6 ==> error.
 
-Complete:
-* Het volledige resultaat wordt uitgeschreven
-* De output zal stelselmatig groeien. De job zal niet draaien
-* Gebruiken bij aggregation.
+\subsubsection{Data ophalen met sockets}
 
-Bij een socket lees je enkel hetgeen wat binnenkomt. Historiek wordt niet bijgehouden.
+Spark zal gemiste input vergeten, want er wordt gewerkt met sockets. Een socket leest enkel de binnenkomende info. Data die voordien werd gestuurd, zal niet worden gelezen. Historiek wordt niet bijgehouden. Als de deur toe is, dan zal niemand staan wachten tot de deur opengaat. 
+
+\subsubsection{Output sink}
+
+Dit is de bestemming waarnaar de data wordt geschreven. Dit kan een databank, bestand of systeem zijn dat data kan verwerken of manipuleren. Bij stream processing is dit het systeem dat de resultaten van real-time verwerkingsoperaties zal bijhouden. Een output sink dient als werkpaard om de gestreamede data persistent bij te houden.
+
+\subsection{Outputmodes}
+
+Er zijn drie outputmodes: append, update en complete. Deze instelling geeft aan hoe de data tijdelijk moet worden bijgehouden.
+
+\begin{itemize}
+	\item Appendmode zal enkel de nieuwe rijen als resultaat zien. De historiek of bestaande rijen worden niet getoond of aangepast. Dit is de standaardmodus. Met enkel de nieuwe rijen is er weinig mogelijk. Zo is WordCount niet odnersteudn, want het aantal voorkomens wordt niet lang bijgehouden én de vorige geschreven data wordt niet betrokken. Dit is de meest efficiënte outputmode.
+	\item Updatemode zal zowel nieuwe als oude rijen teruggeven. Van de oude rijen worden enkel aanpassingen gemaakt. Als een woord bij de vorige trigger werd gegeven, en nu zijn er vijf voorkomens meer, dan wordt dat aantal opgeteld. 
+	\begin{itemize}
+		\item Sommige outputsinks ondersteunen deze modus niet, want de bestanden hebben geen interne structuur. Eenmaal een bestand geschreven is, dan is het moeilijk om dit aan te passen. Bijvoorbeeld als de vorige rij vijf kolommen had, en nu wordt er een rij toegevoegd met zes kolommen, dan zal dit resulteren in een fout.
+	\end{itemize}
+	\item Completemode zal het volledige resultaat uitschrijven. De output zal stelselmatig groeien en de job zal in de tussentijd niet draaien. Dit is een \textit{go-to} mode voor aggregatieberekeningen, maar wordt met voorkeur gekozen voor kleine datasets. WordCount werkt wel bij deze modus. Deze mode is de meest flexibele outputmode.
+\end{itemize}
+
+\subsubsection{Voorbeeld stock prices}
+
+Stel dat er een continue flow van stock prices is. Bij appendmode worden enkel de binnenkomende shares getoond. Bij updatemode worden enkel de veranderingen, dus nieuwe en aangepaste shares, weergegeven. Bij completemode worden alle shares na iedere trigger uitgeprint.
 
 \section{Code}
 
-Er zijn vijf stappen:
+Een streamingquery opbouwen vereist vijf stappen:
 
-\section{Input source}
+\begin{enumerate}
+	\item Inputsources bepalen
+	\item Data omzetten
+	\item Outputsink en outputmode bepalen
+	\item Processingsdetails bepalen
+	\item Query starten
+\end{enumerate}}
+	
 
-readStream om een stream van objecten in te lezen
-* format: sockets, etc.
-* options: Kafka --> wie is de broker
-* load: dit is het beginnen met lezen, niet wanneer alles wordt gelezen.
+\subsection{Inputbron bepalen}
+
+Nu wordt er gewerkt met een \textit{readStream} methode. Bij batch-processing werd er gewerkt met een gewone \textit{read}-methode. De keuzes bij stream-processing lopen in lijn met batch-processing. 
+\begin{itemize}
+	\item De format zal in de meeste gevallen een socket zijn, wat voordien een CSV, parquet of tekstbestand was. 
+	\item Bij de opties worden de netwerkinstellingen en Kafka-informatie meegegeven. Het poort van de socket, gegevens over de broker, etc.
+	\item Load start het leesproces.
+\end{itemize}
 
 \begin{lstlisting}[language=Java]
 Dataset<Row> df = spark.readStream()
-	.format("socket")             // lezen van een socket
-	.option("host", "localhost")  // optie: host
-	.option("port", 9999)         // optie: poortnummer
-	.load();
+						.format("socket")             
+						.option("host", "localhost")  
+						.option("port", 9999)         
+						.load();
 \end{lstlisting}
 
-```
+\subsection{Data omzetten}
 
-\subsection{Transform data}
+Je hebt enkel de huidige data nodig. Data kunnen zich in twee statussen bevinden: stateful en stateless. De opdeling loopt in lijn met \textit{wide} en \textit{narrow} berekeningen.
 
-Je hebt enkel de huidige data nodig.
+\begin{itemize}
+	\item Bij stateful kan iedere rij op zich worden verwerkt. Met enkel de huidige informatie is het systeem voldoende. Bijvoorbeeld mapping volgens select of filters.
+	\item Bij stateless is de informatie van voordien nodig. Stateless komt bij een aggregatie goed van pas. De meeste combinaties worden ondersteund, tenzij de combinaties te moeilijk zijn om op een incrementele manier te berekenen.
+\end{itemize}
 
-Stateful \& stateless:
-* Loopt parallel met "wide \& narrow"
-* stateful: de huidige informatie is voldoende (bijvoorbeeld mapping)
-* stateless: je hebt informatie van voordien nodig (bijvoorbeeld een groupby of een aggregatie)
+\begin{lstlisting}[language=Java]
+Dataset<Row> words = lines.select(
+	explode(split(col("value"), "\\s")).as("word")
+);
 
-\subsection{Output}
+Dataset<Row> counts = words.groupBy("word").count();
+\end{lstlisting}
 
-* Geef mee waarnaartoe je de data wilt schrijven.
-* outputMode
+\subsection{Outputsink -en modus bepalen}
 
-\begin{lstlisting}
-Dataset<Row> counts = ....
+Er wordt bepaald hoe de geschreven outputdata moet worden geschreven. De outputmode en de outputlocatie moeten in de code te zien zijn. De code hieronder bouwt verder op de de counts-dataset die net werd opgesteld:
+\begin{itemize}
+	\item In de code hieronder wordt er gewerkt met een complete outputmode, want er wordt een aggregatie op de dataset gemaakt.
+	\item Alle output wordt naar de console geschreven. Andere mogelijkheden zijn: 'memory', 'kafka', 'rate', 'parquet' of 'csv'. 
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
 DataStreamWriter<Row> writer = counts.writeStream()
-	.format("console")
-	.outputMode(OutputMode.Complete());
+				.format("console")
+				.outputMode(OutputMode.Complete());
 \end{lstlisting}
 
-\subsection{Processing Details}
+\subsection{Processingdetails bepalen}
 
-Micro-batches heel snel uitvoeren. Je moet meegeven wanneer de volgende micro-batch wordt uitgevoerd. 
-* Standaard: zo snel na de laatste micro-batch alles verwerken.
-* Trigger interval: gelijkaardig aan Cronjobs. Op een bepaald moment wordt de query uitgevoerd.
-* Eenmalig: "Verwerk alle data nu en stop dan."
-* Continuous: De data wordt niet in micro-batches verwerkt. Zo snel als het binnen komt wordt de data verwerkt. Hier is er weinig vertraging. Dit is eerder voor een experimenteel gebruik.
+De laatste stap voor het starten van de query is het specifiëren hoe de data moet worden verwerkt. Er zijn vier mogelijkheden:
 
-\begin{lstlisting}
+\begin{itemize}
+	\item De standaardoptie is het behandelen in microbatches. Deze worden kort na elkaar uitgevoerd. Wel moet de onderlinge tijd worden meegegeven. 
+	\item Werken met een vast triggerinterval is soortgelijk aan Linux cronjobs. Op een vooraf gespecifieerd moment wordt de query uitgevoerd.
+	\item Alle data wordt op één moment verwerkt, daarna stopt de applicatie. Alle nieuwe data wordt in één batch verwerkt. Dit is handig wanneer er controle over een externe scheduler moet worden genomen.
+	\item Continuous is een experimentele modus. Hierbij de data zo snel als mogelijk continu verwerkt, dus niet meer in micro-batches. Enkel een klein aantal dataframebewerkingen ondersteunen deze modus. De latency is hier minimaal. 
+\end{itemize}}
+
+\subsubsection{Code}
+
+Dit is een aanvulling op de code van stap 3. Onder format en outputmode wordt er een trigger meegegeven. In dit geval gebeurt de verwerking iedere seconde. 
+
+\begin{lstlisting}[language=Java]
 DataStreamWriter<Row> writer = counts.writeStream()
-	.format("console")
-	.outputMode(OutputMode.Complete())
-	.trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
+				.format("console")
+				.outputMode(OutputMode.Complete())
+				.trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
 \end{lstlisting}
-
 
 \subsection{Query starten}
 
-\begin{lstlisting}
+De query wordt gestart met een start-methode op de DataStreamWriter. Dit geeft een StreamingQuery terug, wat de actieve query voorstelt. Een StreamingQuery kan dienen voor verder beheer van de query.
+
+\begin{lstlisting}[language=Java]
 StreamingQuery streamingQuery = writer.start();
 try{
-	
-	} except {
-	
+	streamingQuery.awaitTermination();
+} except {
+	e.printStackTrace();
 };
 \end{lstlisting}
 
-\subsection{Sources \& Sinks}
+\section{Sources \& Sinks}
 
-Uit bestanden of directories lezen:
+\subsection{Bestanden lezen}
 
-* Parallel applicaties uitvoeren.
-* Geen garantie welk bestand er eerst wordt bekeken.
-* Naar een bestand schrijven --> enkel append mode mogelijk
+Bestanden in een directory kunnen worden ingezet als input voor een stream. Wel moeten er drie zaken in het achterhoofd worden gehouden:
 
-Uit Kafka lezen:
-
-* Het schema bij Kafka Dataframees zal altijd hetzelfde zijn. De key-value wordt als binary teruggegeven, maar dit is in binary. Parsen is noodzakelijk.
-
-Naar Kafka schrijven:
-
-* Kolomnamen staan vast. 
-* Schrijven van topic naar topic(s) is mogelijk.
-
-\subsection{Map to overlapping windows}
-
-Iedere timestamp wordt naar een windows gemapt.
-* groupby op interval en word
-* truncate op false: altijd volledige woord
+\begin{itemize}
+	\item Alle bestanden moeten in eenzelfde formaat zijn geschreven. Alles is ofwel een CSV-formaat, ofwel een tekstformaat, ofwel een specifiek ander formaat.
+	\item Bestanden moeten atomisch beschikbaar zijn. Tijdens het lezen mogen de bestanden niet worden bewerkt of verwijderd.
+	\item Bestanden worden genomen op basis van de timestamp, maar het verwerken daarentegen is niet vooraf bepaald. Alle bestanden worden parallel gelezen. Er is geen garantie welk bestand er eerst wordt bekeken.
+	\item Naar een bestand schrijven gebeurt in append-only mode. Het is makkelijker om bestanden aan een bestaande directory toe te voegen, dan de inhoud van bestaande bestanden aan te passen.
+\end{itemize}
 
 
-Watermark delay:
-* keeps state bounded
+\subsection{Kafka-inhoud lezen}
 
+Net zoals bij bestanden kan de inhoud van een Kafka topic worden gezien als een stream. Het schema bij Kafka Dataframes zal altijd hetzelfde zijn. Parsen zal wel altijd noodzakelijk zijn.
 
-Event time (ET): 
-* moment wanneer iets aangemaakt werd bij de bron
-* de watermark gaat kijken naar de grootste event time.
+\begin{itemize}
+	\item De key-value wordt als binary teruggegeven, maar dit is in binary. 
+	\item De topic wordt als een String teruggegeven.
+	\item De partitie waar de record in terug kan worden gevonden.
+	\item De line offsset value van een record.
+	\item De timestamp van de record en het type van de timestamp.
+\end{itemize} 
 
-Watermark:
-* "Bezemwagen": telkens de laatste timestamp updaten.
-* Ieder ET met een ET voor 12u10: wordt niet meegeteld.
-* [12u - 12u10]
-* State wordt telkens kleiner.
-* 
+\subsubsection{Naar Kafka schrijven.}
 
-```java
-.withWatermark()
-```
+Het is mogelijk om in alle drie outputmodes naar Kafka uit te schrijven. Ter aanvulling is het ook mogelijk om van een topic naar een topic te schrijven.Completemode wordt wel niet aangeraden. Bij het uitschrijven naar Kafka moet er met het volgende schema worden gewerkt:
 
-\subsection{Join streams}
+\begin{itemize}
+	\item De key is optioneel. Dit in de vorm van een String of een binaire waarde.
+	\item De value is verplicht. 
+	\item de topic is verplicht wanneer er geen topic werd meegegeven als optie. Als dit werd meegegeven in de applicatie, dan wordt deze kolom in het schema genegeerd.
+\end{itemize}
 
-Static DF + Stream:
-* Left Outer, Inner of Right Outer.
-* Enkel Outer met de streaming
+\begin{lstlisting}[language=Java]
+SparkSession spark = SparkSession.builder();
 
-Geen watermarking nodig:
-* Stream met een bounded-ding: geen state van de DF nodig.
+final String topic = args[0];
 
-Caching:
-* Iedere n aantal seconden een DF lezen: alles cachen.
-* Static DF
+Dataset<Row> messages = spark.readStream()
+			.format("kafka")
+			.option("kafka.bootstrap.servers"), BOOTSTRAP_SERVERS)
+			.option("subscribe", topic)
+			.load();
+			
+StreamingQuery query = null;
 
-```java
-.cache()
-```
+try {
+	query = messages.writeStream()
+		.format("console")
+		.outputMode(OutputMode.append())
+		.option("checkpointLocation", CHECKPOINT_LOCATION)
+		.start();
+} catch {
+	e.printStackTrace();
+}
+
+try {
+	query.awaitTermination();
+} catch (StreamingQueryException e) {
+	e.printStackTrace();
+}
+
+spark.close();
+\end{lstlisting}
+
+\section{Aggregations with Event-Time windows}
+
+Gebruikelijk worden aggregaties niet over een volledige stream gedaan, maar in kleine stukken over een tijdspanne. Bijvoorbeeld in een casus waar sensoren data iedere minuut doorsturen. Hier ligt de nadruk eerder op wanneer de data werd aangemaakt en niet op wanneer de data werd verwerkt door Spark. Iedere timestamp wordt naar een window gemapt. Zo wordt er een groupby op het interval uitgevoerd.
+
+\subsubsection{Tumbling windows}
+
+Tumbling windows zijn windows van een vaste grootte en afwisselend. Ieder event wordt aan één window toegekend, en de windows overlappen elkaar niet. 
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/tumbling.png}
+	\caption{Tumbling event time. Learning Spark (2022)}
+\end{figure}
+
+\subsubsection{Overlapping windows}
+
+Overlapping windows zijn time windows die elkaar onderling overlappen. Een event kan tot meerdere overlappende windows behoren.
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/overlapping.png}
+	\caption{Overlapping time windows. Learning Spark (2022)}
+\end{figure}
+
+\subsubsection{WordCount met time interval}
+
+\begin{enumerate}
+	\item Allereerst wordt er een spark-object aangemaakt.
+	\item Vervolgens wordt de dataset als stream-object ingelezen. Er wordt gelezen vanuit een socket met de gewoonlijke opties. Wel wordt er een extra kolom toegevoegd, namelijk een timestamp. We veronderstellen voor de volgende stap dat het dataframe minstens twee kolommen heeft: value en timestamp.
+	\item 
+	\begin{enumerate}
+		\item We veronderstellen dat de value-kolom een doorlopende tekst is van alle woorden. Dit is niet nodig, dus de explode-functie wordt gebruikt om alle woorden uit de tekst te halen. Dit wordt opgeslaan in een nieuwe kolom.
+		\item Op basis van de timestamp en het woord wordt er gegroepeerd. Hier moet er binnen een window worden gewerkt. De window-functie wordt aangesproken op de timestamp-kolom met als tijdspanne 10 seconden en sliding interval van 5 seconden.
+	\end{enumerate}
+	\item Uiteindelijk wordt count als aggregatie-functie gebruikt. De order-by voorziet een chronologische volgorde.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+SparkSession spark = SparkSession.builder()
+
+Dataset<Row> lines = spark.readStream()
+								.format("socket")
+								.option("host","localhost")
+								.option("port",9999)
+								.option("includeTimestamp",true)
+								.load();
+
+Dataset<Row> output = lines.withColumn("word",explode(split(col("value"),"\\s")))
+								.select("word","timestamp")
+								.groupby(window(col("timestamp"),"10 seconds", "5 seconds"), col("word"))
+								.count()
+								.orderBy(col("window"), col("count"));			
+
+StreamingQuery query = null;
+
+try{
+	query = output.writeStream()
+					.format("console")
+					.option("truncate",false)
+					.option("numRows", 100)
+					.outputMode(OutputMode.Complete())
+					.trigger(Trigger.ProcessingTime(5,TimeUnit.SECONDS))
+					.start()
+} catch (TimeoutException e){
+	e.printStackTrace();
+}
+
+try {
+	query.awaitTermination();
+} catch (StreamingQueryException e) {
+	e.printStackTrace();
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Watermarking}
+
+Tijdens het streamen wordt de staat van de data bijgehouden. De staat vergroot zolang het systeem data zal streamen. De kans op \textit{unbounded} data vergroot. De oplossing hiervoor is \textit{watermarking}. Een watermark is een event-time threshold. De event-time is het moment wanneer iets bij de bron werd aangemaakt Enkele kenmerken van watermarking:
+\begin{itemize}
+	\item De watermark kijkt naar de grootste of meest recente event-time. Deze threshold definieert welke events te laat in een stream terechtkomen. Een watermark delay is de tijd dat het systeem wacht op late data, voordat het systeem de data verwerpt.
+	\item Enkel de relevante data wordt behouden. Het systeem verwerpt achterhaalde data.
+	\item Enkel de laatste timestamp wordt geüpdate. Een watermark stelt hier een bezemwagen voor. Bijvoorbeeld iedere event met een event-time voor 12u10 wordt niet meegeteld, want de range ligt tussen 12u10 en 12u20.
+\end{itemize}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/watermarking-in-windowed-grouped-aggregation.png}
+	\caption{De twee events komen aan tussen 12u20 en 12u25. Het watermark wordt gebruikt om het verschil tussen \textit{late} en \textit{too-late} aan te duiden. Opgehaald uit Databricks (2022)}
+\end{figure}
+
+\subsection{Streaming joins}
+
+Er zijn twee mogelijkheden: 
+
+\begin{enumerate}
+	\item Een stream joinen met een statische dataframe. 
+	\item Twee streams met elkaar joinen. Dit kan enkel met een outer join.
+\end{enumerate}}
+
+\subsubsection{Stream-static joins}
+
+Data uit een gestreamede dataframe wordt gecombineerd met data uit een statische dataframe, bijvoorbeeld een dataframe opgebouwd uit een CSV. De code om dit mogelijk te maken, lijkt zeer sterk op de code voor een join bij een gewone dataframe.
+
+\begin{itemize}
+	\item Dit is een stateless-operatie, daarom is er geen watermarking nodig.
+	\item Een stream houdt geen state van de dataframe bij.
+	\item Dit kan volgens een left-outer, inner of right outer join. Andere outer join opties, zoals een full outer join, zijn niet mogelijk. Het probleem is te wijten aan het incrementeel aflopen van de data. 
+	\item Iedere n-aantal seconden wordt de volledige statische dataframe gelezen. Caching zorgt ervoor dat de dataframe één maal moet worden gelezen. 
+	\item Aanpassingen aan de statische file worden tijdelijk genegeerd, vooral omdat caching wordt gebruikt. Pas bij het herstarten van de streamingquery worden de aanpassingen doorgevoerd. Dit hangt af van het gekozen bestandstype van de statische dataframe.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> staticDF = spark.read()...;
+Dataset<Row> streamingDF = spark.readStream()....;
+streamingDF.join(staticDF, "type");
+streamingDF.join(staticDF, "type", "left_outer");
+\end{lstlisting}
 
 \subsection{Stream-Stream joins}
 
+Data uit een stream wordt gecombineerd met data uit een andere stream. 
+
+\begin{itemize}
+	\item Beide bronnen veranderen snel van inhoud. 
+	\item Bijvoorbeeld een stream van iedere aankoop en een stream met info van iedere klant. De twee streams kunnen met elkaar worden ge\textit{joined}.
+	\item De grootste uitdagingen zijn:
+	\begin{itemize}
+		\item De incompleetheid van de datastream. De kans dat er matches zijn tussen de inputs van de twee datastreams is kleiner. 
+		\item Events in twee streams kunnen in eender welke volgorde komen. Mogelijk met vertraging wat het moeilijker maakt om matches terug te vinden.
+	\end{itemize} 
+	\item Om deze changes aan te pakken, wordt er gewerkt met \textit{buffering}. 
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> purchases = spark.readStream(). ...;
+Dataset<Row> customers = spark.readStream(). ...;
+Dataset<Row> matched = purchases.join(customers,”adId”);
+\end{lstlisting}
+
+\subsubsection{Buffering}
+
+Bij buffering wordt de inputdata van beide streams tijdelijk bijgehouden. Zo wordt er gekeken naar matches, zelfs al is de data in een andere volgorde binnengekomen. Structured streaming verloopt zo effectiever, en je hebt een beter zicht op de data.
+
+\section{Keeping the state bounded}
+
+Het probleem bij de stream-stream joins is dat de engine een unbounded aantal streaming state kan bijhouden. Uit het voorbeeld van de aankopen zal niet iedere klant worden gekoppeld aan een aankoop en vice versa. Rijen zullen niet worden gebruikt en zo een lange periode in de buffer blijven.
+
+\subsubsection{State beperken}
+
+Twee zaken moeten zijn gekend:
+
+\begin{itemize}
+	\item Wat is de maximale tijdsrange tussen de twee events?
+	\begin{itemize}
+		\item In het voorbeeld van de aankopen: Hoe lang duurt het vooraleer een klant een aankoop uitvoert?
+	\end{itemize}
+	\item Wat is de maximale tijsdperiode waarin een event tussen de bron en de processing engine kan worden vertraagd?
+	\begin{itemize}
+		\item In het voorbeeld van de aankopen: Mogelijks kan er vertraging optreden bij het aankopen. De verbinding speelt hier een belangrijke rol.
+	\end{itemize}
+\end{itemize}}
+
+\subsubsection{State clean-up}
+
+De \textit{delay limits} en \textit{event-time constraints} kunnen omgezet worden in dataframebewerkingen. Bij deze bewerkingen worden watermarks en \textit{time range conditions} gebruikt. Er zijn twee stappen:
+
+\begin{enumerate}
+	\item Stel een watermark delay op voor beide inputstreams. Zo weet de engine hoe lang de vertraging van de input kan zijn. 
+	\item Stel een \textit{event-time constraint} op over de twee inputs heen. Zo weet de engine welke rijen verplicht zijn. M.a.w. de rijen die wél voldoen aan de \textit{time-constraint}. Een \textit{time-constraint} kan op twee manieren worden opgesteld:
+	\begin{itemize}
+		\item Time range join conditions zoals \textit{between righttime and (righttime + "interval 1 hour")}
+		\item Join op event-time windows zoals \textit{"lefttimewindow = righttimewindow"}.
+	\end{itemize}
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> purchases = spark.readStream()...
+Dataset<Row> customers = spark.readStream()...
+
+Dataset<Row> purchasesWWatermark = purchases.withWatermark("purchasesTime","2 hours");
+Dataset<Row> customersWithWatermark = customers.withWatermark("customersTime", "3 hours");
+
+impressionsWithwatermark.join(
+	clicksWithWatermark,
+	expr(
+		"custID = purchasesCustId AND " +
+		"customersTime >= purchasesTime AND " +
+		"customersTime <= purchasesTime + interval 1 hour"
+	)
+);
+\end{lstlisting}
+
+\subsubsection{Outer joins with watermarking}
+
+De outer-type join specifiëren gebeurt helemaal onderaan. Wel zijn er enkele opmerkingen over outer joins:
+\begin{itemize}
+	\item De watermark delay en event-time constraints zijn verplicht. De engine moet weten wanneer een event niet gaat matchen, anders leidt dit tot een null-resultaat.
+	\item De \textit{outer} null-resultaten worden met een delay aangemaakt. De engine doet dit om zeker te zijn dat er mogelijke matches niet worden verworpen.
+\end{itemize}
+
+\begin{lstlisting}
+impressionsWithWatermark.join(
+	clicksWithWatermark,
+	expr(
+		"custID = purchasesCustId AND " +
+		"customersTime >= purchasesTime AND " +
+		"customersTime <= purchasesTime + interval 1 hour",
+		"leftOuter"
+	)
+
+);
+\end{lstlisting}
 
 \chapter{Kafka}
 
@@ -1458,7 +1711,7 @@ kafka-topics --bootstrap-server kafka2:19093 --list
 kafka-topics --bootstrap-server kafka3:19094 --list
 ```
 
-Het maakt niet uit bij welke broker. De actie zal altijd werken.
+Het maakt wél uit bij welke broker. De actie zal altijd werken.
 
 Aanmaken:
 ```cmd
