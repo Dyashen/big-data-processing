@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  30 DEC 2022 15:55
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  30 DEC 2022 23:31
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -5409,29 +5409,1475 @@ l.1774 \end{itemize}}
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
 
-Overfull \hbox (44.61885pt too wide) in paragraph at lines 1785--1790
-[]\TU/Montserrat(0)/m/n/10 “‘cmd kafka-topics –bootstrap-server kafka1:19092 –l
-ist kafka-topics –bootstrap-server kafka2:19093
- []
+samenvatting.tex:1786: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1786 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
 
 
-Overfull \hbox (14.99216pt too wide) in paragraph at lines 1803--1807
-[]\TU/Montserrat(0)/m/n/10 Nieuwe messages toevoegen: “‘cmd kafka-console-produ
-cer –bootstrap-server kafka1:19092
- []
+samenvatting.tex:1786: Package Listings Error: language cli-kafka undefined.
 
-[52] (samenvatting.aux)
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1786 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1787: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1787 kafka-
+             topics --bootstrap-server kafka1:19092 --list
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1787: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1787 ...s --bootstrap-server kafka1:19092 --list
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1788: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1788 kafka-
+             topics --bootstrap-server kafka2:19093 --list
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1788: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1788 ...s --bootstrap-server kafka2:19093 --list
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1789: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1789 kafka-
+             topics --bootstrap-server kafka3:19094 --list
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1789: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1789 ...s --bootstrap-server kafka3:19094 --list
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1791: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1791 kafka-
+             topics --bootstrap-server 127.0.0.1:9092 --topic first_topic  -...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1791: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1791 kafka-
+             topics --bootstrap-server 127.0.0.1:9092 --topic first_topic  -...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1793: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1793 kafka-
+             topics --bootstrap-server kafka1:19092 --describe --topic lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1793: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1793 kafka-
+             topics --bootstrap-server kafka1:19092 --describe --topic lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:1798: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1798 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
+
+
+samenvatting.tex:1798: Package Listings Error: language cli-kafka undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1798 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1799: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1799 kafka-
+             topics --bootstrap-server 127.0.0.1:9092
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1800: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1800 ^^I
+          ^^I^^I --create
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1801: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1801 ^^I
+          ^^I^^I --topic first_topic
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1802: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1802 ^^I
+          ^^I^^I --partitions 3
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1803: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1803 ^^I
+          ^^I^^I --replication-factor 1
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1804: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1804 ^^I
+          ^^I^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1805: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1805 kafka-
+             topics --create --topic lecture --partitions 3 --replication-fa...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:1811: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1811 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
+
+
+samenvatting.tex:1811: Package Listings Error: language cli-kafka undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1811 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1812: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1812 kafka-
+             topics --bootstrap-server 127.0.0.1:9092
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1813: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1813 ^^I
+          --delete
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:1820: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1820 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
+
+
+samenvatting.tex:1820: Package Listings Error: language cli-kafka undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1820 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1821: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1821 kafka-
+             console-producer --bootstrap-server kafka1:19092
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1822: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1822 ^^I
+          ^^I^^I^^I^^I   --topic lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1823: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1823 ^^I
+          ^^I^^I^^I^^I   --producer-property acks=all/0/1
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1823: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1823 ^^I^^I^^I^^I^^I   --producer-property 
+                                             acks=all/0/1
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1823: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1823 ...^I^^I^^I   --producer-property acks=all/
+                                                  0/1
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[52]
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:1833: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1833 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
+
+
+samenvatting.tex:1833: Package Listings Error: language cli-kafka undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1833 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1834: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1834 kafka-
+             console-consumer --bootstrap-server kafka1:19092
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1835: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1835 ^^I
+          ^^I^^I^^I^^I^^I--topic lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1836: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1836 ^^I
+          ^^I^^I^^I^^I^^I--from-beginning
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1836: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1836 ^^I^^I^^I^^I^^I^^I--from-
+                                beginning
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:1843: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1843 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
+
+
+samenvatting.tex:1843: Package Listings Error: language cli-kafka undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1843 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1844: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1844 kafka-
+             console-consumer --bootstrap-server kafka1:19092
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1845: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1845 ^^I
+          ^^I^^I^^I^^I   --topic lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1846: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1846 ^^I
+          ^^I^^I^^I^^I   --group group-lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1847: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1847 ^^I
+          ^^I^^I^^I^^I   --from-beginning
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1847: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1847 ^^I^^I^^I^^I^^I   --from-
+                                beginning
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1848: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1848 ^^I
+          ^^I^^I^^I^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1849: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1849 kafka-
+             consumer-groups --bootstrap-server kafka1:19092 --list
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1849: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1849 ...s --bootstrap-server kafka1:19092 --list
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1851: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1851 kafka-
+             consumer-groups --bootstrap-server kafka1:19092 --describe
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1851: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1851 kafka-
+             consumer-groups --bootstrap-server kafka1:19092 --describe
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1852: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1852 ^^I
+          ^^I^^I^^I^^I^^I--group group-lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting.tex:1866: Package Listings Error: Couldn't load requested language
+.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1866 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The following languages weren't loadable:
+    ,cli-kafka$
+This may cause errors in the sequel.
+
+
+samenvatting.tex:1866: Package Listings Error: language cli-kafka undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1866 \begin{lstlisting}[language=CLI-kafka]
+                                             
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1867: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1867 kafka-
+             consumer-groups --bootstrap-server kafka1:19092
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1868: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1868 ^^I
+          ^^I^^I^^I^^I^^I--group group-lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1869: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1869 ^^I
+          ^^I^^I^^I^^I^^I--reset-offsets --to-earliest/to-datetime/by-period...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1870: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1870 ^^I
+          ^^I^^I^^I^^I^^I--execute
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1871: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1871 ^^I
+          ^^I^^I^^I^^I^^I--topic lecture
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[53]
+
+samenvatting.tex:1902: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1902 Properties 
+                  kafkaProperties = new Properties();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1903: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1903 String 
+              bootstrapServers = "localhost:9092";
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1905: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1905 kafkaProperties.s
+                        etProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG),...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1905: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1905 kafkaProperties.s
+                        etProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG),...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1906: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1906 kafkaProperties.s
+                        etProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFI...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1907: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1907 kafkaProperties.s
+                        etProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CON...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1913: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1913 KafkaProducer<
+                     String, String> producer = new KafkaProducer<>(kafkaPro...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1919: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1919 ProducerRecord<
+                      String, String> record = new ProducerRecord<>("topic-n...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1920: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1920 producer.s
+                 end(record);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1921: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1921 producer.f
+                 lush();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1922: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1922 producer.c
+                 lose();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1930: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1930 producer.s
+                 end(record, new Callback(){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1931: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1931 ^^I
+          @Override
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1932: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1932 ^^I
+          public void onCompletion(RecordMetaData recordmetadata, Exception e)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1933: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1933 ^^I
+          {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1934: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1934 ^^I
+          ^^Iif (e == null){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1934: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1934 ^^I^^Iif 
+                (e == null){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ^^I
+          ^^I^^Ilogger.info("Received new metadata"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ^^I^^I^^Ilogger.info("R
+                              eceived new metadata"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ^^I^^I^^Ilogger.info("Received 
+                                      new metadata"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ^^I^^I^^Ilogger.info("Received 
+                                      new metadata"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ^^I^^I^^Ilogger.info("Received new 
+                                          metadata"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ^^I^^I^^Ilogger.info("Received new 
+                                          metadata"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ...^I^^Ilogger.info("Received new metadata"
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1935: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1935 ...^I^^Ilogger.info("Received new metadata"
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1936: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1936 ^^I
+          ^^I^^I+ "Topic: " + recordmetadata.topic()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1936: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1936 ^^I^^I^^I+ "T
+                    opic: " + recordmetadata.topic()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1936: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1936 ^^I^^I^^I+ "Topic:
+                          " + recordmetadata.topic()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1936: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1936 ^^I^^I^^I+ "Topic: 
+                          " + recordmetadata.topic()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1936: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1936 ^^I^^I^^I+ "Topic: 
+                          " + recordmetadata.topic()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1936: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1936 ^^I^^I^^I+ "Topic: " 
+                            + recordmetadata.topic()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1937: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1937 ^^I
+          ^^I^^I+ "Partition: " + recordmetadata.partition()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1937: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1937 ^^I^^I^^I+ "P
+                    artition: " + recordmetadata.partition()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1937: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1937 ^^I^^I^^I+ "Partition:
+                              " + recordmetadata.partition()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1937: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1937 ^^I^^I^^I+ "Partition: 
+                              " + recordmetadata.partition()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1937: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1937 ^^I^^I^^I+ "Partition: 
+                              " + recordmetadata.partition()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1937: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1937 ^^I^^I^^I+ "Partition: " 
+                                + recordmetadata.partition()
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1938: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1938 ^^I
+          ^^I^^I+ "Offset: " + recordmetadata.offset());^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1938: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1938 ^^I^^I^^I+ "O
+                    ffset: " + recordmetadata.offset());^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1938: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1938 ^^I^^I^^I+ "Offset:
+                           " + recordmetadata.offset());^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1938: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1938 ^^I^^I^^I+ "Offset: 
+                           " + recordmetadata.offset());^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1938: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1938 ^^I^^I^^I+ "Offset: 
+                           " + recordmetadata.offset());^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1938: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1938 ^^I^^I^^I+ "Offset: " 
+                             + recordmetadata.offset());^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[54]
+
+samenvatting.tex:1939: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1939 ^^I
+          ^^I} else {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1939: Package xcolor Error: Undefined color `keywordsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1939 ^^I^^I} else 
+                    {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ^^I
+          ^^I^^Ilogger.error("Error while producing", e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ^^I^^I^^Ilogger.error("E
+                               rror while producing", e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ^^I^^I^^Ilogger.error("Error 
+                                    while producing", e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ^^I^^I^^Ilogger.error("Error 
+                                    while producing", e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ^^I^^I^^Ilogger.error("Error while 
+                                          producing", e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ^^I^^I^^Ilogger.error("Error while 
+                                          producing", e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ...^^Ilogger.error("Error while producing",
+                                                   e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1940: Package xcolor Error: Undefined color `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1940 ...^^Ilogger.error("Error while producing",
+                                                   e);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1941: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1941 ^^I
+          ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1942: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1942 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting.tex:1943: Package xcolor Error: Undefined color `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1943 })
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[55] (samenvatting.aux)
 Package rerunfilecheck Info: File `samenvatting.out' has not changed.
-(rerunfilecheck)             Checksum: 0045D20CB0D6EA093EF8489987F904EF;14381.
+(rerunfilecheck)             Checksum: E71A194DEC420F9B523E9ADF0014523B;14858.
  ) 
 Here is how much of TeX's memory you used:
- 15377 strings out of 410532
- 291560 string characters out of 2813299
- 1102104 words of memory out of 3000000
- 36317 multiletter control sequences out of 15000+600000
+ 15486 strings out of 410532
+ 294308 string characters out of 2813299
+ 1103132 words of memory out of 3000000
+ 36384 multiletter control sequences out of 15000+600000
  473819 words of font info for 85 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  72i,6n,85p,970b,2058s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on samenvatting.pdf (52 pages).
+Output written on samenvatting.pdf (55 pages).

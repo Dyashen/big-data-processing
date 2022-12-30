@@ -1777,32 +1777,175 @@ Als je Kafka wilt draaien in productie, dan wordt Zookeeper aangeraden. Zookeepe
 
 Zookeeper is op zich ook een gedistribueerd systeem. Nu wordt er gewerkt om Kafka zonder Zookeeper te laten draaien, maar dit werkt voorlopig enkel binnen een testomgeving.
 
-
 \section{Labo}
 
-We moeten hier het poortnummer 19092 gebruiken voor Kafka1. 
+Poortnummer 19092 wordt gebruikt. De broker maakt niet uit, want de actie zal altijd werken.
 
-```cmd
+\subsubsection{Lijst tonen}
+
+\begin{lstlisting}[language=CLI-kafka]
 kafka-topics --bootstrap-server kafka1:19092 --list
 kafka-topics --bootstrap-server kafka2:19093 --list
 kafka-topics --bootstrap-server kafka3:19094 --list
-```
 
-Het maakt wél uit bij welke broker. De actie zal altijd werken.
+kafka-topics --bootstrap-server 127.0.0.1:9092 --topic first_topic  --describe
 
-Aanmaken:
-```cmd
-kafka-topics --create --topic lecture --partitions 3 --replication-factor 3
-```
-
-Omschrijven:
-```cmd
 kafka-topics --bootstrap-server kafka1:19092 --describe --topic lecture
-```
+\end{lstlisting}
 
-Nieuwe messages toevoegen:
-```cmd
-kafka-console-producer --bootstrap-server kafka1:19092 --topic-lecture
-```
-	
+\subsubsection{Topic aanmaken}
+Opmerking: de replicatiefactor kan nooit groter zijn dan het aantal brokers.
+\begin{lstlisting}[language=CLI-kafka]
+kafka-topics --bootstrap-server 127.0.0.1:9092
+			 --create
+			 --topic first_topic
+			 --partitions 3
+			 --replication-factor 1
+			 
+kafka-topics --create --topic lecture --partitions 3 --replication-factor 3
+\end{lstlisting}
+
+
+\subsubsection{Topic verwijderen}
+
+\begin{lstlisting}[language=CLI-kafka]
+kafka-topics --bootstrap-server 127.0.0.1:9092
+	--delete
+\end{lstlisting}
+
+
+\subsection{Producer}
+
+\subsubsection{Messages aanmaken in bestaande topic}
+\begin{lstlisting}[language=CLI-kafka]
+kafka-console-producer --bootstrap-server kafka1:19092 
+					   --topic lecture
+					   --producer-property acks=all/0/1
+\end{lstlisting}
+
+\subsubsection{Messages aanmaken in nieuwe topic}
+
+Eerst wordt er een waarschuwing gegeven, maar het topic zal worden aangemaakt met standaardparameters. Dit is standaard één replicatiefactor en één partitie, wat vaak van de benodigde parameters afwijkt. Het is beter om zelf een nieuwe topic te maken, al kunnen de standaardparameters wél in \textit{server.properties} worden ingesteld.
+
+\subsection{Consumer}
+De consumer zal enkel nieuwe berichten opvangen. Als er geen nieuwe berichten zijn, dan wordt er niets opgehaald en blijft de terminal leeg. Enkel als de optie \textit{from-beginning} wordt meegegeven, dan worden alle messages sinds het aanmaken van de topic getoond. Die volgorde is niet dezelfde als waarin de berichten werden verstuurd. De ordening van de topic is afhankelijk van de gekozen partitie.
+
+\begin{lstlisting}[language=CLI-kafka]
+kafka-console-consumer --bootstrap-server kafka1:19092
+						--topic lecture
+						--from-beginning
+\end{lstlisting}
+
+\subsubsection{Consumer groups}
+
+Als een consumer hetzelfde commando tweemaal doet draaien, dan zal de uitvoer zich niet herhalen. Kafka houdt de offset bij van een consumer-group. Het tweede commando toont alle gekende consumer-groups. Met het derde commando kan er worden afgeleid hoeveel consumers er op dat moment in een groep zitten. Voor iedere partitie wordt de offset getoond van de laatste offset in de partitie en de laatste offset die werd geconsumeerd. Ofwel de log-end-offset en de current-offset.
+
+\begin{lstlisting}[language=CLI-kafka]
+kafka-console-consumer --bootstrap-server kafka1:19092
+					   --topic lecture
+					   --group group-lecture
+					   --from-beginning
+					   
+kafka-consumer-groups --bootstrap-server kafka1:19092 --list
+
+kafka-consumer-groups --bootstrap-server kafka1:19092 --describe
+						--group group-lecture
+\end{lstlisting}
+
+\subsubsection{Offsets resetten}
+
+De offset kan op vier verschillende manieren worden aangepast.
+
+\begin{itemize}
+	\item To-earliest zal de offset naar het begin verplaatsen
+	\item To-datetime maakt het mogelijk om de offset te verplaatsen naar de offset die het dichtste bij een specifiek gekozen datum 
+	\item Shift-by verlegt de offset met n-aantal lijnen
+	\item By-period is gelijkaardig aan \textit{to-datetime}, maar hier kan je enkel met periodes werken. Bijvoorbeeld een week geleden, een dag geleden, een uur geleden enzovoort.
+\end{itemize}
+
+\begin{lstlisting}[language=CLI-kafka]
+kafka-consumer-groups --bootstrap-server kafka1:19092
+						--group group-lecture
+						--reset-offsets --to-earliest/to-datetime/by-period/shift-by
+						--execute
+						--topic lecture
+\end{lstlisting}
+
+\section{Kafka Java Programming}
+
+\subsubsection{Dependencies}
+
+Het pom-bestand heeft twee dependencies nodig: kafka-clients en slf4j-simple.
+
+\subsection{Producer}
+
+Een Java-producer opzetten bestaat uit drie fasen:
+
+\begin{enumerate}
+	\item Producer-eigenschappen instellen.
+	\item Producer aanmaken.
+	\item Data versturen naar Kafka.
+	\item Optioneel: Callback toevoegen
+\end{enumerate}
+
+\subsubsection{Eigenschappen instellen}
+
+De drie belangrijkste eigenschappen zijn: 
+
+\begin{itemize}
+	\item bootstrap.servers dat het adres van Kafka aangeeft
+	\item key.serializer
+	\item value.serializer
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Properties kafkaProperties = new Properties();
+String bootstrapServers = "localhost:9092";
+
+kafkaProperties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG), bootstrapServers);
+kafkaProperties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, bootstrapServers);
+kafkaProperties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+\end{lstlisting}
+
+\subsubsection{Producer aanmaken}
+
+\begin{lstlisting}[language=Java]
+KafkaProducer<String, String> producer = new KafkaProducer<>(kafkaProperties);
+\end{lstlisting}
+
+\subsubsection{Data versturen naar Kafka}
+
+\begin{lstlisting}[language=Java]
+ProducerRecord<String, String> record = new ProducerRecord<>("topic-naam", "message-inhoud-message");
+producer.send(record);
+producer.flush();
+producer.close();
+\end{lstlisting}
+
+\subsubsection{Callback gebruiken}
+
+De callback wordt in de send-methode gebruikt om logs bij te houden.
+
+\begin{lstlisting}
+producer.send(record, new Callback(){
+	@Override
+	public void onCompletion(RecordMetaData recordmetadata, Exception e)
+	{
+		if (e == null){
+			logger.info("Received new metadata"
+			+ "Topic: " + recordmetadata.topic()
+			+ "Partition: " + recordmetadata.partition()
+			+ "Offset: " + recordmetadata.offset());	
+		} else {
+			logger.error("Error while producing", e);
+		}
+	}
+})
+\end{lstlisting}
+
+\subsubsection{Keys toevoegen aan de producer}
+\begin{lstlisting}
+
+\end{lstlisting}
+
 \end{document}
