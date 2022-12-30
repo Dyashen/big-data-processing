@@ -1588,117 +1588,194 @@ impressionsWithWatermark.join(
 
 \chapter{Kafka}
 
-Check out Learn Apache Kafka for Beginners.
+\subsubsection{Probleemstellingen}
 
-\section{Transporting data}
+Veronderstel dat er een systeem is met n-aantal bronsystemen en m-aantal doelsystemen. Om de twee met elkaar te linken, zou ieder bronsysteem moeten verbonden zijn met ieder doelsysteem. Dit komt gelijk op hoogstens een \textit{n x m} aantal berekeningen. Elke connectie neemt resources van het systeem. Daarnaast zijn er drie zaken waarmee er rekening mee moet worden gehouden.
 
-Source: Maakt data.
-Target: Verbruikt data.
+\begin{itemize}
+	\item Protocol geeft aan hoe de data moet worden getransporteerd.
+	\item Het formaat of de manier hoe de data is \textit{geparsed}.
+	\item Dataschema en de evolutie van de data: hoe is de data gevormd en hoe kan het veranderen. Wat is de locatie van de data?
+\end{itemize}
 
-| w/ | wo/ |
-| -- | -- |
-|  Kafka functioneert hier als tussenpersoon. De tussenpersoon zal het verkeer naar de targets regelen. Zo moeten de sources niet verbonden zijn met alle targets. Dit zorgt voor een fouttolerant en veerkrachtig systeem. Kafka staat ook sterk bij horizontale schaalbaarheid. | Iedere source is verbonden met ieder target. Dit is de meest verbruikende manier van de twee. Hier moet iedere source rekening houden met protocollen, doorvoer, etc. |
-| m + n | m x n|
+\subsubsection{Introductie Kafka}
+
+Kafka is platform dat streaming tussen bron- en doelsystemen ondersteund. Tussen de systemen is er een \textit{broker}. Met Kafka als tussenpersoon verandert dit naar een \textit{n + m}-aantal berekeningen.
+
+\subsubsection{Werking}
+
+\begin{enumerate}
+	\item Wanneer een bronsysteem data aanmaakt, dan wordt er data verstuurd naar Kafka. Events die de website heeft gestuurd wordt naar Kafka gestuurd. Een doelsysteem weet niet van wie de data komt.
+	\item Kafka slaat het bericht op in een topic. Een topic is een logische categorie waarin de message is opgeslaan. 
+	\item Het doelsysteem kan dan de message van de topic opgebruiken, verwerken en nodige acties nemen.
+\end{enumerate}
+
+\subsubsection{Voordelen Kafka}
+
+\begin{itemize}
+	\item Het is een volwassen stuk open-source software.
+	\item Het is een gedistribueerd systeem. De architectuur is fouttolerant gebouwd.
+	\item De horizontale schaalbaarheid is goed. Op honderden brokers blijft het systeem even efficiënt werken.
+	\item De \textit{latency} is minimaal. 
+\end{itemize}
+
+\subsubsection{Use cases}
+
+De twee belangrijkste use cases om te weten:
+
+\begin{itemize}
+	\item Kafka wordt ingezet bij het verzamelen van metrieken en de bijhorende analyse. Die data wordt verwerkt in een \textit{recommendation}-systeem, bijvoorbeeld bij Netflix, YouTube of LinkedIn.
+	\item De voornaamste use case is stream processing, waar er een oneindige stroom van data wordt beheerd.
+\end{itemize}
 
 
-\section{Topics}
-Topics:
-* Stream van data. Meerdere mogelijk.
-* Naamgeving.
-* Wordt opgedeeld in een **vast aantal partities**:
+\section{Concepten van Kafka}
 
-\section{Partitions}
-* Doorvoer verbeteren
-* Een bestand op een lokaal FS.
-* Append-only. Je kan enkel messages op het einde toevoegen.
-* Offset = 0 : Allereerste bericht. 
-* Offset van de laatste partitie = n
-* Bij vergissing: pech!
-*  Je kan het niet verwijderen of aanpassen.
-*  Een dubbele actie (bv.: twee messages rond een aankoop): Je moet een derde message sturen om de dubbel ongedaan te maken.
-* Ordening is niet gesorteerd!
-* min -> max
-* Je kan het aanpassen (?), maar er hangen hier nadelen aan.
+\subsubsection{Topic}
+
+Eén datastroom van boodschappen die met elkaar te maken hebben. De structuur is vergelijkbaar met een tabel. Er is geen beperking, buiten hardware-limitaties, op het aantal topics dat in een Kafka-systeem kan worden aangemaakt.
+
+\subsubsection{Partitie}
+
+Een topic is opgedeeld in een aantal partities. het doel van meerdere partities is om de \textit{workload} en doorvoer evenwaardig te verdelen. Het aantal partities staat vast wanneer een topic wordt aangemaakt.
+
+\begin{itemize}
+	\item De volgorde ligt definitief vast. De volgorde wordt bepaald door de offset. Het is vergelijkbaar met een oude typmachine. Eenmaal een lijn is geschreven, dan blijft dit zo. De volgorde waarin een partitie wordt geschreven, is dezelfde volgorde waarin een lezer de partitie zal lezen.
+	\item Dit is een \textit{append-only} logfile. Als iets geschreven is in de partitie, dan zal dit achteraan zijn. Daarnaast kan een boodschap niet gewijzigd of verwijderd worden. Als je een foute boodschap stuurt, dan moet je een tweede boodschap sturen om de fout recht te zetten.
+	\item Een broker kijkt nooit naar de data. Ze plakken er enkel metadata aan, maar ze bewerken geen inhoud.
+	\item Er is geen verhouding tussen nummers van verschillende partities. De volgorde en offset is enkel zinvol binnen dezelfde partitie. Offset 3 bij partitie 0 heeft geen invloed of correlatie met offset 3 van partitie 1.
+\end{itemize}
 
 
-\section{Kenmerken}
-* Immutable
-* Limited: Volgens de default policy worden berichten ouder dan een week verwijderd.
-* Je specifieert de topic waar het bericht naartoe moet, niet de partition.
-* Partitie is willekeurig --> Load-balancing
+\subsubsection{Voorbeeldcasus}
+
+\begin{enumerate}
+	\item Iedere vrachtwagen in een vloot rapporteert de locatie van de GPS naar Kafka. Iedere vrachtwagen zal telkens, iedere 20 seconden, naar dezelfde topic schrijven. Het bericht omvat de huidige coördinaten.
+	\item De data van dezelfde truck moet in dezelde partitie worden opgeslaan.
+	\item Bij verschillende partities is er geen garantie dat een vrachtwagen telkens naar dezelfde partitie zal schrijven.
+\end{enumerate}}
+
+
+\subsubsection{Kenmerken}
+
+Kafka bezit vier belangrijke kenmerken:
+
+\begin{itemize}
+	\item De offset is enkel geldig binnen een gekozen topic partitie.
+	\item De volgorde is enkel binnen een partitie gegarandeerd. Als je als consumer een topic leest, dan gebeurt dit hoogstwaarschijnlijk niet in dezelfde volgorde als hoe ze werden gepost.
+	\item Data kan opstapelen. Als er niets wordt toegevoegd of gelezen, dan zal Kafka alles ouder dan een week verwijderen. Deze periode kan worden veranderd. Een tweede mogelijkheid is om een capaciteitslimiet in te stellen, bijvoorbeeld wanneer de partitie te groot is.
+	\item Data is immutable. Eenmaal geschreven, kan de data niet meer worden aangepast.
+	\item Als er geen key wordt meegegeven, dan kiest Kafka zelf een partitie om de data naar uit te schrijven. Deze keuze gebeurt willekeurig om de partities even groot te houden. Op de key wordt er een hash berekend. 
+\end{itemize}
 
 \section{Rollen}
 
 \subsection{Broker}
-= Computer
 
-* Elke broker een ID geven.
-* Elk bestaat uit partities 
-* --> weinig controle over de brokers: geen master/slave verhouding.
-* Als je één broker kent, dan kan je verbinding maken met alles binnen de cluster.
-* Per standaard: drie brokers.
-* één broker ook mogelijk: geen schaalbaarheid.
+Iedere Kafka-cluster bestaat uit minstens één \textit{broker}.  
 
-Partitie toekennen aan broker(s):
-* Algoritme
+\begin{itemize}
+	\item Een \textit{broker} is een server met een eigen ID en topic-partitions.
+	\item Er is geen specifieke master-broker. Er wordt verbonden met een willekeurige broker die de metadata van de cluster bijhoudt. Verbinden met één broker staat gelijk aan verbinden met de hele cluster.
+	\item Bij enkel één broker heb je geen fouttolerantie. Pas vanaf twee brokers biedt je systeem fouttolerantie aan. Per standaard zijn er drie brokers.
+	\item Het toekennen van een partitie aan een broker gebeurt o.b.v. een algoritme.
+\end{itemize}
 
-\subsection{Leader}
+\subsubsection{Data partitioneren over verschillende brokers}
 
-Leader/followers:
-* Leaders hebben volledige toegang tot de data.
-* Moet worden aangesproken als er iets in de partitie moet worden veranderd
+Er zijn drie brokers en twee topics. Topic A heeft drie partities en topic B heeft twee partities. Kafka probeert altijd om de partities van één topic op verschillende brokers te zetten. Verschillende topics hoeven niet hetzelfde aantal partities te hebben. Als een broker uitvalt, dan zal replicatie hier de situatie redden. 
 
-\subsection{Follower}
+\subsubsection{Replicatie}
 
-Volgers hebben geen toegang. 
-* Gedrag kan worden beïnvloed.
-* Een applicatie binnen dezelfde rack als een follower, van de data dat die nodig heeft, zal de volger aanspreken i.p.v. leader.
+Als er één broker uitvalt, dan is de data beschikbaar op een andere broker. Hou rekening met de hoeveelheid data dat er op een systeem wordt bijgehouden. De replicatiefactor wijst aan hoeveel keer de data moet worden bijgehouden. Data die van enorm belang zijn, krijgt best een hoge replicatiefactor toegekend, terwijl eerder dev-gerelateerde zaken zoals logging kan op een replicatiefactor van één worden gehouden.
 
+\subsection{Data synchroon houden met een \textit{partition leader}}
 
-\section{Data Replication}
-Het repliceren van data:
-* Fouttolerantie: voorkomen dat data verloren raakt als het systeem van een partitie defunct gaat.
-* Partitioneren verhoogt de schade bij een fout.
+Er wordt het onderscheid gemaakt tussen leaders en followers:
 
-Replication factor:
-* Factor hoger dan één, maar niet te hoog!
-* Broker kapot --> andere broker bezit de data
+\subsubsection{Leaders}
 
-**Out-of-sync**: De volger beschikt niet meer over de meeste recente data.
+Een partition leader wordt op één broker tegelijkertijd toegekend. Er kan niet meer dan één broker leider zijn van een partitie.  Verder bezit een leider twee belangrijke kenmerken.
 
-**Fetch requests**: Geef mij alles dat begint vanaf deze offset.
-* De replica weet hoeveel offsets die achterloopt op de leider.
-* **In-sync**: er is geen verschil tussen de replica en de leider. Enkel zij komen in aanmerking om leider te worden.
-* Als de leider geen fetch request ziet voor meer dan 10 seconden == Out-of-Sync (Mortis)
+\begin{itemize}
+	\item De leider heeft volledige toegang tot de data en is de enige die data kan sturen en ontvangen. Daarmee is de leider diegene die wordt aangesproken wanneer er iets in de data moet worden aangepast.
+	\item De leider kent de data-achterstand van de replica's. Met fetch requests kunnen volgers achterhalen hoeveel data ze nog moeten inhalen.
+	\item De leider zal de status van \textit{out-of-sync} toekennen aan volgers die na tien seconden niets laten weten.
+\end{itemize}
+
+\subsubsection{Follower}
+
+De andere brokers volgen de leader en worden followers genoemd. De followers hebben geen toegang tot de data, maar luisteren enkel naar de aanpassingen van de leader. Een applicatie kan, binnen dezelfde databankrack van de leader, een volger aanspreken. Dit gebeurt enkel wanneer het luisteren naar de volger resulteert in het snelst en meest correct ophalen van de data. Hiervoor moet de follower wel in-sync zijn. De volgers sturen \textit{fetch requests} naar de leader om de lokale data te updaten met de meest recente versie.
+
+\subsubsection{Bij het uitvallen van een leader}
+
+Wanneer een leader opeens uitvalt, dan wordt er een broker als leader van een partitie toegekend. Dit gebeurt enkel als de replica \textit{in-sync} is met de data. Er is een verschil met in-sync replica's en out-of-sync replica's.
+
+\begin{itemize}
+	\item Een \textit{in-sync} replica is een replica waarbij er geen verschil is tussen de replica en de leider. Zij bezitten de meest recente data. Enkel in-sync replica's komen in aanmerking om leider te worden.
+	\item Een \textit{out-of-sync} replica beschikt niet meer over de meeste recente data. De leader bepaalt wie \textit{out-of-sync} is.
+\end{itemize}
 
 \subsection{Producer}
-* Schrijft/verstuurt data naar de topic(s).
-* Zal automatisch opnieuw proberen.
+Een producer weet, afhankelijk van de metadata, naar welk topic en partitie zij zal sturen. Veel van de moeilijkheden worden voor de producer verborgen. 
 
-| Hoe achterhalen of een bericht is toegekomen: | -- | |
-| -- | -- | -- |
-| Bericht versturen + schietgebedje | ack=0 | Unreliable, maar snel. |
-| Bericht versturen + wachten op bevestiging | acks=1 | Deels geruststellend. |
-| Bericht versturen en wachten tot de leider + in-sync replicas het bericht hebben ontvangen. | acks=all | Volledige geruststelling, maar gevaarlijk als er géén enkele replica in-sync is. Geen in-sync replicas: enkel de leader wordt geüpdatet. Als er géén in-sync replica's zijn is alles *'goed'* verlopen. Dit voorkom je door *min in-sync replica's* op twee te plaatsen. Nooit hetzelfde getal als je replication factor (vb.: 2 & 2), want dan verwacht je dat je geen trage volgers hebt. |
+\subsubsection{Configuratie}
+Belangrijke configuratie is wanneer de producer iets ziet als geslaagd. Er zijn drie verschillende waarden:
+
+\begin{itemize}
+	\item acks=0 wijst erop dat de producer een bericht verstuurd en verder niets doet. De data verzenden is voldoende. Het is niet betrouwbaar, maar wel snel. Dit is interessant bij sensordata, maar minder interessant bij een banktransactie.
+	\item acks=1 wijst erop dat de producer een bericht verstuurd én wacht op bevestiging van de broker. Dit leidt tot deelse geruststelling, want de dataverlies is beperkt. De producer geen weet op wat er na die stap gebeurt én of de data bij de \textit{in-sync replica's} is terechtgekomen.
+	\item acks=all wijst erop dat alle producers wachten op de leider, en alle \textit{in-sync replicas} moeten de data ontvangen hebben. In het geval van minstens één \textit{in-sync replica} is de producer zeker dat de data in minstens twee buffers zijn opgeslaan. 
+	\item min.insync.replicas=1 is een optionele parameter. Hierbij wordt er ingesteld hoeveel \textit{insync-replica's} er per broker moet zijn ingesteld.
+	\begin{itemize}
+		\item Replicatiefactor 3 met min-insync-replicas van 1 is gevaarlijk, want dat geeft aan dat de data verloren zijn wanneer de leader uitvalt. De producer zal denken dat het bericht is toegekomen.
+		\item Replicatiefactor drie met min-insync-replicas van 2 wilt zeggen er minstens één \textit{out-of-sync} volger wordt toegelaten.
+		\item Replicatiefactor 3 met min-insync-replicas van 3 is functioneel ok, maar de beschikbaarheid van het systeem zal \textit{tanken}. Hier verwacht je dat je géén trage volgers zal hebben.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Keys}
+
+Per boodschap wordt er een key verstuurd. Alle boodschappen met dezelfde sleutel zal naar dezelfde partitie worden verstuurd. Als er geen specifieke requirement is, dan wordt de key weggelaten. Het systeem zal de load verdelen, met behulp van een \textit{round robin} manier, over de verschillende brokers.
 
 \subsection{Consumer}
-* Data lezen van de topic(s)
-* Toekennen aan partitie:
-* Speciale topic binnen Kafka: Consumer offset.
 
+Consumers lezen van één of meer topics. De consumers worden per partitie toegekend. Als er een fout in de cluster voordoet, dan zullen de consumers zich daar automatisch van herstellen. Data wordt gelezen in een bepaalde volgorde in een partitie. Over de partities heen is er geen garantie dat de volgorde parallel loopt of identiek is.
 
-Consumer offset:
-* De staat van topics.
-* Logboek: "ik heb de messages t.e.m. 50 gelezen". 
-* Achterhalen vanaf waar de consumer berichten moet verwerken.
+\subsubsection{Consumer group}
 
-## Delivery Semantics
-* "Wat kan een consumer doen om het bericht te verwerken?"
-* "Wanneer vertel je Kafka dat je klaar bent met het verwerken van een bericht?"
+Een groep wordt bijgehouden in de vorm van een applicatie. Alle consumers in een groep krijgen dezelfde ID toegekend. Iedere applicatie, met verschillende consumers, zal lezen van partities die de applicatie werd toegewezen. De partities worden niet onderling verdeeld. Een consumer zal altijd een volledige partitie benutten. Als er een partitie bijkomt, dan kan er een derde consumer worden toegevoegd. Het is zinloos om meer consumers te hebben, dan partities. Bij vier consumers en drie partities zal één consumer geen werk kunnen verrichten. Het aantal partities is de bovengrens voor het parallelisme dat een systeem kan bereiken.
 
+\subsubsection{Consumer offset}
 
-## Zookeeper
-* leader-follower architecture
+Binnen Kafka is er een speciale topic, namelijk de \textit{consumer offset}. Dit is de staat van de topics per consumer. De analogie met een logboek wordt gelegd. Als de consumer alle data heeft verwerkt, dan moet de offset worden verlegd voor het lezen van de eerstvolgende offset. Het moment wanneer de offset wordt gecommit speelt een rol over hoeveel keer een bericht zal worden verwerkt. Alle gelezen berichten worden bijgehouden en zo heeft het systeem weet vanaf waar een consumer berichten mag beginnen verwerken. 
+
+\subsection{Delivery Semantics}
+
+Er zijn drie verschillende delivery semantics:
+
+\begin{itemize}
+	\item \textit{At most once} impliceert dat de boodschap nooit twee keer zal verwerkt worden. De kans is dat de boodschap één keer werd verwerkt, maar ook dat de consumer géén boodschap heeft verwerkt.
+	\item \textit{At least once} wijst erop dat de boodschap zeker één keer werd verwerkt. Meerdere keren is mogelijk. Als de consumer uitvalt voor de commit, dan wordt de boodschap opnieuw verwerkt. Afhankelijk van de applicatie, idempotent of niet, dan kan dit worden gezien als een negatief. 
+	\item \textit{Exactly once} betekent dat het bericht noch minder noch meer dan één keer mag worden gelezen.
+\end{itemize}
+
+\subsubsection{Broker Discovery}
+
+Het maakt niet uit met welke broker er een verbinding wordt opgestart. De client zal een verbinding leggen met eender welke broker. Welke maakt niet uit, want je bent met de cluster verbonden als je met eender welke broker een verbinding kan opstarten. Iedere broker houdt metadata bij.
+
+\subsection{Zookeeper}
+
+Als je Kafka wilt draaien in productie, dan wordt Zookeeper aangeraden. Zookeeper wordt gebruikt om Kafka te beheren. Enkele functies van Zookeeper:
+
+\begin{itemize}
+	\item Zookeeper houdt de brokers bij.
+	\item Zookeeper voert het leader-election-algoritme uit. Als er een topic online/offline wordt gehaald, dan loopt dit eerst naar Zookeeper.
+\end{itemize}}
+
+\subsubsection{Oppositie}
+
+Zookeeper is op zich ook een gedistribueerd systeem. Nu wordt er gewerkt om Kafka zonder Zookeeper te laten draaien, maar dit werkt voorlopig enkel binnen een testomgeving.
 
 
 \section{Labo}

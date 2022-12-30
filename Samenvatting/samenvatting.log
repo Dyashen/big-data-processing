@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  29 DEC 2022 11:15
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  30 DEC 2022 15:55
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -5396,75 +5396,42 @@ Hoofdstuk 5.
 [47
 
 ]
-samenvatting.tex:1682: Misplaced alignment tab character &.
-l.1682 ...etal als je replication factor (vb.: 2 &
-                                                   2), want dan verwacht je ...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
+samenvatting.tex:1656: Too many }'s.
+l.1656 \end{enumerate}}
+                       
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
 
-samenvatting.tex:1695: You can't use `macro parameter character #' in vertical 
-mode.
-l.1695 #
-        # Delivery Semantics
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-samenvatting.tex:1695: You can't use `macro parameter character #' in vertical 
-mode.
-l.1695 ##
-          Delivery Semantics
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-samenvatting.tex:1700: You can't use `macro parameter character #' in vertical 
-mode.
-l.1700 #
-        # Zookeeper
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
-
-samenvatting.tex:1700: You can't use `macro parameter character #' in vertical 
-mode.
-l.1700 ##
-          Zookeeper
-Sorry, but I'm not programmed to handle this case;
-I'll just pretend that you didn't ask for it.
-If you're in the wrong mode, you might be able to
-return to the right one by typing `I}' or `I$' or `I\par'.
+[48] [49] [50] [51]
+samenvatting.tex:1774: Too many }'s.
+l.1774 \end{itemize}}
+                     
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
 
 
-Overfull \hbox (44.61885pt too wide) in paragraph at lines 1708--1713
+Overfull \hbox (44.61885pt too wide) in paragraph at lines 1785--1790
 []\TU/Montserrat(0)/m/n/10 “‘cmd kafka-topics –bootstrap-server kafka1:19092 –l
 ist kafka-topics –bootstrap-server kafka2:19093
  []
 
-[48]
-Overfull \hbox (14.99216pt too wide) in paragraph at lines 1726--1730
+
+Overfull \hbox (14.99216pt too wide) in paragraph at lines 1803--1807
 []\TU/Montserrat(0)/m/n/10 Nieuwe messages toevoegen: “‘cmd kafka-console-produ
 cer –bootstrap-server kafka1:19092
  []
 
-[49] (samenvatting.aux)
+[52] (samenvatting.aux)
 Package rerunfilecheck Info: File `samenvatting.out' has not changed.
-(rerunfilecheck)             Checksum: 5CCC30EF472449E88BBCB5526D1E7F25;14418.
+(rerunfilecheck)             Checksum: 0045D20CB0D6EA093EF8489987F904EF;14381.
  ) 
 Here is how much of TeX's memory you used:
- 15379 strings out of 410532
- 291517 string characters out of 2813299
- 1102107 words of memory out of 3000000
- 36320 multiletter control sequences out of 15000+600000
- 473811 words of font info for 84 fonts, out of 8000000 for 9000
+ 15377 strings out of 410532
+ 291560 string characters out of 2813299
+ 1102104 words of memory out of 3000000
+ 36317 multiletter control sequences out of 15000+600000
+ 473819 words of font info for 85 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  72i,6n,85p,970b,2058s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on samenvatting.pdf (49 pages).
+Output written on samenvatting.pdf (52 pages).
