@@ -1,3 +1,3 @@
 # Big Data Processing
 
-Klik [hier](Samenvatting/samenvatting.pdf) om naar de samenvatting te gaan.
+Klik [hier](Samenvatting/samenvatting-big-data-processing.pdf) om naar de samenvatting te gaan.
