@@ -13,209 +13,211 @@
 \contentsline {subsection}{\numberline {1.3.2}Niet-betrouwbare netwerken}{7}{subsection.1.3.2}%
 \contentsline {subsection}{\numberline {1.3.3}Niet-betrouwbare tijdsindicaties}{8}{subsection.1.3.3}%
 \contentsline {subsection}{\numberline {1.3.4}Onderlinge onzekerheid}{8}{subsection.1.3.4}%
+\contentsline {subsubsection}{Split-brain}{8}{section*.2}%
+\contentsline {subsubsection}{Tweegeneralenprobleem}{8}{section*.3}%
 \contentsline {section}{\numberline {1.4}Replication en partitioning}{8}{section.1.4}%
 \contentsline {subsection}{\numberline {1.4.1}Partitionering}{8}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Replication}{8}{subsection.1.4.2}%
-\contentsline {subsubsection}{Replication-lag}{9}{section*.2}%
-\contentsline {subsubsection}{Replicatiefouten}{9}{section*.3}%
+\contentsline {subsection}{\numberline {1.4.2}Replication}{9}{subsection.1.4.2}%
+\contentsline {subsubsection}{Replication-lag}{9}{section*.4}%
+\contentsline {subsubsection}{Replicatiefouten}{9}{section*.5}%
 \contentsline {subsection}{\numberline {1.4.3}Replicatie en partitionering combineren}{10}{subsection.1.4.3}%
 \contentsline {section}{\numberline {1.5}Request routing}{12}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Hadoop Filesystem}{13}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Inleiding}{13}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Hadoop stack}{13}{subsection.2.1.1}%
-\contentsline {section}{\numberline {2.2}Hadoop filesystem}{13}{section.2.2}%
-\contentsline {subsubsection}{Algemeen}{13}{section*.4}%
-\contentsline {subsubsection}{Designprincipes}{13}{section*.5}%
-\contentsline {subsubsection}{Anti-patterns}{14}{section*.6}%
-\contentsline {section}{\numberline {2.3}Hadoop-onderdelen}{15}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}NameNode}{15}{subsection.2.3.1}%
-\contentsline {subsubsection}{Opslag voor metadata}{15}{section*.7}%
-\contentsline {subsubsection}{Werking NameNode}{15}{section*.8}%
-\contentsline {subsection}{\numberline {2.3.2}DataNode}{16}{subsection.2.3.2}%
-\contentsline {subsubsection}{Werking DataNode}{16}{section*.9}%
-\contentsline {section}{\numberline {2.4}Single-point-of-failure}{16}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Bescherming NameNode}{17}{subsection.2.4.1}%
-\contentsline {section}{\numberline {2.5}HDFS Blokken}{17}{section.2.5}%
-\contentsline {subsubsection}{Preventie}{17}{section*.10}%
-\contentsline {section}{\numberline {2.6}Anatomy}{17}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Anatomy of a File Read}{17}{subsection.2.6.1}%
-\contentsline {subsubsection}{Rollen}{18}{section*.11}%
-\contentsline {subsection}{\numberline {2.6.2}Anatomy of a File Write}{18}{subsection.2.6.2}%
-\contentsline {subsubsection}{Rollen}{19}{section*.12}%
-\contentsline {subsubsection}{Foutafhandeling}{20}{section*.13}%
-\contentsline {section}{\numberline {2.7}Command-Line}{20}{section.2.7}%
-\contentsline {subsubsection}{Kopiëren en ophalen}{20}{section*.14}%
-\contentsline {subsubsection}{Nieuwe elementen aanmaken}{20}{section*.15}%
-\contentsline {section}{\numberline {2.8}MapReduce}{21}{section.2.8}%
-\contentsline {subsubsection}{Voordelen van MapReduce}{21}{section*.16}%
-\contentsline {subsection}{\numberline {2.8.1}Data Flow}{21}{subsection.2.8.1}%
-\contentsline {subsection}{\numberline {2.8.2}Mapping}{21}{subsection.2.8.2}%
-\contentsline {subsubsection}{Voorbeeld luchttemperatuur}{22}{section*.17}%
-\contentsline {subsection}{\numberline {2.8.3}Shuffling}{22}{subsection.2.8.3}%
-\contentsline {subsection}{\numberline {2.8.4}Reduce}{22}{subsection.2.8.4}%
-\contentsline {subsubsection}{Voorbeeld luchttemperatuur}{22}{section*.18}%
-\contentsline {section}{\numberline {2.9}Java MapReduce}{22}{section.2.9}%
-\contentsline {subsubsection}{WordCount-oefening}{23}{section*.19}%
-\contentsline {subsection}{\numberline {2.9.1}Mapper-klasse}{24}{subsection.2.9.1}%
-\contentsline {subsection}{\numberline {2.9.2}Reduce-klasse}{24}{subsection.2.9.2}%
-\contentsline {subsection}{\numberline {2.9.3}Main-methode}{24}{subsection.2.9.3}%
-\contentsline {subsubsection}{Inputpaden}{24}{section*.20}%
-\contentsline {subsubsection}{Outputpaden}{24}{section*.21}%
-\contentsline {subsubsection}{Afwerking}{24}{section*.22}%
-\contentsline {subsection}{\numberline {2.9.4}Development Environment}{25}{subsection.2.9.4}%
-\contentsline {subsubsection}{POM-file}{25}{section*.23}%
-\contentsline {subsubsection}{JAR genereren}{25}{section*.24}%
-\contentsline {subsubsection}{JAR in een Hadoop NameNode plaatsen.}{25}{section*.25}%
-\contentsline {section}{\numberline {2.10}YARN}{25}{section.2.10}%
-\contentsline {subsection}{\numberline {2.10.1}Algemeen}{25}{subsection.2.10.1}%
-\contentsline {subsubsection}{Extra ondersteuning}{25}{section*.26}%
-\contentsline {subsection}{\numberline {2.10.2}Core Services}{26}{subsection.2.10.2}%
-\contentsline {subsection}{\numberline {2.10.3}YARN Application run}{26}{subsection.2.10.3}%
-\contentsline {subsection}{\numberline {2.10.4}Resource requests}{27}{subsection.2.10.4}%
-\contentsline {subsection}{\numberline {2.10.5}Scheduling}{27}{subsection.2.10.5}%
-\contentsline {subsubsection}{Verschillende schedulers}{27}{section*.27}%
-\contentsline {chapter}{\numberline {3}Spark}{28}{chapter.3}%
-\contentsline {subsubsection}{Vooraf}{28}{section*.28}%
-\contentsline {subsubsection}{Algemene voordelen}{28}{section*.29}%
-\contentsline {section}{\numberline {3.1}Spark Application Architecture}{28}{section.3.1}%
-\contentsline {subsubsection}{Partitionering}{29}{section*.30}%
-\contentsline {section}{\numberline {3.2}Spark in Java}{29}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Dataframe}{29}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Transformaties}{29}{subsection.3.2.2}%
-\contentsline {subsubsection}{Lazy Evaluation}{30}{section*.31}%
-\contentsline {subsection}{\numberline {3.2.3}Acties}{30}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Physical plan}{30}{subsection.3.2.4}%
-\contentsline {subsubsection}{Het belang van een physical plan}{30}{section*.32}%
-\contentsline {section}{\numberline {3.3}Spark Libraries}{30}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Integratie met opslagsystemen}{31}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Resilient Distributed Dataset}{31}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Spark-applicaties schrijven}{31}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Een dataframe met nieuwe waarden aanmaken.}{31}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Een bestaande dataframe lezen}{32}{subsection.3.4.2}%
-\contentsline {subsubsection}{Schema overerven}{33}{section*.33}%
-\contentsline {subsection}{\numberline {3.4.3}Een dataframe uitschrijven naar een nieuw bestand.}{33}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Dataframe-kolommen inlezen, toevoegen en verwijderen.}{34}{section.3.5}%
-\contentsline {subsubsection}{Kolommen toevoegen}{34}{section*.34}%
-\contentsline {subsubsection}{Kolommen selecteren}{34}{section*.35}%
-\contentsline {subsubsection}{Kolommen verwijderen}{35}{section*.36}%
-\contentsline {subsubsection}{Kolommen hernoemen}{35}{section*.37}%
-\contentsline {subsection}{\numberline {3.5.1}Dataframes filteren}{35}{subsection.3.5.1}%
-\contentsline {subsubsection}{Voorbeelden van de studentendataset}{35}{section*.38}%
-\contentsline {subsection}{\numberline {3.5.2}Aggregaties uitvoeren op dataframes}{35}{subsection.3.5.2}%
-\contentsline {subsubsection}{Voorbeelden van de studenten-dataset}{35}{section*.39}%
-\contentsline {subsubsection}{Voorbeelden van de ViewingFigures-oefening}{36}{section*.40}%
-\contentsline {subsection}{\numberline {3.5.3}User Defined Functions}{36}{subsection.3.5.3}%
-\contentsline {chapter}{\numberline {4}Spark Streaming}{37}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Stream Processing}{37}{section.4.1}%
-\contentsline {subsubsection}{Structured Spark batch processing}{37}{section*.41}%
-\contentsline {subsection}{\numberline {4.1.1}Spark Stream Processing}{37}{subsection.4.1.1}%
-\contentsline {subsubsection}{Data ophalen met sockets}{37}{section*.42}%
-\contentsline {subsubsection}{Output sink}{38}{section*.43}%
-\contentsline {subsection}{\numberline {4.1.2}Outputmodes}{38}{subsection.4.1.2}%
-\contentsline {subsubsection}{Voorbeeld stock prices}{38}{section*.44}%
-\contentsline {section}{\numberline {4.2}Code}{38}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Inputbron bepalen}{38}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Data omzetten}{39}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Outputsink -en modus bepalen}{39}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Processingdetails bepalen}{39}{subsection.4.2.4}%
-\contentsline {subsubsection}{Code}{40}{section*.45}%
-\contentsline {subsection}{\numberline {4.2.5}Query starten}{40}{subsection.4.2.5}%
-\contentsline {section}{\numberline {4.3}Sources \& Sinks}{40}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Bestanden lezen}{40}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Kafka-inhoud lezen}{41}{subsection.4.3.2}%
-\contentsline {subsubsection}{Naar Kafka schrijven.}{41}{section*.46}%
-\contentsline {section}{\numberline {4.4}Aggregations with Event-Time windows}{42}{section.4.4}%
-\contentsline {subsubsection}{Tumbling windows}{42}{section*.47}%
-\contentsline {subsubsection}{Overlapping windows}{42}{section*.48}%
-\contentsline {subsubsection}{WordCount met time interval}{42}{section*.49}%
-\contentsline {subsection}{\numberline {4.4.1}Watermarking}{44}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Streaming joins}{44}{subsection.4.4.2}%
-\contentsline {subsubsection}{Stream-static joins}{45}{section*.50}%
-\contentsline {subsection}{\numberline {4.4.3}Stream-Stream joins}{45}{subsection.4.4.3}%
-\contentsline {subsubsection}{Buffering}{45}{section*.51}%
-\contentsline {section}{\numberline {4.5}Keeping the state bounded}{46}{section.4.5}%
-\contentsline {subsubsection}{State beperken}{46}{section*.52}%
-\contentsline {subsubsection}{State clean-up}{46}{section*.53}%
-\contentsline {subsubsection}{Outer joins with watermarking}{46}{section*.54}%
-\contentsline {chapter}{\numberline {5}Kafka}{48}{chapter.5}%
-\contentsline {subsubsection}{Probleemstellingen}{48}{section*.55}%
-\contentsline {subsubsection}{Introductie Kafka}{48}{section*.56}%
-\contentsline {subsubsection}{Werking}{48}{section*.57}%
-\contentsline {subsubsection}{Voordelen Kafka}{48}{section*.58}%
-\contentsline {subsubsection}{Use cases}{49}{section*.59}%
-\contentsline {section}{\numberline {5.1}Concepten van Kafka}{49}{section.5.1}%
-\contentsline {subsubsection}{Topic}{49}{section*.60}%
-\contentsline {subsubsection}{Partitie}{49}{section*.61}%
-\contentsline {subsubsection}{Voorbeeldcasus}{49}{section*.62}%
-\contentsline {subsubsection}{Kenmerken}{49}{section*.63}%
-\contentsline {section}{\numberline {5.2}Rollen}{50}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Broker}{50}{subsection.5.2.1}%
-\contentsline {subsubsection}{Data partitioneren over verschillende brokers}{50}{section*.64}%
-\contentsline {subsubsection}{Replicatie}{50}{section*.65}%
-\contentsline {subsection}{\numberline {5.2.2}Data synchroon houden met een \textit {partition leader}}{50}{subsection.5.2.2}%
-\contentsline {subsubsection}{Leaders}{50}{section*.66}%
-\contentsline {subsubsection}{Follower}{51}{section*.67}%
-\contentsline {subsubsection}{Bij het uitvallen van een leader}{51}{section*.68}%
-\contentsline {subsection}{\numberline {5.2.3}Producer}{51}{subsection.5.2.3}%
-\contentsline {subsubsection}{Configuratie}{51}{section*.69}%
-\contentsline {subsubsection}{Keys}{52}{section*.70}%
-\contentsline {subsection}{\numberline {5.2.4}Consumer}{52}{subsection.5.2.4}%
-\contentsline {subsubsection}{Consumer group}{52}{section*.71}%
-\contentsline {subsubsection}{Consumer offset}{52}{section*.72}%
-\contentsline {subsection}{\numberline {5.2.5}Delivery Semantics}{52}{subsection.5.2.5}%
-\contentsline {subsubsection}{Broker Discovery}{52}{section*.73}%
-\contentsline {subsection}{\numberline {5.2.6}Zookeeper}{53}{subsection.5.2.6}%
-\contentsline {subsubsection}{Oppositie}{53}{section*.74}%
-\contentsline {section}{\numberline {5.3}Labo}{53}{section.5.3}%
-\contentsline {subsubsection}{Lijst tonen}{53}{section*.75}%
-\contentsline {subsubsection}{Topic aanmaken}{53}{section*.76}%
-\contentsline {subsubsection}{Topic verwijderen}{53}{section*.77}%
-\contentsline {subsection}{\numberline {5.3.1}Producer}{53}{subsection.5.3.1}%
-\contentsline {subsubsection}{Messages aanmaken in bestaande topic}{53}{section*.78}%
-\contentsline {subsubsection}{Messages aanmaken in nieuwe topic}{54}{section*.79}%
-\contentsline {subsection}{\numberline {5.3.2}Consumer}{54}{subsection.5.3.2}%
-\contentsline {subsubsection}{Consumer groups}{54}{section*.80}%
-\contentsline {subsubsection}{Offsets resetten}{54}{section*.81}%
-\contentsline {chapter}{\numberline {6}Kafka Java Programming}{55}{chapter.6}%
-\contentsline {subsubsection}{Dependencies}{55}{section*.82}%
-\contentsline {section}{\numberline {6.1}Producer}{55}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Een Kafka Producer ontwikkelen}{55}{subsection.6.1.1}%
-\contentsline {subsubsection}{Eigenschappen instellen}{55}{section*.83}%
-\contentsline {subsubsection}{Producer aanmaken}{55}{section*.84}%
-\contentsline {subsubsection}{Data versturen naar Kafka}{56}{section*.85}%
-\contentsline {subsubsection}{Callback gebruiken}{56}{section*.86}%
-\contentsline {subsubsection}{Keys toevoegen aan de producer}{56}{section*.87}%
-\contentsline {subsection}{\numberline {6.1.2}Producer Internals}{56}{subsection.6.1.2}%
-\contentsline {section}{\numberline {6.2}Java Consumer}{57}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Een Java Consumer ontwikkelen}{57}{subsection.6.2.1}%
-\contentsline {subsubsection}{Consumer properties aanmaken}{57}{section*.88}%
-\contentsline {subsubsection}{Een consumer aanmaken}{58}{section*.89}%
-\contentsline {subsubsection}{Een consumer koppelen of abonneren aan één of meerdere topics.}{58}{section*.90}%
-\contentsline {subsubsection}{De consumer in een lus plaatsen}{58}{section*.91}%
-\contentsline {section}{\numberline {6.3}Java Threads}{58}{section.6.3}%
-\contentsline {subsubsection}{Voorbeelden van threads}{59}{section*.92}%
-\contentsline {subsubsection}{Shutdown hook}{59}{section*.93}%
-\contentsline {subsubsection}{Atomic Boolean en het sluiten van de Consumer}{59}{section*.94}%
-\contentsline {section}{\numberline {6.4}Commits en offsets}{60}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Verloren berichten en dubbels}{60}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}API's om de offset te committen}{60}{subsection.6.4.2}%
-\contentsline {subsubsection}{Automatische offset commit}{61}{section*.95}%
-\contentsline {subsubsection}{Synchrone offset commits}{61}{section*.96}%
-\contentsline {subsubsection}{Asynchrone commit}{62}{section*.97}%
-\contentsline {subsubsection}{Het combineren van een synchrone en een asynchrone commit}{62}{section*.98}%
-\contentsline {section}{\numberline {6.5}Apache Avro}{63}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Avro}{63}{subsection.6.5.1}%
-\contentsline {subsubsection}{Voorbeeld Avro schema}{63}{section*.99}%
-\contentsline {subsection}{\numberline {6.5.2}Een klasse aanmaken met Avro}{64}{subsection.6.5.2}%
-\contentsline {subsection}{\numberline {6.5.3}De klasse serializeren}{64}{subsection.6.5.3}%
-\contentsline {subsection}{\numberline {6.5.4}Een klasse deserializeren.}{65}{subsection.6.5.4}%
-\contentsline {subsubsection}{Het aantal gebruikte schema's}{65}{section*.100}%
-\contentsline {subsection}{\numberline {6.5.5}Een klasse deserializeren zonder het aangemaakte User-object}{65}{subsection.6.5.5}%
-\contentsline {subsubsection}{Het aanmaken van de Users}{65}{section*.101}%
-\contentsline {subsubsection}{Gebruikers uitschrijven}{66}{section*.102}%
-\contentsline {subsubsection}{Gebruikers inlezen}{66}{section*.103}%
-\contentsline {subsubsection}{Het uitgeschreven bestand}{66}{section*.104}%
-\contentsline {section}{\numberline {6.6}Het schema-register}{67}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}Werking van een schema-register}{67}{subsection.6.6.1}%
-\contentsline {subsection}{\numberline {6.6.2}Kafka-producer met Avro}{67}{subsection.6.6.2}%
-\contentsline {subsection}{\numberline {6.6.3}Kafka Consumer met Avro}{68}{subsection.6.6.3}%
+\contentsline {chapter}{\numberline {2}Hadoop Filesystem}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Inleiding}{14}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Hadoop stack}{14}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Hadoop filesystem}{14}{section.2.2}%
+\contentsline {subsubsection}{Algemeen}{14}{section*.6}%
+\contentsline {subsubsection}{Designprincipes}{14}{section*.7}%
+\contentsline {subsubsection}{Anti-patterns}{15}{section*.8}%
+\contentsline {section}{\numberline {2.3}Hadoop-onderdelen}{16}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}NameNode}{16}{subsection.2.3.1}%
+\contentsline {subsubsection}{Opslag voor metadata}{16}{section*.9}%
+\contentsline {subsubsection}{Werking NameNode}{16}{section*.10}%
+\contentsline {subsection}{\numberline {2.3.2}DataNode}{17}{subsection.2.3.2}%
+\contentsline {subsubsection}{Werking DataNode}{17}{section*.11}%
+\contentsline {section}{\numberline {2.4}Single-point-of-failure}{17}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Bescherming NameNode}{18}{subsection.2.4.1}%
+\contentsline {section}{\numberline {2.5}HDFS Blokken}{18}{section.2.5}%
+\contentsline {subsubsection}{Preventie}{18}{section*.12}%
+\contentsline {section}{\numberline {2.6}Anatomy}{18}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Anatomy of a File Read}{18}{subsection.2.6.1}%
+\contentsline {subsubsection}{Rollen}{19}{section*.13}%
+\contentsline {subsection}{\numberline {2.6.2}Anatomy of a File Write}{19}{subsection.2.6.2}%
+\contentsline {subsubsection}{Rollen}{20}{section*.14}%
+\contentsline {subsubsection}{Foutafhandeling}{21}{section*.15}%
+\contentsline {section}{\numberline {2.7}Command-Line}{21}{section.2.7}%
+\contentsline {subsubsection}{Kopiëren en ophalen}{21}{section*.16}%
+\contentsline {subsubsection}{Nieuwe elementen aanmaken}{21}{section*.17}%
+\contentsline {section}{\numberline {2.8}MapReduce}{22}{section.2.8}%
+\contentsline {subsubsection}{Voordelen van MapReduce}{22}{section*.18}%
+\contentsline {subsection}{\numberline {2.8.1}Data Flow}{22}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Mapping}{22}{subsection.2.8.2}%
+\contentsline {subsubsection}{Voorbeeld luchttemperatuur}{23}{section*.19}%
+\contentsline {subsection}{\numberline {2.8.3}Shuffling}{23}{subsection.2.8.3}%
+\contentsline {subsection}{\numberline {2.8.4}Reduce}{23}{subsection.2.8.4}%
+\contentsline {subsubsection}{Voorbeeld luchttemperatuur}{23}{section*.20}%
+\contentsline {section}{\numberline {2.9}Java MapReduce}{23}{section.2.9}%
+\contentsline {subsubsection}{WordCount-oefening}{24}{section*.21}%
+\contentsline {subsection}{\numberline {2.9.1}Mapper-klasse}{25}{subsection.2.9.1}%
+\contentsline {subsection}{\numberline {2.9.2}Reduce-klasse}{25}{subsection.2.9.2}%
+\contentsline {subsection}{\numberline {2.9.3}Main-methode}{25}{subsection.2.9.3}%
+\contentsline {subsubsection}{Inputpaden}{25}{section*.22}%
+\contentsline {subsubsection}{Outputpaden}{25}{section*.23}%
+\contentsline {subsubsection}{Afwerking}{25}{section*.24}%
+\contentsline {subsection}{\numberline {2.9.4}Development Environment}{26}{subsection.2.9.4}%
+\contentsline {subsubsection}{POM-file}{26}{section*.25}%
+\contentsline {subsubsection}{JAR genereren}{26}{section*.26}%
+\contentsline {subsubsection}{JAR in een Hadoop NameNode plaatsen.}{26}{section*.27}%
+\contentsline {section}{\numberline {2.10}YARN}{26}{section.2.10}%
+\contentsline {subsection}{\numberline {2.10.1}Algemeen}{26}{subsection.2.10.1}%
+\contentsline {subsubsection}{Extra ondersteuning}{26}{section*.28}%
+\contentsline {subsection}{\numberline {2.10.2}Core Services}{27}{subsection.2.10.2}%
+\contentsline {subsection}{\numberline {2.10.3}YARN Application run}{27}{subsection.2.10.3}%
+\contentsline {subsection}{\numberline {2.10.4}Resource requests}{28}{subsection.2.10.4}%
+\contentsline {subsection}{\numberline {2.10.5}Scheduling}{28}{subsection.2.10.5}%
+\contentsline {subsubsection}{Verschillende schedulers}{28}{section*.29}%
+\contentsline {chapter}{\numberline {3}Spark}{29}{chapter.3}%
+\contentsline {subsubsection}{Vooraf}{29}{section*.30}%
+\contentsline {subsubsection}{Algemene voordelen}{29}{section*.31}%
+\contentsline {section}{\numberline {3.1}Spark Application Architecture}{29}{section.3.1}%
+\contentsline {subsubsection}{Partitionering}{30}{section*.32}%
+\contentsline {section}{\numberline {3.2}Spark in Java}{30}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Dataframe}{30}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Transformaties}{30}{subsection.3.2.2}%
+\contentsline {subsubsection}{Lazy Evaluation}{31}{section*.33}%
+\contentsline {subsection}{\numberline {3.2.3}Acties}{31}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Physical plan}{31}{subsection.3.2.4}%
+\contentsline {subsubsection}{Het belang van een physical plan}{31}{section*.34}%
+\contentsline {section}{\numberline {3.3}Spark Libraries}{31}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Integratie met opslagsystemen}{32}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Resilient Distributed Dataset}{32}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Spark-applicaties schrijven}{32}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Een dataframe met nieuwe waarden aanmaken.}{32}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Een bestaande dataframe lezen}{33}{subsection.3.4.2}%
+\contentsline {subsubsection}{Schema overerven}{34}{section*.35}%
+\contentsline {subsection}{\numberline {3.4.3}Een dataframe uitschrijven naar een nieuw bestand.}{34}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Dataframe-kolommen inlezen, toevoegen en verwijderen.}{35}{section.3.5}%
+\contentsline {subsubsection}{Kolommen toevoegen}{35}{section*.36}%
+\contentsline {subsubsection}{Kolommen selecteren}{35}{section*.37}%
+\contentsline {subsubsection}{Kolommen verwijderen}{36}{section*.38}%
+\contentsline {subsubsection}{Kolommen hernoemen}{36}{section*.39}%
+\contentsline {subsection}{\numberline {3.5.1}Dataframes filteren}{36}{subsection.3.5.1}%
+\contentsline {subsubsection}{Voorbeelden van de studentendataset}{36}{section*.40}%
+\contentsline {subsection}{\numberline {3.5.2}Aggregaties uitvoeren op dataframes}{36}{subsection.3.5.2}%
+\contentsline {subsubsection}{Voorbeelden van de studenten-dataset}{36}{section*.41}%
+\contentsline {subsubsection}{Voorbeelden van de ViewingFigures-oefening}{37}{section*.42}%
+\contentsline {subsection}{\numberline {3.5.3}User Defined Functions}{37}{subsection.3.5.3}%
+\contentsline {chapter}{\numberline {4}Spark Streaming}{38}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Stream Processing}{38}{section.4.1}%
+\contentsline {subsubsection}{Structured Spark batch processing}{38}{section*.43}%
+\contentsline {subsection}{\numberline {4.1.1}Spark Stream Processing}{38}{subsection.4.1.1}%
+\contentsline {subsubsection}{Data ophalen met sockets}{38}{section*.44}%
+\contentsline {subsubsection}{Output sink}{39}{section*.45}%
+\contentsline {subsection}{\numberline {4.1.2}Outputmodes}{39}{subsection.4.1.2}%
+\contentsline {subsubsection}{Voorbeeld stock prices}{39}{section*.46}%
+\contentsline {section}{\numberline {4.2}Code}{39}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Inputbron bepalen}{39}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Data omzetten}{40}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Outputsink -en modus bepalen}{40}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Processingdetails bepalen}{40}{subsection.4.2.4}%
+\contentsline {subsubsection}{Code}{41}{section*.47}%
+\contentsline {subsection}{\numberline {4.2.5}Query starten}{41}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Sources \& Sinks}{41}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Bestanden lezen}{41}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Kafka-inhoud lezen}{42}{subsection.4.3.2}%
+\contentsline {subsubsection}{Naar Kafka schrijven.}{42}{section*.48}%
+\contentsline {section}{\numberline {4.4}Aggregations with Event-Time windows}{43}{section.4.4}%
+\contentsline {subsubsection}{Tumbling windows}{43}{section*.49}%
+\contentsline {subsubsection}{Overlapping windows}{43}{section*.50}%
+\contentsline {subsubsection}{WordCount met time interval}{43}{section*.51}%
+\contentsline {subsection}{\numberline {4.4.1}Watermarking}{45}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Streaming joins}{45}{subsection.4.4.2}%
+\contentsline {subsubsection}{Stream-static joins}{46}{section*.52}%
+\contentsline {subsection}{\numberline {4.4.3}Stream-Stream joins}{46}{subsection.4.4.3}%
+\contentsline {subsubsection}{Buffering}{46}{section*.53}%
+\contentsline {section}{\numberline {4.5}Keeping the state bounded}{47}{section.4.5}%
+\contentsline {subsubsection}{State beperken}{47}{section*.54}%
+\contentsline {subsubsection}{State clean-up}{47}{section*.55}%
+\contentsline {subsubsection}{Outer joins with watermarking}{47}{section*.56}%
+\contentsline {chapter}{\numberline {5}Kafka}{49}{chapter.5}%
+\contentsline {subsubsection}{Probleemstellingen}{49}{section*.57}%
+\contentsline {subsubsection}{Introductie Kafka}{49}{section*.58}%
+\contentsline {subsubsection}{Werking}{49}{section*.59}%
+\contentsline {subsubsection}{Voordelen Kafka}{49}{section*.60}%
+\contentsline {subsubsection}{Use cases}{50}{section*.61}%
+\contentsline {section}{\numberline {5.1}Concepten van Kafka}{50}{section.5.1}%
+\contentsline {subsubsection}{Topic}{50}{section*.62}%
+\contentsline {subsubsection}{Partitie}{50}{section*.63}%
+\contentsline {subsubsection}{Voorbeeldcasus}{50}{section*.64}%
+\contentsline {subsubsection}{Kenmerken}{50}{section*.65}%
+\contentsline {section}{\numberline {5.2}Rollen}{51}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Broker}{51}{subsection.5.2.1}%
+\contentsline {subsubsection}{Data partitioneren over verschillende brokers}{51}{section*.66}%
+\contentsline {subsubsection}{Replicatie}{51}{section*.67}%
+\contentsline {subsection}{\numberline {5.2.2}Data synchroon houden met een \textit {partition leader}}{51}{subsection.5.2.2}%
+\contentsline {subsubsection}{Leaders}{51}{section*.68}%
+\contentsline {subsubsection}{Follower}{52}{section*.69}%
+\contentsline {subsubsection}{Bij het uitvallen van een leader}{52}{section*.70}%
+\contentsline {subsection}{\numberline {5.2.3}Producer}{52}{subsection.5.2.3}%
+\contentsline {subsubsection}{Configuratie}{52}{section*.71}%
+\contentsline {subsubsection}{Keys}{53}{section*.72}%
+\contentsline {subsection}{\numberline {5.2.4}Consumer}{53}{subsection.5.2.4}%
+\contentsline {subsubsection}{Consumer group}{53}{section*.73}%
+\contentsline {subsubsection}{Consumer offset}{53}{section*.74}%
+\contentsline {subsection}{\numberline {5.2.5}Delivery Semantics}{53}{subsection.5.2.5}%
+\contentsline {subsubsection}{Broker Discovery}{53}{section*.75}%
+\contentsline {subsection}{\numberline {5.2.6}Zookeeper}{54}{subsection.5.2.6}%
+\contentsline {subsubsection}{Oppositie}{54}{section*.76}%
+\contentsline {section}{\numberline {5.3}Labo}{54}{section.5.3}%
+\contentsline {subsubsection}{Lijst tonen}{54}{section*.77}%
+\contentsline {subsubsection}{Topic aanmaken}{54}{section*.78}%
+\contentsline {subsubsection}{Topic verwijderen}{54}{section*.79}%
+\contentsline {subsection}{\numberline {5.3.1}Producer}{54}{subsection.5.3.1}%
+\contentsline {subsubsection}{Messages aanmaken in bestaande topic}{54}{section*.80}%
+\contentsline {subsubsection}{Messages aanmaken in nieuwe topic}{55}{section*.81}%
+\contentsline {subsection}{\numberline {5.3.2}Consumer}{55}{subsection.5.3.2}%
+\contentsline {subsubsection}{Consumer groups}{55}{section*.82}%
+\contentsline {subsubsection}{Offsets resetten}{55}{section*.83}%
+\contentsline {chapter}{\numberline {6}Kafka Java Programming}{56}{chapter.6}%
+\contentsline {subsubsection}{Dependencies}{56}{section*.84}%
+\contentsline {section}{\numberline {6.1}Producer}{56}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Een Kafka Producer ontwikkelen}{56}{subsection.6.1.1}%
+\contentsline {subsubsection}{Eigenschappen instellen}{56}{section*.85}%
+\contentsline {subsubsection}{Producer aanmaken}{56}{section*.86}%
+\contentsline {subsubsection}{Data versturen naar Kafka}{57}{section*.87}%
+\contentsline {subsubsection}{Callback gebruiken}{57}{section*.88}%
+\contentsline {subsubsection}{Keys toevoegen aan de producer}{57}{section*.89}%
+\contentsline {subsection}{\numberline {6.1.2}Producer Internals}{57}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Java Consumer}{58}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Een Java Consumer ontwikkelen}{58}{subsection.6.2.1}%
+\contentsline {subsubsection}{Consumer properties aanmaken}{58}{section*.90}%
+\contentsline {subsubsection}{Een consumer aanmaken}{59}{section*.91}%
+\contentsline {subsubsection}{Een consumer koppelen of abonneren aan één of meerdere topics.}{59}{section*.92}%
+\contentsline {subsubsection}{De consumer in een lus plaatsen}{59}{section*.93}%
+\contentsline {section}{\numberline {6.3}Java Threads}{59}{section.6.3}%
+\contentsline {subsubsection}{Voorbeelden van threads}{60}{section*.94}%
+\contentsline {subsubsection}{Shutdown hook}{60}{section*.95}%
+\contentsline {subsubsection}{Atomic Boolean en het sluiten van de Consumer}{60}{section*.96}%
+\contentsline {section}{\numberline {6.4}Commits en offsets}{61}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Verloren berichten en dubbels}{61}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}API's om de offset te committen}{61}{subsection.6.4.2}%
+\contentsline {subsubsection}{Automatische offset commit}{62}{section*.97}%
+\contentsline {subsubsection}{Synchrone offset commits}{62}{section*.98}%
+\contentsline {subsubsection}{Asynchrone commit}{63}{section*.99}%
+\contentsline {subsubsection}{Het combineren van een synchrone en een asynchrone commit}{63}{section*.100}%
+\contentsline {section}{\numberline {6.5}Apache Avro}{64}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Avro}{64}{subsection.6.5.1}%
+\contentsline {subsubsection}{Voorbeeld Avro schema}{64}{section*.101}%
+\contentsline {subsection}{\numberline {6.5.2}Een klasse aanmaken met Avro}{65}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}De klasse serializeren}{65}{subsection.6.5.3}%
+\contentsline {subsection}{\numberline {6.5.4}Een klasse deserializeren.}{66}{subsection.6.5.4}%
+\contentsline {subsubsection}{Het aantal gebruikte schema's}{66}{section*.102}%
+\contentsline {subsection}{\numberline {6.5.5}Een klasse deserializeren zonder het aangemaakte User-object}{66}{subsection.6.5.5}%
+\contentsline {subsubsection}{Het aanmaken van de Users}{66}{section*.103}%
+\contentsline {subsubsection}{Gebruikers uitschrijven}{67}{section*.104}%
+\contentsline {subsubsection}{Gebruikers inlezen}{67}{section*.105}%
+\contentsline {subsubsection}{Het uitgeschreven bestand}{67}{section*.106}%
+\contentsline {section}{\numberline {6.6}Het schema-register}{68}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Werking van een schema-register}{68}{subsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.6.2}Kafka-producer met Avro}{68}{subsection.6.6.2}%
+\contentsline {subsection}{\numberline {6.6.3}Kafka Consumer met Avro}{69}{subsection.6.6.3}%

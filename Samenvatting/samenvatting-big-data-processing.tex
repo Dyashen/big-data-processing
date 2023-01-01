@@ -200,18 +200,20 @@ Causality is achterhalen wanneer een event werd uitgevoerd. Concensus is wanneer
 
 Nodes in een gedistribueerd systeem kan enkel veronderstellingen maken. De informatie dat een node bijhoudt verandert regelmatig. Voorbeelden hiervan zijn: klokken die desynchroniseren of nodes die niets terugsturen terwijl ze een update uitvoeren.
 
+\subsubsection{Split-brain}
+
 Split-brain is een concept rond inconsistente data-opslag. De ene helft van het systeem denkt dat iets juist is, terwijl de andere helft van het systeem denkt dat iets anders juist is. Bijvoorbeeld deel A denkt dat systeem 1 de baas is, terwijl deel B denkt dat systeem 2 de baas is.
 
-Het tweegeneralenprobleem bouwt verder op het split-brain concept. Dit weergeeft een scenario waarin beide partijen enkel winnen als ze samenwerken. Elk ander scenario leidt tot verlies. Beide partijen weten niet of de andere partij iets wilt ondernemen. Ze moeten het eerst vragen. De boodschap kan mogelijks niet tot de generaal komen.
+\subsubsection{Tweegeneralenprobleem}
 
-Dit probleem kunnen we toepassen binnen een online webshop. Er zijn drie gevallen:
+Het tweegeneralenprobleem bouwt verder op het split-brain concept. Dit weergeeft een scenario waarin beide partijen enkel winnen als ze samenwerken. Elk ander scenario leidt tot verlies. Beide partijen weten niet of de andere partij iets wilt ondernemen. Ze moeten het eerst vragen. De boodschap kan mogelijks niet tot de generaal komen. Dit probleem kunnen we toepassen binnen een online webshop. Er zijn vier gevallen:
 
-| Online shop | Payments service | Resultaat |
-| -- | -- | -- |
-| verzendt het pakket niet | vraagt geen geld | / |
-| verstuurt het pakket | vraagt geen geld | de shop is hier nadelig |
-| verzendt het pakket niet | vraagt geld | de klant is hier nadelig |
-| verstuurt het pakket | vraagt geld | :D |
+\begin{itemize}
+	\item Als een online shop het pakket niet verstuurd en de klant betaalt geen geld, dan is er geen probleem.
+	\item Als een online shop het pakket wél verstuurd en de klant betaalt geen geld, dan is de shop hier nadelig.
+	\item Als een online shop het pakket niet verstuurd en de klant betaalt wél, dan is de klant hier nadelig.
+	\item Als een online shop het pakket wél verstuurd en de klant betaalt wél, dan is iedereen \textit{happy}.
+\end{itemize}}
 
 \section{Replication en partitioning}
 
@@ -242,14 +244,14 @@ Replication kan synchroon of asynchroon verlopen. Synchroon is wanneer je wacht 
 
 \subsubsection{Replicatiefouten}
 
-Fouten bij synchrone replicatie zijn minder voorkomend, maar de techniek kan gedwarsboomd worden. Zo heb je nog steeds een probleem wanneer een write-operation niet kan worden afgewerkt als één van de volgers niet online is. Je wacht tot de bevestiging van de volgers.
+Fouten bij synchrone replicatie zijn minder voorkomend, maar de techniek kan gedwarsboomd worden. Zo heb je nog steeds een probleem wanneer een write-operation niet kan worden afgewerkt als één van de volgers niet online is. Je wacht tot de bevestiging van de volgers. De twee vaak voorkomende fouten bij asynchrone replicatie zijn monotonic read en read-after-write. 
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{../images/Screenshot_160.png}
 	\caption{Voorbeeld van een fout bij synchrone replicatie.}
 \end{figure}
 
-De twee vaak voorkomende fouten bij asynchrone replicatie zijn monotonic read en read-after-write. 
+
 
 \begin{itemize}
 	\item Read-after-write (RAW) duidt, zoals de naam het aangeeft, op een fout bij het lezen. De client heeft in dit geval een comment geplaatst en vervolgens wordt er een bevestiging gegeven aan de client. Daarna wilt dezelfde gebruiker dezelfde post inlezen, maar die is nog niet opgeslaan door een andere volger. Je wilt dezelfde output krijgen als je hetzelfde in de databank schrijft. Bij RAW is het belangrijk om met een timestamp te werken. Zorg dat je bij een schrijfoperatie alles tot aan een punt moet laten voldoen aan de timestamp. Zo ja, haal de gegevens op en geef ze aan de client. Zo niet, wacht of kijk naar een andere volger.
@@ -286,11 +288,11 @@ We kunnen niet zomaar data in stukken snijden. We moetne hotspots vermijden. Een
 
 De plaats van data achterhalen kan op drie manieren:
 
-1. Iedere node bevat metadata. De client kan een willekeurige knoop contacteren. De knoop weet waar het te zoeken woord is. Hieronder geeft knoop 0 mee dat het te zoeken woord op knoop 2 is.
-
-2. Er is een laag tussen de client en de knopen. De routing-tier bevat metadata.
-
-3. De client heeft directe toegang tot de metadata. Dit wordt het minste gebruikt.
+\begin{enumerate}
+	\item Iedere node bevat metadata. De client kan een willekeurige knoop contacteren. De knoop weet waar het te zoeken woord is. Hieronder geeft knoop 0 mee dat het te zoeken woord op knoop 2 is.
+	\item Er is een laag tussen de client en de knopen. De routing-tier bevat metadata.
+	\item De client heeft directe toegang tot de metadata. Dit wordt het minste gebruikt.
+\end{enumerate}}
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{../images/Screenshot_216.png}
@@ -315,10 +317,13 @@ Het is ontworpen met de gedachten om clusters te kunnen draaien op normale hardw
 \subsection{Hadoop stack}
 
 Een pure hadoop-stack bestaat uit vier onderdelen:
-* Hadoop common: de gedeelde bibliotheken die door de andere modules worden gebruikt. Je ziet dit gedeelte niet. Het is de meeste onderste laag.
-* HDFS is een filesystem. Dit zorgt voor de distributed file storage. Je merkt de delay amper.
-* MapReduce is het processing-gedeelte. MapReduce laat je toe om parallel grote datasets te verwerken.
-* YARN voorkomt dat één element in je cluster alle resources opeet. Dit element zorgt voor request-afhandeling van resourcevragen.
+
+\begin{itemize}
+	\item Hadoop common: de gedeelde bibliotheken die door de andere modules worden gebruikt. Je ziet dit gedeelte niet. Het is de meeste onderste laag.
+	\item HDFS is een filesystem. Dit zorgt voor de distributed file storage. Je merkt de delay amper.
+	\item MapReduce is het processing-gedeelte. MapReduce laat je toe om parallel grote datasets te verwerken.
+	\item YARN voorkomt dat één element in je cluster alle resources opeet. Dit element zorgt voor request-afhandeling van resourcevragen.
+\end{itemize}
 
 \section{Hadoop filesystem}
 
@@ -340,9 +345,7 @@ De data wordt opgeslaan in een cluster van gewone machines. De focus van HDFS li
 	\item HDFS is bedoeld om een historiek uit te bouwen. De data wordt ingezet in data-analyse, waar nauwkeurigheid een rol speelt, dus er mogen geen wijzigingen aan de data worden aangebracht.
 \end{itemize}
 
-Het principe is 'write-once, read-many-times'. Een bestand wordt eenmalig gemaakt. De doorvoer van het systeem is hier belangrijker. De hoeveelheid verwerkte data per tijdseenheid. HDFS op een klassiek filesysteem. Eens de machine bezig is kan je een grote doorvoer hebben. 
-
-Er is sprake van \textbf{append-only fashion}. De gegevens kunnen enkel achteraan worden toegevoegd en niet tussenin of helemaal vooraan. Deze werkwijze helpt om de prestaties en betrouwbaarheid van HDFS te verbeteren, omdat het aantal wijzigingen aan gegevens beperkt. 
+Het principe is 'write-once, read-many-times'. Een bestand wordt eenmalig gemaakt. De doorvoer van het systeem is hier belangrijker. De hoeveelheid verwerkte data per tijdseenheid. HDFS op een klassiek filesysteem. Eens de machine bezig is kan je een grote doorvoer hebben. Er is sprake van \textbf{append-only fashion}. De gegevens kunnen enkel achteraan worden toegevoegd en niet tussenin of helemaal vooraan. Deze werkwijze helpt om de prestaties en betrouwbaarheid van HDFS te verbeteren, omdat het aantal wijzigingen aan gegevens beperkt. 
 
 \subsubsection{Anti-patterns}
 
