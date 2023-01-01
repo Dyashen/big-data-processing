@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  31 DEC 2022 11:36
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2022.11.9)  1 JAN 2023 23:53
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -609,36 +609,36 @@ Package hyperref Info: Link coloring OFF on input line 80.
 
 ] (samenvatting-big-data-processing.toc [2
 
-])
+] [3])
 \tf@toc=\write4
 \openout4 = `samenvatting-big-data-processing.toc'.
 
- [3]
+ [4]
 Hoofdstuk 1.
-[4
+[5
 
-] [5] [6] [7]
+] [6] [7] [8]
 File: ../images/Screenshot_213.png Graphic file (type bmp)
 <../images/Screenshot_213.png>
 File: ../images/Screenshot_160.png Graphic file (type bmp)
 <../images/Screenshot_160.png>
- [8]
+ [9]
 File: ../images/Screenshot_213.png Graphic file (type bmp)
 <../images/Screenshot_213.png>
 File: ../images/Screenshot_214.png Graphic file (type bmp)
 <../images/Screenshot_214.png>
 File: ../images/Screenshot_215.png Graphic file (type bmp)
 <../images/Screenshot_215.png>
- [9] [10]
+ [10] [11]
 File: ../images/Screenshot_216.png Graphic file (type bmp)
 <../images/Screenshot_216.png>
 File: ../images/Screenshot_217.png Graphic file (type bmp)
 <../images/Screenshot_217.png>
- [11]
+ [12]
 Hoofdstuk 2.
 File: images/hadoop-ecosystem-layers.png Graphic file (type bmp)
 <images/hadoop-ecosystem-layers.png>
-[12
+[13
 
 ]
 Overfull \hbox (0.99023pt too wide) in paragraph at lines 340--341
@@ -646,24 +646,24 @@ Overfull \hbox (0.99023pt too wide) in paragraph at lines 340--341
 ata wordt ingezet in data-analyse,
  []
 
-[13] [14]
+[14] [15]
 File: images/hdfs-components-namenode-datanode-datanode.png Graphic file (type 
 bmp)
 <images/hdfs-components-namenode-datanode-datanode.png>
- [15]
+ [16]
 samenvatting-big-data-processing.tex:429: Too many }'s.
 l.429 \end{itemize}}
                     
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
-[16]
+[17]
 File: images/HDFS-Read.png Graphic file (type bmp)
 <images/HDFS-Read.png>
- [17]
+ [18]
 File: images/HDFS-Write.png Graphic file (type bmp)
 <images/HDFS-Write.png>
- [18]
+ [19]
 (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -924,7 +924,7 @@ l.539 hadoop fs -mkdir input
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[19] [20] [21]
+[20] [21] [22]
 File: images/mapper-reducer-mapreduce-job-flow.png Graphic file (type bmp)
 <images/mapper-reducer-mapreduce-job-flow.png>
 
@@ -1500,7 +1500,7 @@ l.650 ^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[22]
+[23]
 
 samenvatting-big-data-processing.tex:651: Package xcolor Error: Undefined color
  `commentsColor'.
@@ -1553,7 +1553,7 @@ l.654 }
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[23]
+[24]
 (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -1808,10 +1808,10 @@ l.714 hadoop fs -cat
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[24]
+[25]
 File: images/yarn-daemons-hadoop-architecture.png Graphic file (type bmp)
 <images/yarn-daemons-hadoop-architecture.png>
- [25] [26]
+ [26] [27]
 Hoofdstuk 3.
 
 Overfull \hbox (3.14354pt too wide) in paragraph at lines 777--778
@@ -1828,7 +1828,7 @@ draaien.
 
 File: images/Screenshot_258.png Graphic file (type bmp)
 <images/Screenshot_258.png>
-[27
+[28
 
 ]
 Overfull \hbox (0.34106pt too wide) in paragraph at lines 821--822
@@ -1838,13 +1838,13 @@ Overfull \hbox (0.34106pt too wide) in paragraph at lines 821--822
 TU/Montserrat(0)/m/n/10 trans-
  []
 
-[28]
+[29]
 Overfull \hbox (5.26108pt too wide) in paragraph at lines 866--867
 \TU/Montserrat(0)/m/n/10 Dit is puur informatief. Spark bevat meerdere librarie
 s om data-analyse of data-berekeningen
  []
 
-[29]
+[30]
 Overfull \hbox (21.23935pt too wide) in paragraph at lines 880--881
 []\TU/Montserrat(0)/m/n/10 HDFS is de populairste keuze voor Big Data, zowel ge
 structureerde als non-gestructureerde
@@ -1889,7 +1889,7 @@ l.910 ^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[30]
+[31]
 
 samenvatting-big-data-processing.tex:911: Package xcolor Error: Undefined color
  `commentsColor'.
@@ -2443,7 +2443,7 @@ l.967 ^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[31]
+[32]
 
 samenvatting-big-data-processing.tex:968: Package xcolor Error: Undefined color
  `commentsColor'.
@@ -2769,7 +2769,7 @@ l.1018 spark.c
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[32]
+[33]
 Overfull \hbox (5.18109pt too wide) in paragraph at lines 1028--1029
 []\TU/Montserrat(0)/m/n/10 Er worden twee kolommen aan de dataset toegevoegd. E
 en expressie of where-clausule
@@ -2983,7 +2983,7 @@ l.1060 df.s
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[33]
+[34]
 
 samenvatting-big-data-processing.tex:1068: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -3349,7 +3349,7 @@ l.1121 Dataset<
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[34]
+[35]
 
 samenvatting-big-data-processing.tex:1122: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -3688,9 +3688,9 @@ l.1161 ^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[35]
+[36]
 Hoofdstuk 4.
-[36
+[37
 
 ]
 Overfull \hbox (12.68439pt too wide) in paragraph at lines 1207--1208
@@ -3704,7 +3704,7 @@ l.1224 \end{enumerate}}
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
-[37]
+[38]
 
 samenvatting-big-data-processing.tex:1237: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -3874,7 +3874,7 @@ l.1272 ^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[38]
+[39]
 samenvatting-big-data-processing.tex:1284: Too many }'s.
 l.1284 \end{itemize}}
                      
@@ -4011,7 +4011,7 @@ l.1307 };
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[39]
+[40]
 
 samenvatting-big-data-processing.tex:1347: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -4389,7 +4389,7 @@ l.1375 spark.c
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[40]
+[41]
 File: images/tumbling.png Graphic file (type bmp)
 <images/tumbling.png>
 File: images/overlapping.png Graphic file (type bmp)
@@ -4432,7 +4432,7 @@ l.1416 Dataset<
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[41]
+[42]
 
 samenvatting-big-data-processing.tex:1416: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -4852,7 +4852,7 @@ l.1447 }
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[42]
+[43]
 File: images/watermarking-in-windowed-grouped-aggregation.png Graphic file (typ
 e bmp)
 <images/watermarking-in-windowed-grouped-aggregation.png>
@@ -4863,7 +4863,7 @@ l.1473 \end{enumerate}}
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
-[43]
+[44]
 
 samenvatting-big-data-processing.tex:1488: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -4955,7 +4955,7 @@ l.1512 Dataset<
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[44]
+[45]
 samenvatting-big-data-processing.tex:1536: Too many }'s.
 l.1536 \end{itemize}}
                      
@@ -5147,7 +5147,7 @@ l.1565 )
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[45]
+[46]
 
 samenvatting-big-data-processing.tex:1577: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -5772,9 +5772,9 @@ l.1586 )
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[46]
+[47]
 Hoofdstuk 5.
-[47
+[48
 
 ]
 samenvatting-big-data-processing.tex:1656: Too many }'s.
@@ -5783,7 +5783,7 @@ l.1656 \end{enumerate}}
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
-[48] [49] [50] [51]
+[49] [50] [51] [52]
 samenvatting-big-data-processing.tex:1774: Too many }'s.
 l.1774 \end{itemize}}
                      
@@ -6249,7 +6249,7 @@ l.1823 ...^I^^I^^I   --producer-property acks=all/
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[52]
+[53]
 (C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -6619,71 +6619,44 @@ l.1871 ^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[53]
+[54]
+Hoofdstuk 6.
 
-samenvatting-big-data-processing.tex:1902: Package xcolor Error: Undefined colo
+samenvatting-big-data-processing.tex:1904: Package xcolor Error: Undefined colo
 r `commentsColor'.
 
 See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1902 Properties 
+l.1904 Properties 
                   kafkaProperties = new Properties();
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-samenvatting-big-data-processing.tex:1903: Package xcolor Error: Undefined colo
+samenvatting-big-data-processing.tex:1905: Package xcolor Error: Undefined colo
 r `commentsColor'.
 
 See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1903 String 
+l.1905 String 
               bootstrapServers = "localhost:9092";
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-samenvatting-big-data-processing.tex:1905: Package xcolor Error: Undefined colo
+samenvatting-big-data-processing.tex:1907: Package xcolor Error: Undefined colo
 r `commentsColor'.
 
 See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1905 kafkaProperties.s
+l.1907 kafkaProperties.s
                         etProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG),...
-
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1905: Package xcolor Error: Undefined colo
-r `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1905 kafkaProperties.s
-                        etProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG),...
-
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1906: Package xcolor Error: Undefined colo
-r `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1906 kafkaProperties.s
-                        etProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFI...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -6697,49 +6670,50 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1907 kafkaProperties.s
+                        etProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG),...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1908: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1908 kafkaProperties.s
+                        etProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFI...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1909: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1909 kafkaProperties.s
                         etProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CON...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-samenvatting-big-data-processing.tex:1913: Package xcolor Error: Undefined colo
+samenvatting-big-data-processing.tex:1915: Package xcolor Error: Undefined colo
 r `commentsColor'.
 
 See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1913 KafkaProducer<
+l.1915 KafkaProducer<
                      String, String> producer = new KafkaProducer<>(kafkaPro...
 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1919: Package xcolor Error: Undefined colo
-r `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1919 ProducerRecord<
-                      String, String> record = new ProducerRecord<>("topic-n...
-
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1920: Package xcolor Error: Undefined colo
-r `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1920 producer.s
-                 end(record);
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6751,8 +6725,9 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1921 producer.f
-                 lush();
+l.1921 ProducerRecord<
+                      String, String> record = new ProducerRecord<>("topic-n...
+
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6764,34 +6739,37 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1922 producer.c
+l.1922 producer.s
+                 end(record);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[55
+
+]
+
+samenvatting-big-data-processing.tex:1923: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1923 producer.f
+                 lush();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1924: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1924 producer.c
                  lose();
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1930: Package xcolor Error: Undefined colo
-r `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1930 producer.s
-                 end(record, new Callback(){
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1931: Package xcolor Error: Undefined colo
-r `commentsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1931 ^^I
-          @Override
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6803,8 +6781,8 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1932 ^^I
-          public void onCompletion(RecordMetaData recordmetadata, Exception e)
+l.1932 producer.s
+                 end(record, new Callback(){
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6817,7 +6795,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1933 ^^I
-          {
+          @Override
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6830,20 +6808,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1934 ^^I
-          ^^Iif (e == null){
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1934: Package xcolor Error: Undefined colo
-r `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1934 ^^I^^Iif 
-                (e == null){
+          public void onCompletion(RecordMetaData recordmetadata, Exception e)
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6856,98 +6821,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1935 ^^I
-          ^^I^^Ilogger.info("Received new metadata"
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ^^I^^I^^Ilogger.info("R
-                              eceived new metadata"
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ^^I^^I^^Ilogger.info("Received 
-                                      new metadata"
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ^^I^^I^^Ilogger.info("Received 
-                                      new metadata"
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ^^I^^I^^Ilogger.info("Received new 
-                                          metadata"
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ^^I^^I^^Ilogger.info("Received new 
-                                          metadata"
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ...^I^^Ilogger.info("Received new metadata"
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1935: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1935 ...^I^^Ilogger.info("Received new metadata"
-                                                  
+          {
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -6960,72 +6834,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1936 ^^I
-          ^^I^^I+ "Topic: " + recordmetadata.topic()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1936: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1936 ^^I^^I^^I+ "T
-                    opic: " + recordmetadata.topic()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1936: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1936 ^^I^^I^^I+ "Topic:
-                          " + recordmetadata.topic()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1936: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1936 ^^I^^I^^I+ "Topic: 
-                          " + recordmetadata.topic()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1936: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1936 ^^I^^I^^I+ "Topic: 
-                          " + recordmetadata.topic()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1936: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1936 ^^I^^I^^I+ "Topic: " 
-                            + recordmetadata.topic()
+          ^^Iif (e == null){
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7038,72 +6847,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1937 ^^I
-          ^^I^^I+ "Partition: " + recordmetadata.partition()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1937: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1937 ^^I^^I^^I+ "P
-                    artition: " + recordmetadata.partition()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1937: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1937 ^^I^^I^^I+ "Partition:
-                              " + recordmetadata.partition()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1937: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1937 ^^I^^I^^I+ "Partition: 
-                              " + recordmetadata.partition()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1937: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1937 ^^I^^I^^I+ "Partition: 
-                              " + recordmetadata.partition()
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1937: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1937 ^^I^^I^^I+ "Partition: " 
-                                + recordmetadata.partition()
+          ^^I^^Ilogger.info("Received new metadata"
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7116,76 +6860,10 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1938 ^^I
-          ^^I^^I+ "Offset: " + recordmetadata.offset());^^I
+          ^^I^^I+ "Topic: " + recordmetadata.topic()
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-
-samenvatting-big-data-processing.tex:1938: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1938 ^^I^^I^^I+ "O
-                    ffset: " + recordmetadata.offset());^^I
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1938: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1938 ^^I^^I^^I+ "Offset:
-                           " + recordmetadata.offset());^^I
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1938: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1938 ^^I^^I^^I+ "Offset: 
-                           " + recordmetadata.offset());^^I
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1938: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1938 ^^I^^I^^I+ "Offset: 
-                           " + recordmetadata.offset());^^I
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1938: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1938 ^^I^^I^^I+ "Offset: " 
-                             + recordmetadata.offset());^^I
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[54]
 
 samenvatting-big-data-processing.tex:1939: Package xcolor Error: Undefined colo
 r `commentsColor'.
@@ -7195,20 +6873,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1939 ^^I
-          ^^I} else {
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1939: Package xcolor Error: Undefined colo
-r `keywordsColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1939 ^^I^^I} else 
-                    {
+          ^^I^^I+ "Partition: " + recordmetadata.partition()
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7221,98 +6886,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1940 ^^I
-          ^^I^^Ilogger.error("Error while producing", e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ^^I^^I^^Ilogger.error("E
-                               rror while producing", e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ^^I^^I^^Ilogger.error("Error 
-                                    while producing", e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ^^I^^I^^Ilogger.error("Error 
-                                    while producing", e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ^^I^^I^^Ilogger.error("Error while 
-                                          producing", e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ^^I^^I^^Ilogger.error("Error while 
-                                          producing", e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ...^^Ilogger.error("Error while producing",
-                                                   e);
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-samenvatting-big-data-processing.tex:1940: Package xcolor Error: Undefined colo
-r `stringColor'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1940 ...^^Ilogger.error("Error while producing",
-                                                   e);
+          ^^I^^I+ "Offset: " + recordmetadata.offset());^^I
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7325,7 +6899,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1941 ^^I
-          ^^I}
+          ^^I} else {
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7338,7 +6912,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.1942 ^^I
-          }
+          ^^I^^Ilogger.error("Error while producing", e);
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -7350,36 +6924,4318 @@ See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1943 })
-         
+l.1943 ^^I
+          ^^I}
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-samenvatting-big-data-processing.tex:1949: Package xcolor Error: Undefined colo
+samenvatting-big-data-processing.tex:1944: Package xcolor Error: Undefined colo
 r `commentsColor'.
 
 See the xcolor package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1949 \end{lstlisting}
-                       
+l.1944 ^^I
+          }
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[55] (samenvatting-big-data-processing.aux)
+
+samenvatting-big-data-processing.tex:1945: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1945 })
+         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1951: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1951 for 
+           (int i = 0; i < NUM_MESSAGES; i++){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1952: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1952 ^^I
+          String topic = "first-topic";
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1953: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1953 ^^I
+          String key = "id_" + Integer.toString(i % 10);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1954: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1954 ^^I
+          String message = "Hello world " + Integer.toString(i);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1955: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1955 ^^I
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1956: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1956 ^^I
+          ProducerRecord<String, String> record = new ProducerRecord<>(topic...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:1957: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1957 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (36.02689pt too wide) in paragraph at lines 1971--1972
+[]\TU/Montserrat(0)/m/n/10 Als de broker erin slaagt om het bericht uit te schr
+ijven, dan wordt er een RecordMetadata-
+ []
+
+[56]
+
+samenvatting-big-data-processing.tex:2009: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2009 private 
+               static final String GROUP_ID = "lecture-app";
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2010: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2010 private 
+               static final String TOPIC = "online";
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2012: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2012 Properties 
+                  properties = new Properties();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2012: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2012 Properties 
+                  properties = new Properties();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2013: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2013 properties.s
+                   etProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127....
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2014: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2014 properties.s
+                   etProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2015: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2015 properties.s
+                   etProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2017: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2017 properties.s
+                   etProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2017: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2017 properties.s
+                   etProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2018: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2018 properties.s
+                   etProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "late...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[57]
+
+samenvatting-big-data-processing.tex:2024: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2024 Consumer<
+                String, String> consumer = new KafkaConsumer<>(properties);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2030: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2030 consumer.s
+                 ubscribe(Collections.singleton(TOPIC));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2048: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2048 while(
+             true){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2049: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2049 ^^I
+          ConsumerRecords<String,String> records = consumer.poll(Duration.of...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2050: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2050 ^^I
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2051: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2051 ^^I
+          for(ConsumerRecord<String,String> record:records){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2052: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2052 ^^I
+          logger.info("key: " + record.key() = ", value: " + record.value());
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2053: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2053 ^^I
+          logger.info("Partition: " + record.partition() + ", Offset:" + rec...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2054: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2054 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2055: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2055 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[58]
+samenvatting-big-data-processing.tex:2069: Too many }'s.
+l.2069 \end{itemize}}
+                     
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+
+samenvatting-big-data-processing.tex:2082: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2082 public 
+              class ShutdownHookExample {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2083: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2083 ^^I
+          public static void main(String[] args){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2084: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2084 ^^I
+          ^^ISystem.out.println("The name of the main thread is: " + Thread....
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2085: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2085 ^^I
+          ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2086: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2086 ^^I
+          ^^IRuntime.getRuntime().addShutdownHook(new Thread() {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2087: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2087 ^^I
+          ^^I^^I@Override
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2088: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2088 ^^I
+          ^^I^^Ipublic void run(){
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2089: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2089 ^^I
+          ^^I^^ISystem.out.println("Shutdownhook is executing in thread: " +...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2090: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2090 ^^I
+          ^^I^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2091: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2091 ^^I
+          ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2092: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2092 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2093: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2093 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2104: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2104 final 
+             AtomicBoolean stopRequested = new AtomicBoolean(false);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2105: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2105 final 
+             Thread mainThread = Thread.currentThread();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2107: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2107 Runtime.g
+                etRuntime().addShutdownHook(new Thread() {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2107: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2107 Runtime.g
+                etRuntime().addShutdownHook(new Thread() {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2108: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2108 ^^I
+          @Override
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2109: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2109 ^^I
+          public void run() {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2110: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2110 ^^I
+          ^^IstopRequested.set(true);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2111: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2111 ^^I
+          ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2112: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2112 ^^I
+          ^^Itry {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2113: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2113 ^^I
+          ^^I^^ImainThread.join();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2114: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2114 ^^I
+          ^^I} catch (InterruptedException e) {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2115: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2115 ^^I
+          ^^I^^Ie.printStackTrace();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2116: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2116 ^^I
+          ^^I} finally {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2117: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2117 ^^I
+          ^^I^^ISystem.out.println("Done waiting for main thread");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2118: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2118 ^^I
+          ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2119: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2119 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2120: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2120 })
+         ;
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2124: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2124 try 
+           {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2125: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2125 ^^I
+          while (!stopRequested.get()) {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2126: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2126 ^^I
+          ^^IConsumerRecords<String, String> records = consumer.poll(Duratio...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[59]
+
+samenvatting-big-data-processing.tex:2127: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2127 ^^I
+          ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2128: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2128 ^^I
+          ^^Ifor (ConsumerRecord<String, String> record : records) {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2129: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2129 ^^I
+          ^^I^^ISystem.out.println("Received record with key: " + record.key...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2130: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2130 ^^I
+          ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2131: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2131 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2132: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2132 } 
+         finally {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2133: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2133 ^^I
+          System.out.println("About to close the consumer.");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2134: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2134 ^^I
+          consumer.close();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2135: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2135 ^^I
+          System.out.println("Consumer closed");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2136: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2136 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+samenvatting-big-data-processing.tex:2146: Too many }'s.
+l.2146 \end{itemize}}
+                     
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+File: images/Screenshot_266.png Graphic file (type bmp)
+<images/Screenshot_266.png>
+[60]
+File: images/kafka-automatic-commit.png Graphic file (type bmp)
+<images/kafka-automatic-commit.png>
+
+
+samenvatting-big-data-processing.tex:2196: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2196 properties.s
+                   etProperty("enable.auto.commit","false");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2198: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2198 try
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2198: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2198 try
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2199: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2199 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2200: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2200 ^^I
+          while(!stopRequested.get())
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[61]
+
+samenvatting-big-data-processing.tex:2201: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2201 ^^I
+          {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2202: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2202 ^^I
+          ^^IConsumerRecords<String,String> records = consumer.poll(...);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2203: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2203 ^^I
+          ^^Itry
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2204: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2204 ^^I
+          ^^I{
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2205: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2205 ^^I
+          ^^I^^Iconsumer.commitSync();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2206: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2206 ^^I
+          ^^I} catch(CommitFailedException e) {LOGGER.error("commit failed",...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2207: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2207 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2208: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2208 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2209: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2209 ^^I
+          finally
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2210: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2210 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2211: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2211 ^^I
+          try
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2212: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2212 ^^I
+          {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2213: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2213 ^^I
+          ^^Iconsumer.commitSync();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2214: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2214 ^^I
+          } catch (CommitFailedException e){ LOGGER.error("commit failed");}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2215: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2215 ^^I
+          consumer.close();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2216: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2216 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2228: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2228 properties.s
+                   etProperty("enable.auto.commit","false");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2230: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2230 try
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[62]
+
+samenvatting-big-data-processing.tex:2230: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2230 try
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2231: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2231 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2232: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2232 ^^I
+          while(!stopRequest.get())
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2233: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2233 ^^I
+          {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2234: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2234 ^^I
+          ^^IConsumerRecords<String,String> records = consumer.poll(...);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2235: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2235 ^^I
+          ^^Iconsumer.commitAsync();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2236: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2236 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2237: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2237 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2238: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2238 ^^I
+          finally
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2239: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2239 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2240: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2240 ^^I
+          try
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2241: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2241 ^^I
+          {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2242: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2242 ^^I
+          ^^Iconsumer.commitSync();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2243: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2243 ^^I
+          } catch (CommitFailedException e) {LOGGER.error("commit failed",e)}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2244: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2244 ^^I
+          ^^I{
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2245: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2245 ^^I
+          ^^I^^Iconsumer.close();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2246: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2246 ^^I
+          ^^I}
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2247: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2247 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting-big-data-processing.tex:2273: Package Listings Error: Couldn't loa
+d requested language.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2273 \begin{lstlisting}[language=JSON]
+                                        
+The following languages weren't loadable:
+    ,json$
+This may cause errors in the sequel.
+
+
+samenvatting-big-data-processing.tex:2273: Package Listings Error: language jso
+n undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2273 \begin{lstlisting}[language=JSON]
+                                        
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2274: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2274 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I
+          "type": "record",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I"t
+            ype": "record",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I"type":
+                  "record",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I"type":
+                  "record",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I"type": "r
+                    ecord",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I"type": "record",
+                           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2275: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2275 ^^I"type": "record",
+                           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I
+          "name": "User",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I"n
+            ame": "User",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I"name":
+                  "User",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I"name":
+                  "User",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I"name": "U
+                    ser",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I"name": "User",
+                         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2276: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2276 ^^I"name": "User",
+                         
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I
+          "namespace": "be.hogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"n
+            amespace": "be.hogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace":
+                       "be.hogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace":
+                       "be.hogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "b
+                         e.hogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.h
+                            ogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.h
+                            ogent.dit.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.hogent.d
+                                   it.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.hogent.d
+                                   it.tin",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.hogent.dit.t
+                                       in",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.hogent.dit.t
+                                       in",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.hogent.dit.tin",
+                                           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2277: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2277 ^^I"namespace": "be.hogent.dit.tin",
+                                           
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2278: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2278 ^^I
+          "fields": [
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2278: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2278 ^^I"f
+            ields": [
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2278: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2278 ^^I"fields":
+                    [
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2278: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2278 ^^I"fields":
+                    [
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I
+          { "name": "name", "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "n
+              ame": "name", "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name":
+                    "name", "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name":
+                    "name", "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "n
+                      ame", "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name",
+                            "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name",
+                            "type": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name", "t
+                              ype": "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name", "type":
+                                    "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name", "type":
+                                    "string" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name", "type": "s
+                                      tring" },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name", "type": "string" 
+                                             },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2279: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2279 ^^I{ "name": "name", "type": "string" 
+                                             },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I
+          { "name": "favorite_number",  "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "n
+              ame": "favorite_number",  "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name":
+                    "favorite_number",  "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name":
+                    "favorite_number",  "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name": "f
+                      avorite_number",  "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name": "favorite_number",
+                                        "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name": "favorite_number",
+                                        "type": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name": "favorite_number",  "t
+                                          ype": ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name": "favorite_number",  "type":
+                                                ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ^^I{ "name": "favorite_number",  "type":
+                                                ["int", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ... "name": "favorite_number",  "type": ["i
+                                                  nt", "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ...me": "favorite_number",  "type": ["int",
+                                                   "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ...me": "favorite_number",  "type": ["int",
+                                                   "null"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ...: "favorite_number",  "type": ["int", "n
+                                                  ull"] },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ...vorite_number",  "type": ["int", "null"]
+                                                   },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2280: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2280 ...vorite_number",  "type": ["int", "null"]
+                                                   },
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I
+          { "name": "favorite_color", "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "n
+              ame": "favorite_color", "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name":
+                    "favorite_color", "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name":
+                    "favorite_color", "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "f
+                      avorite_color", "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "favorite_color",
+                                      "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "favorite_color",
+                                      "type": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "favorite_color", "t
+                                        ype": ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "favorite_color", "type":
+                                              ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "favorite_color", "type":
+                                              ["string", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ^^I{ "name": "favorite_color", "type": ["s
+                                                 tring", "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ...e": "favorite_color", "type": ["string",
+                                                   "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ...e": "favorite_color", "type": ["string",
+                                                   "null"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ... "favorite_color", "type": ["string", "n
+                                                  ull"] }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ...orite_color", "type": ["string", "null"]
+                                                   }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2281: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2281 ...orite_color", "type": ["string", "null"]
+                                                   }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2282: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2282 ^^I
+          ]
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[63]
+
+samenvatting-big-data-processing.tex:2283: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2283 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+samenvatting-big-data-processing.tex:2284: Too many }'s.
+l.2284 \end{lstlisting}}
+                        
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting-big-data-processing.tex:2286: Package Listings Error: Couldn't loa
+d requested language.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2286 \begin{lstlisting}[language=JSON]
+                                        
+The following languages weren't loadable:
+    ,json$
+This may cause errors in the sequel.
+
+
+samenvatting-big-data-processing.tex:2286: Package Listings Error: language jso
+n undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2286 \begin{lstlisting}[language=JSON]
+                                        
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2287: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2287 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I
+          "name": "Alice",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I"n
+            ame": "Alice",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I"name":
+                  "Alice",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I"name":
+                  "Alice",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I"name": "A
+                    lice",
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I"name": "Alice",
+                          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2288: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2288 ^^I"name": "Alice",
+                          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2289: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2289 ^^I
+          "favorite_number": 7,
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2289: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2289 ^^I"f
+            avorite_number": 7,
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2289: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2289 ^^I"favorite_number":
+                             7,
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2289: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2289 ^^I"favorite_number":
+                             7,
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I
+          "favorite_color": "red"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I"f
+            avorite_color": "red"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I"favorite_color":
+                            "red"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I"favorite_color":
+                            "red"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I"favorite_color": "r
+                              ed"
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I"favorite_color": "red"
+                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2290: Package xcolor Error: Undefined colo
+r `stringColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2290 ^^I"favorite_color": "red"
+                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2291: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2291 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2305: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2305 User 
+            user1 = new User();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2306: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2306 user1.s
+              etName("Alice");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2307: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2307 user1.s
+              etFavoriteNumber(7);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2308: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2308 user1.s
+              etColor("red");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2310: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2310 User 
+            user2 = new User("Dylan", 25, "violet");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2310: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2310 User 
+            user2 = new User("Dylan", 25, "violet");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2312: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2312 User 
+            user3 = User.newBuilder().setName("Stijn")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2312: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2312 User 
+            user3 = User.newBuilder().setName("Stijn")
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2313: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2313 ^^I
+          ^^I^^I^^I^^I^^I^^I^^I.setFavouriteColor(null)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2314: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2314 ^^I
+          ^^I^^I^^I^^I^^I^^I^^I.setFavouriteNumber(314)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2315: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2315 ^^I
+          ^^I^^I^^I^^I^^I^^I^^I.build();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (1.56105pt too wide) in paragraph at lines 2323--2324
+\TU/Montserrat(0)/m/n/10 omzetten naar een in-memory serialized format. De Spec
+ificDatumWriter-klasse wordt
+ []
+
+
+samenvatting-big-data-processing.tex:2330: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2330 DatumWriter<
+                   User> userDatumWriter = new SpecificDatumWriter<>(User.cl...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2331: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2331 DataFileWriter<
+                      User> dataFileWriter = new DataFileWriter<>(userDatumW...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2333: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2333 dataFileWriter.c
+                       reate(user1.getSchema(), new File("users.avro"));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2333: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2333 dataFileWriter.c
+                       reate(user1.getSchema(), new File("users.avro"));
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2334: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2334 dataFileWriter.a
+                       ppend(user1);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2335: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2335 dataFileWriter.a
+                       ppend(user2);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2336: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2336 dataFileWriter.a
+                       ppend(user3);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2337: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2337 dataFileWriter.c
+                       lose();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[64]
+
+samenvatting-big-data-processing.tex:2350: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2350 File 
+            file = new File("users.avro");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2351: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2351 DatumReader<
+                   User> userDatumReader = new SpecificDatumReader<>(User.cl...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2352: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2352 DataFileReader<
+                      User> dataFileReader = new DataFileReader<>(file, user...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2353: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2353 User 
+            user = null;
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2354: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2354 while(
+             dataFileReader.hasNext())
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2355: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2355 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2356: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2356 ^^I
+          user = dataFileReader.next(user);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2357: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2357 ^^I
+          System.out.println(user);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2358: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2358 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2359: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2359 dataFileReader.c
+                       lose();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2379: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2379 public 
+              class AvroVoorbeeldZonderUserObject
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2380: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2380 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2381: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2381 ^^I
+          private static final String SCHEMA_FILE_PATH = "src/main/resources...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2382: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2382 ^^I
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2383: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2383 ^^I
+          public static void main(String[] args) throws IOException
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2384: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2384 ^^I
+          {
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2385: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2385 ^^I
+          ^^ISchema schema = new Schema.Parser().parse(
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2386: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2386 ^^I
+          ^^I^^Inew File(SCHEMA_FILE_PATH)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2387: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2387 ^^I
+          ^^I);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2388: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2388 ^^I
+          ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2389: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2389 ^^I
+          ^^IGenericRecord user1 = new GenericData.Record(schema);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2390: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2390 ^^I
+          ^^Iuser1.put("name","Alice");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2391: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2391 ^^I
+          ^^Iuser1.put("favorite_number", 7);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2392: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2392 ^^I
+          ^^Iuser1.put("favorite_color", "red");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2393: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2393 ^^I
+          ^^I
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[65]
+
+samenvatting-big-data-processing.tex:2394: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2394 ^^I
+          ^^IGenericRecord user2 = new GenericData.Record(schema);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2395: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2395 ^^I
+          ^^Iuser2.put("name","Stijn");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2396: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2396 ^^I
+          }
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2397: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2397 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2410: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2410 File 
+            file = new File("users.avro");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2411: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2411 DatumWriter<
+                   GenericRecord> datumWriter = new GenericDatumWriter<>(sch...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2412: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2412 DataFileWriter 
+                      <GenericRecord> dataFileWriter = new DataFileWriter<>(...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2413: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2413 dataFileWriter.c
+                       reate(schema, file);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2414: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2414 dataFileWriter.a
+                       ppend(user1);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2415: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2415 dataFileWriter.a
+                       ppend(user2);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2416: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2416 dataFileWriter.c
+                       lose();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2424: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2424 DatumReader<
+                   GenericRecord> datumReader = new GenericDatumReader<>(sch...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2425: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2425 DataFileReader<
+                      GenericRecord> dataFileReader = new DataFileReader<>(f...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2426: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2426 GenericRecord 
+                     user = null;
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2427: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2427 while(
+             dataFileReader.hasNext())
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2428: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2428 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2429: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2429 ^^I
+          user = dataFileReader.next(user);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2430: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2430 ^^I
+          System.out.println(user);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2431: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2431 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang2.sty
+File: lstlang2.sty 2020/03/24 1.8d listings language file
+)
+(C:\Users\dylan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang3.sty
+File: lstlang3.sty 2020/03/24 1.8d listings language file
+)
+
+samenvatting-big-data-processing.tex:2438: Package Listings Error: Couldn't loa
+d requested language.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2438 \begin{lstlisting}[language=JSON]
+                                        
+The following languages weren't loadable:
+    ,json$
+This may cause errors in the sequel.
+
+
+samenvatting-big-data-processing.tex:2438: Package Listings Error: language jso
+n undefined.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2438 \begin{lstlisting}[language=JSON]
+                                        
+The language is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2439: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2439 {”
+         name”: ”Alyssa”, ”favorite_number”: 256, ”favorite_color”: null}{”n...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2439: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2439 {”n
+          ame”: ”Alyssa”, ”favorite_number”: 256, ”favorite_color”: null}{”n...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (0.56429pt too wide) in paragraph at lines 2439--2440
+[][][][][][][]\TU/Montserrat(0)/m/n/8 ”[][][][][][]””[][][][][][]””[][][][][][]
+[][][][]””[][][][][][][][]”[][]”[][][][][][]””[][][][][][]””[][][] 
+ []
+
+[66]
+File: images/serializer-schema.png Graphic file (type bmp)
+<images/serializer-schema.png>
+ [67]
+
+samenvatting-big-data-processing.tex:2469: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2469 Properties 
+                  props = new Properties();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2471: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2471 props.p
+              ut(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.ka...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2471: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2471 props.p
+              ut(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.ka...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2473: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2473 props.p
+              ut(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.ka...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2473: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2473 props.p
+              ut(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.ka...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2475: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2475 props.p
+              ut("schema.registry.url","http://localhost:8081");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2475: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2475 props.p
+              ut("schema.registry.url","http://localhost:8081");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2477: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2477 Producer<
+                String, be.hogent.dit.tin.avro.User> producer = new KafkaPro...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2477: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2477 Producer<
+                String, be.hogent.dit.tin.avro.User> producer = new KafkaPro...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2479: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2479 List<
+            User> users = new ArrayList<>();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2479: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2479 List<
+            User> users = new ArrayList<>();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2481: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2481 ...
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2481: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2481 ...
+          
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2483: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2483 for 
+           (User user : users)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2483: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2483 for 
+           (User user : users)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2484: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2484 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2485: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2485 ^^I
+          ProducerRecord<String,User> record = new ProducerRecord<>(TOPIC, u...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2486: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2486 ^^I
+          producer.send(record);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2487: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2487 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2489: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2489 producer.f
+                 lush();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2489: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2489 producer.f
+                 lush();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2490: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2490 producer.c
+                 lose();
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2496: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2496 props.p
+              ut(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeseria...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2498: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2498 props.p
+              ut(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, io.confluen...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2498: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2498 props.p
+              ut(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, io.confluen...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2500: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2500 props.p
+              ut("schema.registry.url", "http://localhost:8081");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2500: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2500 props.p
+              ut("schema.registry.url", "http://localhost:8081");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2501: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2501 props.p
+              ut("specific.avro.reader", "true");
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2503: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2503 Consumer<
+                String, User> consumer = new KafkaConsumer<>(props);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2503: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2503 Consumer<
+                String, User> consumer = new KafkaConsumer<>(props);
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2505: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2505 ConsumerRecords<
+                       String, User> records = consumer.poll(Duration.ofMill...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2505: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2505 ConsumerRecords<
+                       String, User> records = consumer.poll(Duration.ofMill...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2507: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2507 for(
+           ConsumerRecord<String,User>record:records)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2507: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2507 for(
+           ConsumerRecord<String,User>record:records)
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2508: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2508 {
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2509: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2509 ^^I
+          System.out.println("Received record with key [" + record.key() + "...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2510: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2510 ^^I
+          System.out.println("Value of this record is " + record.value());
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2511: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2511 ^^I
+          System.out.println("The type of this value is " + record.value().g...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+samenvatting-big-data-processing.tex:2512: Package xcolor Error: Undefined colo
+r `commentsColor'.
+
+See the xcolor package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2512 }
+        
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[68] (samenvatting-big-data-processing.aux)
 Package rerunfilecheck Info: File `samenvatting-big-data-processing.out' has no
 t changed.
-(rerunfilecheck)             Checksum: E71A194DEC420F9B523E9ADF0014523B;14858.
+(rerunfilecheck)             Checksum: 2EDBD1DFBD799D53C7D1F110E2D0D9E5;18141.
  ) 
 Here is how much of TeX's memory you used:
- 15486 strings out of 410532
- 294748 string characters out of 2813299
- 1103172 words of memory out of 3000000
- 36384 multiletter control sequences out of 15000+600000
+ 15616 strings out of 410532
+ 297705 string characters out of 2813299
+ 1107459 words of memory out of 3000000
+ 36493 multiletter control sequences out of 15000+600000
  473819 words of font info for 85 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,6n,85p,990b,2058s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 72i,6n,85p,990b,2060s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
-Output written on samenvatting-big-data-processing.pdf (55 pages).
+Output written on samenvatting-big-data-processing.pdf (68 pages).

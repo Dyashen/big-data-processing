@@ -74,7 +74,7 @@
 \usepackage{fontspec}
 \setmainfont{Montserrat}
 
-\title{Samenvatting Distributed Databanken}
+\title{Samenvatting Big Data Processing}
 
 \author{Dylan {Cluyse}}
 \begin{document}
@@ -83,7 +83,7 @@
 
 \tableofcontents
 	
-\chapter{Gedistribueerde databanksystemen}
+\chapter{Big Data Processing}
 
 \section{Inleiding}
 
@@ -1871,15 +1871,17 @@ kafka-consumer-groups --bootstrap-server kafka1:19092
 						--topic lecture
 \end{lstlisting}
 
-\section{Kafka Java Programming}
+\chapter{Kafka Java Programming}
 
 \subsubsection{Dependencies}
 
 Het pom-bestand heeft twee dependencies nodig: kafka-clients en slf4j-simple.
 
-\subsection{Producer}
+\section{Producer}
 
-Een Java-producer opzetten bestaat uit drie fasen:
+\subsection{Een Kafka Producer ontwikkelen}
+
+Een Kafka Producer in Java ontwikkelen omvat drie fasen:
 
 \begin{enumerate}
 	\item Producer-eigenschappen instellen.
@@ -1926,7 +1928,7 @@ producer.close();
 
 De callback wordt in de send-methode gebruikt om logs bij te houden.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=Java]
 producer.send(record, new Callback(){
 	@Override
 	public void onCompletion(RecordMetaData recordmetadata, Exception e)
@@ -1944,8 +1946,570 @@ producer.send(record, new Callback(){
 \end{lstlisting}
 
 \subsubsection{Keys toevoegen aan de producer}
-\begin{lstlisting}
 
+\begin{lstlisting}[language=Java]
+for (int i = 0; i < NUM_MESSAGES; i++){
+	String topic = "first-topic";
+	String key = "id_" + Integer.toString(i % 10);
+	String message = "Hello world " + Integer.toString(i);
+	
+	ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, message);
+}
+\end{lstlisting}
+
+\subsection{Producer Internals}
+
+Het proces gebeurt in vier stappen:
+
+\begin{enumerate}
+	\item Bij het aanspreken van de send() methode worden de key en value geserializeerd met de serializers. Deze werden verkregen bij het aanmaken van de KafkaProducer.
+	\item  Als de standaardpartitioner niet wordt gespecifieerd, dan wijst Kafka zelf een partitioner aan. De standaardpartitioner is al dan niet eerder beschreven op een \textit{round robin} manier.
+	\item Topic en partitie zijn gekend. De record wordt aan de batch van records toegevoegd. Die worden dan verstuurt naar hetzelfde topic en partitie.
+	\item In een aparte thread worden de batches van records naar de gepaste Kafka broker gestuurd.
+	\item Wanneer de broker de berichten ontvant, dan stuurt die een antwoord terug. Er zijn twee mogelijke scenario's:
+	\begin{itemize}
+		\item Als de broker erin slaagt om het bericht uit te schrijven, dan wordt er een RecordMetadata-object teruggegeven. Die bevat de topic, partitie en record-offset binnen een partitie.
+		\item Als de broker er niet in slaagt om een bericht uit te schrijven, dan wordt er een fout teruggegeven. De producer zal proberen om het bericht enkele keren opnieuw te sturen totdat het opgeeft en een fout teruggeeft. Het aantal keren dat er iets opnieuw wordt gestuurd is een keuze van de ontwikkelaar.
+	\end{itemize}
+	\item Om de producer af te sluiten wordt er gewerkt met \textit{flush} en \textit{close} methoden.
+\end{enumerate}
+
+\section{Java Consumer}
+
+\subsection{Een Java Consumer ontwikkelen}
+
+Een Kafka Consumer in Java ontwikkelen omvat vijf fasen:
+
+\begin{enumerate}
+	\item Properties aanmaken
+	\item Een consumer aanmaken
+	\item De consumer koppelen of abonneren aan één of meerdere topics.
+	\item De consumer in een lus plaatsen.
+	\item De consumer op een gepaste en goedgekeurde manier laten afsluiten.
+\end{enumerate}
+
+\subsubsection{Consumer properties aanmaken}
+
+Er zijn vijf eigenschappen die een Kafka Consumer moet verkrijgen:
+
+\begin{itemize}
+	\item \textit{bootstrap.servers} ofwel de lijst van brokers waaraan de consumer zich kan aan verbinden.
+	\item \textit{key.deserializer} geeft aan hoe de sleutels worden gedeserialiseerd.
+	\item \textit{value.deserializer} geeft aan hoe de values worden gedeserialiseerd. In een best scenario lopen beide parallel met elkaar.
+	\item \textit{group.id} is een String-object dat aangeeft aan welke consumer-group de consumer toebehoort.
+	\item \textit{auto.offset.reset} bepaalt wat er moet gedaan worden als er geen offset bij aanvang is gekozen, of wanneer de huidige offset niet meer op de server bestaat. Er zijn drie mogelijkheden indien er geen offset werd gegeven:
+	\begin{itemize}
+		\item \textit{earliest} zal de consumer van het begin laten lezen.
+		\item \textit{latest} zal de consumer vanaf de laatste offset laten lezen.
+		\item \textit{none} zal een foutmelding geven als er geen offset werd teruggevonden. 
+	\end{itemize}
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+private static final String GROUP_ID = "lecture-app";
+private static final String TOPIC = "online";
+
+Properties properties = new Properties();
+properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092"); 
+properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+\end{lstlisting}
+
+\subsubsection{Een consumer aanmaken}
+
+\begin{lstlisting}[language=Java]
+Consumer<String, String> consumer = new KafkaConsumer<>(properties);
+\end{lstlisting}
+
+\subsubsection{Een consumer koppelen of abonneren aan één of meerdere topics.}
+
+\begin{lstlisting}
+consumer.subscribe(Collections.singleton(TOPIC));
+\end{lstlisting}
+
+\subsubsection{De consumer in een lus plaatsen}
+
+Dit is de eerste versie van hoe een Consumer in een lus wordt geplaatst. Consumers draaien vaak oneindig lang door, waardoor er hier met een oneindige loop wordt gewerkt. De poll-methode is het grote werkpaard hier, want deze methode handelt de volgende zaken af:
+
+\begin{itemize}
+	\item De \textit{poll} methode doet meer dan enkel data ophalen, daarnaast vraagt het een tijdsindicatie op. Die geeft aan hoe lang een Consumer moet wachten op nieuwe records.
+	\item De poll-methode moet regelmatig gebeuren. Een conumser die geen poll doet, zal als dood worden beschouwd door de broker. 
+	\item Als er records beschikbaar zijn in de consumer buffer, dan zal poll deze records onmiddellijk teruggeven. Zo niet worden ze even opgehouden.
+	\item Poll geeft een lijst van records mee. Deze worden geïtereerd en iedere record wordt individueel afgehandeld.
+	\item Bij de eerste poll zal er een GroupCoordinator-object worden teruggegeven. Die consumergroup wordt gejoined en uiteindelijk zal het worden toegekend aan een partitie.
+	\item Een rebalance wordt behandeld in de poll-methode.
+	\item Als het niet-gebruiken van een \textit{poll} langer is dan de \textit{max.poll.interval.ms}, dan wordt de consumer als dood aangezien. Dan wordt de consumer uit de consumergroep gegooid. Daarom moet de code in de loop geen onvoorspelbaar interval meemaken. Als het verwerken te lang duurt, dan kan dit onopgemerkte problemen veroorzaken. Hou extra berekeningen buiten de while-lus. 
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+while(true){
+	ConsumerRecords<String,String> records = consumer.poll(Duration.ofMillis(100));
+	
+	for(ConsumerRecord<String,String> record:records){
+	logger.info("key: " + record.key() = ", value: " + record.value());
+	logger.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+	}
+}
+\end{lstlisting}
+
+\section{Java Threads}
+
+Een Java-programma kan uit meerdere execution threads bestaan. Iedere thread heeft een eigen \textit{method-call stack} en een eigen \textit{program counter}. Een thread kan tegelijkertijd met andere threads worden uitgevoerd. Daarnaast kunnen threads ook resources met elkaar uitwisselen. Dit maakt het programmeren moeilijk, want de toegang tot de gedeelde middelen moet correct worden opgevolgd.
+
+\subsubsection{Voorbeelden van threads}
+
+Er worden twee voorbeelden aangehaald:
+
+\begin{itemize}
+	\item Een Kafka producer maakt een aparte thread aan om record-batches naar de correcte Kafka-brokers door te sturen.
+	\item Een Kafka consumer stuurt \textit{heart-beats} in een achtergrondservice.
+\end{itemize}}
+
+\subsubsection{Shutdown hook}
+
+De Java Virtual Machine of JVM laat het uitvoeren van \textit{shutdown hooks} toe vooraleer een applicatie wordt afgesloten. Deze functies zijn ideaal wanneer er middelen worden afgenomen. Een shutdown hook is een aangemaakte, maar nog niet begonnen, thread. In Eclipse werkt dit niet, want in Eclipse is het klikken op de rode stop-knop geen normale \textit{shutdown} van het JVM. Dit kan enkel worden uitgetest in de Vagrant-machine door met Ctrl+C te werken.
+
+\begin{enumerate}
+	\item Als de JVM begint met de applicatie af te sluiten, dan worden alle geregistreerde hooks in een willekeurige volgorde genoteerd.
+	\item Na het uitvoeren van alle hooks zal de JVM 
+	stoppen.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+public class ShutdownHookExample {
+	public static void main(String[] args){
+		System.out.println("The name of the main thread is: " + Thread.currentThread().getName());
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run(){
+			System.out.println("Shutdownhook is executing in thread: " + Thread.currentThread().getName());
+			}
+		}
+	}
+}
+\end{lstlisting}
+
+\subsubsection{Atomic Boolean en het sluiten van de Consumer}
+
+\begin{itemize}
+	\item Het aanmaken van een AtomicBoolean buiten de main-methode.
+	\item Het gebruiken van de AtomicBoolean binnen de main-methode. Een consumer moet op normale wijze gesloten worden. Dit gebeurt met de \textit{close}-methode. Hiervan kan er ook een oneindige poll-lus van worden gemaakt.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+final AtomicBoolean stopRequested = new AtomicBoolean(false);
+final Thread mainThread = Thread.currentThread();
+
+Runtime.getRuntime().addShutdownHook(new Thread() {
+	@Override
+	public void run() {
+		stopRequested.set(true);
+		
+		try {
+			mainThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("Done waiting for main thread");
+		}
+	}
+});
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+try {
+	while (!stopRequested.get()) {
+		ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(500));
+		
+		for (ConsumerRecord<String, String> record : records) {
+			System.out.println("Received record with key: " + record.key() + "and value" + record.value());
+		}
+	}
+} finally {
+	System.out.println("About to close the consumer.");
+	consumer.close();
+	System.out.println("Consumer closed");
+}
+\end{lstlisting}
+
+\section{Commits en offsets}
+
+Kafka laat consumers toe om het systeem te laten gebruiken als een tracker per partitie. 
+
+\begin{itemize}
+	\item Kafka zelf zal geen records committen, want de consumers committen een laatste bericht dat ze zelf hebben kunnen verwerken. Er wordt simpelweg vanuit gegaan dat ieder bericht, voor het laatste, ook werd verwerkt. 
+	\item Een consumer zal de offset committen wanneer er een bericht naar Kafka wordt gestuurd, die zal namelijk de \textit{\_consumer\_offsets} topic gaan updaten. Merk op dat de gecommitte offset diegen is van het volgende bericht dat de consumer wilt ontvangen.
+\end{itemize}}
+
+\subsection{Verloren berichten en dubbels}
+
+Er zijn verschillende maatregelen om dit tegen te gaan.
+
+\begin{itemize}
+	\item Kafka slaat alle berichten in een \textit{retention period} op. Zo krijgen consumers de kans om de berichten op hun eigen tempo op te halen. Bij een stroomstoring of dergelijke kan de consumer weer oppikken waar ze waren gebleven.
+	\item Consumer groups laten consumers toe om van eenzelfde topic parallel te lezen. Iedere consumer in een consumergroep wordt toegekend aan een unieke verzameling van partities. Ieder bericht wordt enkel naar één consumer in de consumergroep gestuurd, om zo load balancing en fouttolerantie te voorzien in een consumergroup.
+	\item Kafka laat producers toe om een \textit{required acknowledgement level} aan ieder bericht toe te voegen. Dit belet hoeveel kopieën van het bericht naar Kafka moet worden geschreven vooraleer de producer \textit{acknowledgement} krijgt.
+\end{itemize}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/Screenshot_266.png}
+	\caption{Bovenaan wordt, door de commit, een bericht gemist door de consumer. Onderaan haalt een consumer een bericht dubbel op.}
+\end{figure}
+
+\subsection{API's om de offset te committen}
+
+Er zijn drie soorten commits:
+
+\begin{itemize}
+	\item Automatisch is wanneer de \textit{enable.auto.commit} optie op true staat.
+	\item Synchroon en asynchroon worden gebruikt wanneer de \textit{enable.auto.commit} op false staat.
+\end{itemize}
+
+\subsubsection{Automatische offset commit}
+
+De consumer zal iedere laatste offset van een poll elke vijf seconden, per standaard, committen naar de Kafka broker. De offset wordt teruggegeven in de laatste poll, als de consumer op tijd checkt. Het interval wordt aangepast met \textit{auto.commit.interval.ms} en dit wordt geactiveerd met \textit{enable.auto.commit=true}. Opmerking: Alle berichten moeten verwerkt zijn wanneer de poll werd opgeroepen. Bij het aanspreken van de \textit{close}-methode wordt de offset ook gecommit.
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/kafka-automatic-commit.png}
+	\caption{Automatische offsets commits}
+\end{figure}
+
+\subsubsection{Synchrone offset commits}
+
+Offsets worden enkel gecommit als de applicatie het expliciet zegt. 
+
+\begin{itemize}
+	\item Bij een \textit{commitSync} zal de laatste offset teruggegeven worden met de poll-methode en wanneer de offset wordt gecommit.
+	\item Deze vorm zal blijven proberen om te committen voor zolang er geen fout is waar er niet van hersteld kan worden. Als de commit faalt, dan wordt er een foutmelding gegooid.
+	\item Een \textit{commitSync} zal de laatste offset van \textit{poll} teruggeven. 
+	\begin{itemize}
+		\item Als er wordt gecommit vooraleer de laatste berichten werden verwerkt, dan loopt het systeem het risico dat de gecommitte berichten niet verwerkt konden worden.
+		\item Als de commit na het verwerken van de berichten plaatsvindt, dan loopt het systeem het risico dat berichten dubbel worden verwerkt.
+	\end{itemize}
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+properties.setProperty("enable.auto.commit","false");
+
+try
+{
+	while(!stopRequested.get())
+	{
+		ConsumerRecords<String,String> records = consumer.poll(...);
+		try 
+		{
+			consumer.commitSync();
+		} catch(CommitFailedException e) {LOGGER.error("commit failed", e);}
+	}
+} 
+	finally 
+{
+	try
+	{
+		consumer.commitSync();
+	} catch (CommitFailedException e){ LOGGER.error("commit failed");}
+	consumer.close();
+}
+\end{lstlisting}
+
+\subsubsection{Asynchrone commit}
+
+Bij een synchrone commit wordt de applicatie geblokkeerd totdat de broker antwoordt op de commit-request. In tegenstelling tot een asynchrone commit API zal de consumer een commit-request sturen en gewoon doorwerken. De consumer werkt gewoon door, omdat de volgende commit mogelijks al succesvol is. Er wordt niets opnieuwe geprobeerd, want mogelijks wordt de vorige offset overschreven door een latere offset. De code volgt een gelijkaardige lijn als die van de synchrone commit.
+
+\subsubsection{Het combineren van een synchrone en een asynchrone commit}
+
+Een asynchrone commit is snel, maar het is niet geweten wanneer die succesvol is. Het doet er weining toe, want de volgende commit zal eigenlijk dienen als een \textit{retry}. Als de consumer wilt sluiten, dan is er geen 'volgende commit', dus er wordt als sluitende commit een synchrone commit gebruikt met \textit{close()}.
+
+\begin{lstlisting}[language=Java]
+properties.setProperty("enable.auto.commit","false");
+
+try
+{
+	while(!stopRequest.get())
+	{
+		ConsumerRecords<String,String> records = consumer.poll(...);
+		consumer.commitAsync();
+	}
+} 
+	finally 
+{
+	try 
+	{
+		consumer.commitSync();
+	} catch (CommitFailedException e) {LOGGER.error("commit failed",e)}
+		{
+			consumer.close();
+		}
+}
+\end{lstlisting}
+
+\section{Apache Avro}
+
+Enkel String-objecten werden tot nu toe naar Kafka gestuurd. De data (de)serializeren gebeurde respectievelijk met StringSerializer en StringDeserializer. Het is niet aangeraden om een eigen Serializer of Deserializer te schrijven. Veel toepassingen verwachten dat gestructureerde objecten in en uit Kafka kunnen worden utigewisseld. 
+
+\subsection{Avro}
+
+Avro is een taalonafhankelijk, serialisatieformaat dat schema's opstelt. 
+
+\begin{itemize}
+	\item Deze schema's worden vaak in JSON opgemaakt en dient om binaire bestanden te gaan serializeren. Ze zijn zelfomschrijvend waardoor de consumer, zonder toegang tot de initialisatiecode, het schema kan begrijpen.
+	\item Avro gaat er vanuit dat er een schema aanwezig is wanneer bestanden worden gelezen en geschreven. Dit gebeurt vaak door het schema in bestanden zelf te gaan embedden, onder de vorm van metadata.
+	\item Avro ondersteund verschillende soorten datatypen en bezit een goede ondersteuning voor \textit{backward \& forward compatibility}. Dit is ideaal voor systemen waarin data tussen meerdere systemen worden uitgewisseld.
+	\item Avro moet aan de POM-file worden toegevoegd, zowel bij dependencies als bij plugin.
+\end{itemize}
+
+\subsubsection{Voorbeeld Avro schema}
+
+Hieronder wordt er een skeletstructuur getoond. Dit schema houdt een type 'User' bij die drie velden heeft: \textit{favourite number}, \textit{favourite colour} en een \textit{name}. Enkel het naamveld is verplicht, want de volgende twee waarden kunnen ook een null-waarde aannemen. 
+
+\begin{itemize}
+	\item Op basis van dit schema wordt er Java-code aangemaakt, maar het werkpaard hier is de Avro-compiler. De klassenaam zal hier \textit{be.hogent.dit.tin.avro.User} noemen.
+\end{itemize}
+
+\begin{lstlisting}[language=JSON]
+{
+	"type": "record",
+	"name": "User",
+	"namespace": "be.hogent.dit.tin",
+	"fields": [
+	{ "name": "name", "type": "string" },
+	{ "name": "favorite_number",  "type": ["int", "null"] },
+	{ "name": "favorite_color", "type": ["string", "null"] }
+	]
+}
+\end{lstlisting}}
+
+\begin{lstlisting}[language=JSON]
+{
+	"name": "Alice",
+	"favorite_number": 7,
+	"favorite_color": "red"
+}
+\end{lstlisting}
+
+\subsection{Een klasse aanmaken met Avro}
+
+Er zijn drie manieren:
+
+\begin{itemize}
+	\item Constructor aanspreken met meerdere methoden.
+	\item Alle eigenschappen in de constructor aanspreken.
+	\item Aanmaken met de builder.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+User user1 = new User();
+user1.setName("Alice");
+user1.setFavoriteNumber(7);
+user1.setColor("red");
+
+User user2 = new User("Dylan", 25, "violet");
+
+User user3 = User.newBuilder().setName("Stijn")
+								.setFavouriteColor(null)
+								.setFavouriteNumber(314)
+								.build();
+\end{lstlisting}
+
+\subsection{De klasse serializeren}
+
+De drie gebruikers worden vervolgens op deze manier naar de disk geserializeerd.
+
+\begin{enumerate}
+	\item Alleereerst wordt er een DatumWriter-object aangemaakt. Die zal de Java-objecten omzetten naar een in-memory serialized format. De SpecificDatumWriter-klasse wordt gebruikt bij aangemaakte klassen, zodat het schema later kan worden opgehaald.
+	\item Vervolgens wordt er een DataFileWriter aangemaakt. Die zal de geserializeerde records en het schema naar een specifiek bestand uitschrijven.
+	\item Met append worden de gebruikers in een bestand geschreven.
+	\item Het dataFileWriter-object wordt, eenmaal klaar, gesloten.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+DatumWriter<User> userDatumWriter = new SpecificDatumWriter<>(User.class);
+DataFileWriter<User> dataFileWriter = new DataFileWriter<>(userDatumWriter);
+
+dataFileWriter.create(user1.getSchema(), new File("users.avro"));
+dataFileWriter.append(user1);
+dataFileWriter.append(user2);
+dataFileWriter.append(user3);
+dataFileWriter.close();
+\end{lstlisting}
+
+\subsection{Een klasse deserializeren.}
+
+\begin{enumerate}
+	\item Eerst wordt er een DatumReader-object aangemaakt. In dit geval een SpecificDatumReader dat in-memory geserializeerde items zal omzetten naar instanties van de aangemaakte klassen. In dit geval is de klasse User.
+	\item De DatumReader en het bestand dat moet gelezen worden, wordt doorgegeven aan de DataFileReader. Dit object zal zowel het schema als de data van de disk lezen.
+	\item Itereer door de gebruikers in het bestand.
+	\item Het User-object wordt opnieuw gebruikt om zo zuinig mogelijk deze applicatie af te werken. Op deze manier hebben we minder \textit{object-allocation}. 
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+File file = new File("users.avro");
+DatumReader<User> userDatumReader = new SpecificDatumReader<>(User.class);
+DataFileReader<User> dataFileReader = new DataFileReader<>(file, userDatumReader);
+User user = null;
+while(dataFileReader.hasNext())
+{
+	user = dataFileReader.next(user);
+	System.out.println(user);
+}
+dataFileReader.close();
+\end{lstlisting}
+
+\subsubsection{Het aantal gebruikte schema's}
+
+Er worden twee schema's gebruikt. Het schema voor de writer is in het bestand en is nodig om te weten in welke volgorde de gebruikers werden uitgeschreven. Daarnaast is er een reader schema dat aangeeft welke velden er in een bestand zitten. De twee schema's verschillen op de manier hoe ze worden opgelost.
+
+\subsection{Een klasse deserializeren zonder het aangemaakte User-object}
+
+Data in Avro wordt altij bij het bijhorende schema opgeslaan. Daarom kan een geserializeerde item altijd worden gelezen, zonder dat het schema vooraf is gekend. Dit laat ons toe om zowel serializatie als deserializatie uit te voeren zonder het aangemaakte User-object. Een herwerking van het vorige voorbeeld ziet er als volgt uit:
+
+\subsubsection{Het aanmaken van de Users}
+
+\begin{enumerate}
+	\item Eerst wordt er een Parser-object gebruikt om het schema in te lezen en een Schema-object aan te maken.
+	\item Er is geen weet van hoe het schema eruitziet, dus er wordt gewerkt met GenericRecords. Dit object gebruikt het schema om te bevestigen of alles wel geldig is.
+	\item Als er een niet-bestaand veld wordt ingegeven, zoals "favourite\_animal", dan wordt er een \textit{AvroRuntimeException} teruggegeven in de compiler.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+public class AvroVoorbeeldZonderUserObject 
+{
+	private static final String SCHEMA_FILE_PATH = "src/main/resources/avro/Users.avsc";
+	
+	public static void main(String[] args) throws IOException
+	{
+		Schema schema = new Schema.Parser().parse(
+			new File(SCHEMA_FILE_PATH)
+		);
+		
+		GenericRecord user1 = new GenericData.Record(schema);
+		user1.put("name","Alice");
+		user1.put("favorite_number", 7);
+		user1.put("favorite_color", "red");
+		
+		GenericRecord user2 = new GenericData.Record(schema);
+		user2.put("name","Stijn");
+	}
+}
+\end{lstlisting}
+
+\subsubsection{Gebruikers uitschrijven}
+
+Gebruikers uitschrijven gelijkt zeer hard op de vorige uitwerking, maar enkel hier wordt er weer gewerkt met een generieke versie van het oorspronkelijke object. 
+
+\begin{itemize}
+	\item Het schema wordt gebruikt om te achterhalen hoe de GenericRecord moet worden geschreven. 
+	\item Daarnaast wordt het schema ook gebruikt om alle non-nullable velden te detecteren.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+File file = new File("users.avro");
+DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<>(schema);
+DataFileWriter <GenericRecord> dataFileWriter = new DataFileWriter<>(datumWriter);
+dataFileWriter.create(schema, file);
+dataFileWriter.append(user1);
+dataFileWriter.append(user2);
+dataFileWriter.close();
+\end{lstlisting}
+
+\subsubsection{Gebruikers inlezen}
+
+De gouden regel geld ook bij het inlezen. Alle objecten worden aangepast naar een generieke versie van datzelfde object.
+
+\begin{lstlisting}[language=Java]
+DatumReader<GenericRecord> datumReader = new GenericDatumReader<>(schema);
+DataFileReader<GenericRecord> dataFileReader = new DataFileReader<>(file,datumReader);
+GenericRecord user = null;
+while(dataFileReader.hasNext())
+{
+	user = dataFileReader.next(user);
+	System.out.println(user);
+}
+\end{lstlisting}
+
+\subsubsection{Het uitgeschreven bestand}
+
+De applicatie geeft de volgende output terug.
+
+\begin{lstlisting}[language=JSON]
+{”name”: ”Alyssa”, ”favorite_number”: 256, ”favorite_color”: null}{”name”: ”Ben”, ”favorite_number”: 7, ”favorite_color”: ”red”}
+\end{lstlisting}
+
+Het uitgeschreven bestand is niet met het blote oog begrijpbaar. Daarvoor moeten we met \textit{format-hex} het bestand bekijken. Daar merken we op dat het schema helemaal bovenaan het bestand zichtbaar is. Het schema maakt deel uit van het uitgeschreven bestand. Dit is OK wanneer het bestand groot is, want in dat geval bevat het bestand veel records ofwel veel data. De berichten in Kafka zijn echter van beperkte grootte, dus het schema in ieder bericht plaatsen zou veel overhead veroorzaken.
+
+\section{Het schema-register}
+
+Het volledige schema in ieder bericht opslaan zou leiden tot veel overhead. Weglaten kan ook niet, want Avro heeft het schema nodig om een record te kunnen lezen. De oplossing is om het schema elders op te slaan.
+
+\subsection{Werking van een schema-register}
+
+Bij alle Kafka-records worden enkel het ID van het schema opgeslaan. De consumers halen een record op en vragen dan ook aan het register welk schema er nodig is om een record te deserializern. De serializer en deserializer staat in voor het opslaan en ophalen van het schema. De consumers en brokers halen niets direct op vanuit het schema register.
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{images/serializer-schema.png}
+	\caption{Werking van een schema-register.}
+\end{figure}
+
+\subsection{Kafka-producer met Avro}
+
+In de volgende code worden er drie nieuwe zaken aan het properties-bestand toegevoegd. Merk op dat er voor de volgende code extra dependencies en repositories moeten worden toegevoegd in de POM-file. 
+
+\begin{itemize}
+	\item Er wordt een String als sleutel gebruikt, maar toch wordt er gevraagd aan Avro om de sleutel te serializeren. De twee config-klassen worden gebruikt om de keys en values van de berichten te serializeren.
+	\item Daarnaast moet er ook een url richting het schema-register worden toegevoegd.
+\end{itemize}
+
+\newpage
+
+\begin{lstlisting}[language=Java]
+Properties props = new Properties();
+
+props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class.getName());
+
+props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class.getName());
+
+props.put("schema.registry.url","http://localhost:8081");
+
+Producer<String, be.hogent.dit.tin.avro.User> producer = new KafkaProducer<>(props);
+
+List<User> users = new ArrayList<>();
+
+...
+
+for (User user : users)
+{
+	ProducerRecord<String,User> record = new ProducerRecord<>(TOPIC, user.getName().toString(), user);
+	producer.send(record);
+}
+
+producer.flush();
+producer.close();
+\end{lstlisting}
+
+\subsection{Kafka Consumer met Avro}
+
+\begin{lstlisting}[language=Java]
+props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroDeserializer.class.getName());
+
+props.put("schema.registry.url", "http://localhost:8081");
+props.put("specific.avro.reader", "true");
+
+Consumer<String, User> consumer = new KafkaConsumer<>(props);
+
+ConsumerRecords<String, User> records = consumer.poll(Duration.ofMillis(500));
+
+for(ConsumerRecord<String,User>record:records)
+{
+	System.out.println("Received record with key [" + record.key() + "]");
+	System.out.println("Value of this record is " + record.value());
+	System.out.println("The type of this value is " + record.value().getClass().getName());
+}
 \end{lstlisting}
 
 \end{document}
