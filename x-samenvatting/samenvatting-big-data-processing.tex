@@ -89,9 +89,11 @@
 
 \subsection{Breed beeld}
 
-Een gedistribueerd bestandssysteem is een manier om gegevens op te slaan en te beheren die is verspreid over meerdere computers in een cluster. In tegenstelling tot een traditioneel bestandssysteem, waarbij de gegevens op één centrale server worden opgeslagen, worden de gegevens in een gedistribueerd bestandssysteem opgeslagen op verschillende computers in het cluster. Dit maakt het mogelijk om grote hoeveelheden gegevens op te slaan en te verwerken zonder te worden beperkt door de beperkte hoeveelheid opslagruimte op één server. Het kan ook helpen om de prestaties te verbeteren door het gebruik van parallellisatie, waardoor meerdere computers tegelijkertijd kunnen werken aan het verwerken van de gegevens.
+Een gedistribueerd bestandssysteem dient om data, verspreid over meerdere computers, op te slaan en te beheren binnenin een cluster. In tegenstelling tot een traditioneel bestandssysteem, waar de gegevens op één centrale server worden opgeslaan, worden de gegevens in een gedistribueerd bestandssysteem op verschillende computers in een cluster opgeslaan. 
 
 \begin{itemize}
+	\item Deze technologie biedt zowel concurrency als redundantie aan. Het is nu mogelijk om riante hoeveelheden gegevens op te slaan en te verwerken. Het systeem wordt niet meer beperkt door de beperkte opslagruimte van één server.
+	\item Het kan ook helpen om de prestaties te verbeteren door het gebruik van parallellisatie, waardoor meerdere computers tegelijkertijd kunnen werken aan het verwerken van de gegevens.
 	\item Verschillende componenten op een netwerk die met elkaar communiceren.
 	\item Een systeem met het doel om data beschikbaar te maken. Data dat later kan worden gelezen of geschreven.
 	\item De mate van beschikbaarheid doet er niet toe.
@@ -99,26 +101,37 @@ Een gedistribueerd bestandssysteem is een manier om gegevens op te slaan en te b
 
 \subsection{De nood aan schaalbaarheid}
 
-In een gedistribueerd bestandssysteem is er een verschil tussen horizontale en verticale schaalbaarheid. Horizontale schaalbaarheid betekent dat het systeem kan worden uitgebreid door het toevoegen van meer computers aan het cluster, wat kan helpen om meer gegevens te verwerken en om de prestaties te verbeteren. Verticale schaalbaarheid betekent dat het systeem kan worden uitgebreid door het toevoegen van meer hardware aan een enkele computer, zoals extra geheugen of een snellere processor. Dit kan ook helpen om de prestaties te verbeteren, maar het is beperkter dan horizontale schaalbaarheid omdat het alleen mogelijk is binnen de beperkingen van een enkele computer.
+In een gedistribueerd bestandssysteem is er een verschil tussen horizontale en verticale schaalbaarheid.
 
-Moore's Law bevestigt deze theorie. Deze wet zegt dat het aantal transistoren per achttien maanden verdubbelt. Met andere woorden is er een snelle nood aan nieuwe hardwarematerialen. Daarnaast is er ook nood aan nieuwe hardwarematerialen, zo is er nood aan fouttolerantie in een databankomgeving. 
+\subsubsection{Horizontale schaalbaarheid}
+
+Horizontale schaalbaarheid betekent dat het systeem kan worden uitgebreid door het toevoegen van meer computers aan het cluster, wat kan helpen om meer gegevens te verwerken en om de prestaties te verbeteren. 
+
+\subsubsection{Verticale schaalbaarheid}
+
+Verticale schaalbaarheid betekent dat het systeem kan worden uitgebreid door het toevoegen van meer hardware aan een enkele computer, zoals extra geheugen of een snellere processor. Dit kan ook helpen om de prestaties te verbeteren, maar het is beperkter dan horizontale schaalbaarheid omdat het alleen mogelijk is binnen de beperkingen van een enkele computer.
+
+\subsubsection{Moore's Law}
+
+Moore's Law geeft aan dat het aantal transistoren per achttien maanden verdubbelt. Er is een snelle nood aan nieuwe hardwarematerialen. Daarnaast is er ook nood aan nieuwe hardwarematerialen en fouttolerantie in een databankomgeving. 
+
+\subsubsection{Region-picking}
 
 Het verkeer bij een databankserver gebeurt online, wat betekent dat de latency een rol speelt voor de gebruiker. De client moet een systeem kiezen die zo dicht mogelijk bij de client ligt. Online gameservers zijn een goede casus waarbij de systemen opgedeeld zijn per regio.
 
 \subsection{Kenmerken}
 
-Een gedistribueerd systeem kan herkend worden op basis van vier kenmerken:
+Een gedistribueerd systeem omvat drie kenmerken:
 
 \begin{itemize}
-	\item Geen gedeeld geheugen. Iedere verwerkingseenheid heeft een eigen geheugen.
-	\item Onderling worden er berichten naar elkaar verstuurd.
-	\item Componenenten zijn niet bewust van wat de andere componenten nu aan het doen zijn. Daarom sturen ze onderling berichten naar elkaar.
+	\item Er is geen gedeeld geheugen. Iedere verwerkingseenheid heeft een eigen geheugen.
+	\item Componenten zijn niet bewust van wat de andere componenten nu aan het doen zijn. Daarom sturen ze onderling berichten naar elkaar.
 	\item Fouttolerant
 \end{itemize}
 
 \section{Soorten systemen}
 
-We spreken van twee verschillende soorten systemen: parallele en gedistribueerde systemen.
+Er zijn twee soorten systemen: parallele en gedistribueerde systemen.
 
 \begin{itemize}
 	\item Bij een parallel systeem worden meerdere processen tegelijkertijd uitgevoerd. Deze verwerking gebeurt op verschillende verwerkingseenheden met een gedeeld geheugen. Het is makkelijker te ontwikkelen, maar met de kost van géén redundantie.
@@ -127,7 +140,7 @@ We spreken van twee verschillende soorten systemen: parallele en gedistribueerde
 
 \subsection{CAP-theorem}
 
-Deze theorie wijst aan dat je, in een gedistribueerd databanksysteem, de afweging moet maken tussen drie factoren:
+Deze theorie wijst aan dat er in een gedistribueerd databanksysteem een afweging moet worden gemaakt tussen drie factoren. Het is onmogelijk om alle drie deze eigenschappen tegelijkertijd te garanderen. Er moet een afweging worden gemaakt. Deze stelling komt terug uit databanken, maar hier is het anders. De consistentie van een relationele databank overstijgt de consistentie van een gedistribueerde databank.
 
 \begin{itemize}
 	\item Consistentie wijst aaan dat alle nodes dezelfde gegevens hebben.
@@ -135,25 +148,27 @@ Deze theorie wijst aan dat je, in een gedistribueerd databanksysteem, de afwegin
 	\item Partitioneringstolerantie wijst aan dat het systeem blijft functioneren als er problemen zijn met de communicatie tussen de nodes.
 \end{itemize}
 
-Het is onmogelijk om alle drie deze eigenschappen tegelijkertijd te garanderen. Je moet een afweging maken of compromis sluiten.
 
-Deze stelling komt terug uit databanken, maar hier is het anders. De consistentie van een relationele databank overstijgt de consistentie van een gedistribueerde databank.
 
 \subsection{Struikelblokken}
 
-Als we werken met een gedistribueerd systeem, dan zijn er vier horden waarmee we rekening moeten houden:
-* Split-brain scenario: de ene helft denkt het ene en de andere helft denkt het andere. Bijvoorbeeld: Het ene systeem denkt dat een bestand verwijderd is, terwijl het andere systeem denkt dat het nog bestaat.
-* Consistency en structuur raken snel verloren.
-* Testen wordt moeilijker.
-* De oorzaak van traagheid achterhalen wordt complexer: zowel hardware als software kunnen een rol spelen.
+Bij het werken met gedistribueerde systemen zijn er vier verschillende struikelblokken waarmee er moet worden rekening gehouden:
+
+\begin{itemize}
+	\item Split-brain scenario: de ene helft denkt het ene en de andere helft denkt iets anders. Bijvoorbeeld: Het ene systeem denkt dat een bestand verwijderd is, terwijl het andere systeem denkt dat het nog bestaat.
+	\item Consistency en structuur raken snel verloren.
+	\item Testen wordt moeilijker.
+	\item De oorzaak van traagheid achterhalen wordt complexer: zowel hardware als software kunnen een rol spelen.
+\end{itemize}
+
 
 \subsection{Fabels over gedistribueerde systemen}
 
 
 \begin{itemize}
-	\item "Er is geen latency". Latency is wel aanwezig. Enkel is de deze sterk minder naargelang de locatie van het systeem. het duurt een tijd vooraleer een bericht op een systeem aankomt.
+	\item "Er is geen latency". Latency is wel aanwezig. De latency vermindert afhankelijk van twee punten: de locatie van het systeem en de locatie van de gebruiker. Het duurt een tijd vooraleer een bericht op een systeem aankomt. Er is ook een verschil tussen de positie van een systeem op een \textit{data rack}.
 	\item "De bandbreedte is oneindig". De bandbreedte op zowel de client als het distribueerd systeem is beperkt.
-	\item "Het netwerk is veilig". Toegang tot het netwerk blijft iets waar je rekening mee moet houden.
+	\item "Het netwerk is veilig". Toegang tot het netwerk is belangrijk.
 	\item "De netwerktopologie blijft hetzelfde". Computers en hardware kan worden toegevoegd. Zo verandert alles binnen een netwerk op een dynamische manier.
 	\item "De transportkost van data is nul". Data transporteren van begin- naar eindpunt vergt een inspanning qua energie en rekenkracht.
 	\item "Het netwerk is homogeen". Alle onderdelen binnen een netwerk kunnen variëren van eigenschappen. Sommige delen van het netwerk kunnen snel zijn, sommige delen zijn traag.
@@ -172,7 +187,7 @@ Bij een gedistribueerd systeem zijn er vier algemene problemen:
 
 \subsection{Partial Failure}
 
-Er moet rekening worden gehouden met twee zaken: 
+Partial failure bestaat uit twee punten:
 
 \begin{itemize}
 	\item Allereerst is er de kans dat een systeem kan wegvallen. Sommige onderdelen van een netwerk kunnen werken, terwijl andere onderdelen down zijn of niet meer in gebruik. Hoe meer computers, hoe groter de kans dat één systeem (heel even) wegvalt.
@@ -181,20 +196,26 @@ Er moet rekening worden gehouden met twee zaken:
 
 \subsection{Niet-betrouwbare netwerken}
 
-Bij een asynchrone verbinding moeten we rekening houden met tijdsaannames. Boodschappen worden verstuurd zonder tijdsaannames. Het maakt de systemen niet uit hoe lang ze moeten uitvoeren of wanneer het bericht zal arriveren. De oorzaak van een netwerkfout is hier niet voor de hand liggend. Het is moeilijk om de oorzaak te achterhalen, want er zijn drie mogelijke problemen: een probleem tussen zender en ontvanger, de ontvanger kan niets ontvangen of de ontvanger kan niets versturen.
+Bij een asynchrone verbinding moet er met tijdsaannames worden rekening gehouden. Boodschappen worden verstuurd zonder tijdsaannames. Voor een systeem is de tijdsduur en tijdsstip waarop een bericht aankomt irrelevant. 
 
-Het testen van een verbinding gebeurt met \textit{pinging}. Om te vermijden dat een systeem iedere twee seconden een test uitvoert, werken we met \textit{exponential back-off}. De tijd waarop een systeem wacht op een antwoord moet exponentieel vergroten. Begin met twee seconden wachten, daarna vijf seconden, daarna tien seconden, ... tot maximaal vijf minuten. Te snel berichten sturen moet vermeden worden, want zo wordt het netwerk belast en dan verergert de situatie. Eenmaal de capaciteit van de wachtrij wordt behaald, dan zal de vertraging (in seconden) exponentieel verhogen. IRL-voorbeeld: files.
+\begin{itemize}
+	\item De oorzaak van een netwerkfout is niet evident. De oorzaak achterhalen is moeilijk, want er zijn drie mogelijke problemen:
+	\begin{itemize}
+		\item een probleem tussen zender en ontvanger
+		\item de ontvanger kan niets ontvangen 
+		\item de ontvanger kan niets versturen
+	\end{itemize}
+	\item Het testen van een verbinding gebeurt met \textit{pingen}. \textit{Exponential back-off} vermijdt het gehaast pingen. De tijd waarop een systeem op een antwoord wacht, zal exponentieel vergroten. Bij de eerste poging wordt er twee seconden gewacht, vervolgens vijf seconden, daarna tien seconden tot uiteindelijk hoogstens vijf minuten. Berichten kort achter elkaar sturen is uit den boze, want dit belast het netwerk en de situatie verergert. Eenmaal de capaciteit van de wachtrij wordt behaald, dan zal de vertraging (in seconden) exponentieel verhogen.
+\end{itemize}
 
 \subsection{Niet-betrouwbare tijdsindicaties}
 
-Er wordt het onderscheid tussen real-time en monotonische tijd gemaakt. 
+Causality is achterhalen wanneer een event werd uitgevoerd. Concensus is wanneer alle knopen (of nodes) met elkaar overeenkomen bij een beslissing. Er is een onderscheid tussen real-time en monotonische tijd. 
 
 \begin{itemize}
 	\item Real-time tijd zijn klokken die gesynchroniseerd worden met het gebruik van een gecentraliseerde server.
-	\item Monotonische klokken zijn klokken die op een vast moment starten en enkel vooruit gaan. Er is geen synchronisatie. Leap-seconden: een minuut is niet altijd 60 seconden. Soms kan dit 59 of 61 seconden zijn.
+	\item Monotonische klokken zijn klokken die op een vast moment starten en enkel vooruit gaan. Er is geen synchronisatie tussen de verschillende systemen. Bij monotonische tijd komen leap-seconden ook voor. Zo is een minuut niet altijd 60 seconden, want soms kan dit 59 of 61 seconden zijn.
 \end{itemize}
-
-Causality is achterhalen wanneer een event werd uitgevoerd. Concensus is wanneer alle knopen (of nodes) met elkaar overeenkomen bij een beslissing.
 
 \subsection{Onderlinge onzekerheid}
 
@@ -219,32 +240,43 @@ Het tweegeneralenprobleem bouwt verder op het split-brain concept. Dit weergeeft
 
 \subsection{Partitionering}
 
-Bij partitionering zal je een groot bestand onderverdelen over meerdere knopen. Op deze manier hoef je niet alles op één plek op te slaan. Het nadeel hiervan is dat je geen toegang hebt tot het volledige bestand als één van de nodes niet bereikbaar is. Elk stuk data behoort tot precies één partitie. Bij Mongo en ElasticSearch noemt één partitie een \textit{shard}.
+Bij partitionering wordt een groot bestand onderverdeelt over meerdere \textit{nodes} of knooppunten. Op deze manier moet niet alles op één plek worden opgeslaan. Als één van de nodes niet bereikbaar is, dan is het volledige bestand niet toegankelijk. Elk stuk data behoort tot precies één partitie. Bij Mongo en ElasticSearch noemt één partitie een \textit{shard}.
 
 \subsection{Replication}
 
-Replicatie is het maken en onderhouden van verschillende kopieën op meerdere knooppunten. Hiermee wordt redundantie aangeboden. Als de data op node A niet beschikbaar is, dan worden gebruikers doorverwezen naar node B. Dit concept komt vaak voor bij geografisch gespreide netwerken. Bijvoorbeeld een knooppunt in Oceanië, Azië, Europa, etc. Er zijn hier drie verschillende leader-volger technieken: 
+Replicatie is het maken en onderhouden van verschillende kopieën op meerdere knooppunten. Hiermee wordt redundantie aangeboden. Als  data op node A niet beschikbaar is, dan worden gebruikers doorverwezen naar node B. Dit concept komt vaak voor bij geografisch gespreide netwerken. Bijvoorbeeld een knooppunt in Oceanië, Azië, Europa, etc. 
+
+\subsubsection{Leader-follower technieken}
+
+Er zijn hier drie verschillende leader-follower technieken: 
 
 \begin{enumerate}
-	\item  Bij single-leader doen alle clients wat de leider zegt. Alle writes komen vanuit één leider binnen één partitie. De boodschap van de clients kan gedateerd zijn. Als gevolg kunnen acties uitgevoerd worden die niet meer van toepassing zijn. 
+	\item  Bij single-leader doen alle clients wat de leider zegt. Alle writes komen vanuit één leider binnen één partitie. De boodschap van de clients is mogelijks achterhaald. Als gevolg worden acties uitgevoerd die niet meer van toepassing zijn. 
 	\item Bij leaderless replication versturen de clients elke write naar verschillende nodes. De clients lezen parallel.  Zij zorgen ervoor dat de data OK blijft. Elk verstuurt boodschappen door naar de nabije clients. Achterhaalde data kan worden tegengegaan door te werken met timestamps.
 	\item  Multi-leader replication bouwt verder op single-leader replication. Meerdere nodes worden in verschillende datacenters geplaatst.
 \end{enumerate}
 
 \subsubsection{Replication-lag}
 
-Leaders zijn niet statisch. Deze kunnen veranderen door clients te promoveren tot leader. Als een leader verandert, dan is er de kans op replication-lag. Dit is wanneer een volger wordt gepromoveerd tot leader.
+Leaders zijn niet statisch. \textit{Position-switches} gebeuren door clients te promoveren tot leader. Als een leader verandert, dan is er kans op replication-lag. Dit is een marge dat de leader heeft ten opzichte van andere volgers. In dat geval moet de rest ook meer moeite doen om veranderingen in te halen.
 
-Replication kan synchroon of asynchroon verlopen. Synchroon is wanneer je wacht op de antwoorden van de volgers. Je bent hiermee zeker dat de data niet zal verloren gaan, maar ten gevolge zal het systeem trager zijn. Asynchroon is wanneer er niet wordt gewacht op de volgers. Alle overplaatsingen zullen vlot verlopen als er geen wissels gebeuren bij de leaders. Hoe groter de replication lag, hoe groter de kans op dataverlies.
+\subsubsection{Het verloop van replication}
+
+Replication kan synchroon of asynchroon verlopen. 
+\begin{itemize}
+	\item Bij synchrone replicatie wordt er gewacht op de antwoorden van de volgers. Er is garantie dat de data niet zal verloren gaan, met een trager systeem tot gevolg.
+	\item Asynchroon is wanneer er niet wordt gewacht op de volgers. Alle overplaatsingen zullen vlot verlopen als er geen wissels gebeuren bij de leaders. Hoe groter de replication lag, hoe groter de kans op dataverlies.
+\end{itemize}
+
  
 \begin{figure}
  	\includegraphics[width=\linewidth]{../images/Screenshot_213.png}
- 	\caption{Het verschil tussen synchrone en asynchrone replication. Bij synchroon wacht je niet op bevestiging. Synchrone replicatie gaat direct door naar de target storage. Asynchrone replication wacht op bevestiging van de volgers op de source.}
+ 	\caption{Het verschil tussen synchrone en asynchrone replication. Bij synchroon wordt er niet op bevestiging gewacht. Synchrone replicatie gaat direct door naar de target storage. Asynchrone replication wacht op bevestiging van de volgers op de source.}
 \end{figure}
 
 \subsubsection{Replicatiefouten}
 
-Fouten bij synchrone replicatie zijn minder voorkomend, maar de techniek kan gedwarsboomd worden. Zo heb je nog steeds een probleem wanneer een write-operation niet kan worden afgewerkt als één van de volgers niet online is. Je wacht tot de bevestiging van de volgers. De twee vaak voorkomende fouten bij asynchrone replicatie zijn monotonic read en read-after-write. 
+Fouten bij synchrone replicatie zijn minder prevalent, maar de techniek kan gedwarsboomd worden. Zo is er nog steeds een probleem waarbij een \textit{write}-operation niet kan worden afgewerkt als één van de volgers niet online is. Er wordt gewacht op de bevestiging van de volgers. De twee vaak voorkomende fouten bij asynchrone replicatie zijn \textit{monotonic read} en \textit{read-after-write}. 
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{../images/Screenshot_160.png}
@@ -252,11 +284,10 @@ Fouten bij synchrone replicatie zijn minder voorkomend, maar de techniek kan ged
 \end{figure}
 
 
+\subsubsection{Read-after-write}
+Read-after-write (RAW) duidt, zoals de naam het aangeeft, op een fout bij het lezen. De client heeft in dit geval een comment geplaatst en vervolgens wordt er een bevestiging gegeven aan de client. Daarna wilt dezelfde gebruiker dezelfde post inlezen, maar die is nog niet opgeslaan door een andere volger. In een ideaal scenario staat de output gelijk aan de data in de databank. Bij RAW is het belangrijk om met een timestamp te werken. Voorzie daarom bij een schrijfoperatie dat alles tot een specifieke timestamp is voldaan. Zo ja, haal de gegevens op en geef ze aan de client. Zo niet, wacht of kijk naar een andere volger.
 
-\begin{itemize}
-	\item Read-after-write (RAW) duidt, zoals de naam het aangeeft, op een fout bij het lezen. De client heeft in dit geval een comment geplaatst en vervolgens wordt er een bevestiging gegeven aan de client. Daarna wilt dezelfde gebruiker dezelfde post inlezen, maar die is nog niet opgeslaan door een andere volger. Je wilt dezelfde output krijgen als je hetzelfde in de databank schrijft. Bij RAW is het belangrijk om met een timestamp te werken. Zorg dat je bij een schrijfoperatie alles tot aan een punt moet laten voldoen aan de timestamp. Zo ja, haal de gegevens op en geef ze aan de client. Zo niet, wacht of kijk naar een andere volger.
-	\item Een gelijkaardig, maar nog steeds verschillend probleem, is monotonic read. De gebruiker leest een post of comment, maar na een refresh is deze comment opeens niet beschikbaar of niet-bestaand. De volger loopt hier achter op de andere volgers. De klok bij de ene volger loopt voor op de andere. Het verschil hier is dat de gebruiker de tekst niet heeft geschreven, wat wel het geval is bij RAW. Dit lossen we op door de gebruiker altijd van dezelfde replica te laten lezen. Hieronder leest de gebruiker eerst van de volger mét het resultaat. Daarna probeert de gebruiker dit opnieuw, maar bij een volger die achterloopt.
-\end{itemize}
+\subsubsection{Monotonic read}Een gelijkaardig, maar nog steeds verschillend probleem, is monotonic read. De gebruiker leest een post of comment, maar na een refresh is deze comment opeens niet beschikbaar of niet-bestaand. De volger loopt hier achter op de andere volgers. De klok bij de ene volger loopt voor op de andere. Het verschil hier is dat de gebruiker de tekst niet heeft geschreven, wat wel het geval is bij RAW. Dit lossen we op door de gebruiker altijd van dezelfde replica te laten lezen. Hieronder leest de gebruiker eerst van de volger mét het resultaat. Daarna probeert de gebruiker dit opnieuw, maar bij een volger die achterloopt.
 
 
 \begin{figure}
@@ -273,14 +304,14 @@ Fouten bij synchrone replicatie zijn minder voorkomend, maar de techniek kan ged
 
 \begin{figure}
 	\includegraphics[width=\linewidth]{../images/Screenshot_215.png}
-	\caption{Vier partities: elke leader heeft twee volgers. In de volgende foto zijn er vier nodes. Elke node heeft drie onderdelen. Over de vier nodes zijn er vier verschillende partities verdeeld. De replica's of volgers kan je achterhalen aan de hand van de stream. De leider van partitie 1 in node 1. De replica's zijn in Node 3 en in Node 4. De leider van partitie 2 is in node 3. De replica's zijn in Node 1 en in Node 2.}
+	\caption{Vier partities: elke leader heeft twee volgers. In de volgende foto zijn er vier nodes. Elke node heeft drie onderdelen. Over de vier nodes zijn er vier verschillende partities verdeeld. De replica's of volgers worden achterhaald aan de hand van de stream. De leider van partitie 1 in node 1. De replica's zijn in Node 3 en in Node 4. De leider van partitie 2 is in node 3. De replica's zijn in Node 1 en in Node 2.}
 \end{figure}
 
 We kunnen niet zomaar data in stukken snijden. We moetne hotspots vermijden. Een hotspot is een plaats waar de verdeling geen goede verhouding heeft voor iedere node. Hiervoor hebben we twee oplossingen: key-value partitionering en hash partitionering.
 
 \begin{itemize}
-	\item Key-value partitionering is wanneer je een zo eerlijk en even mogelijke verdeling maakt over alle nodes. Alle sleutels binnen een node behoren tot een range. Je sorteert alle sleutels. Bijvoorbeeld alles van A t.e.m. E. Afhankelijk van de context wordt vaak voorkomende data binnen dezelfde partitie opgeslaan. Dit zorgt voor meer verkeer op partitie A-D vergeleken met X-Z. De ene partitie zal een hotspot worden, maar de andere zal geen verkeer krijgen.
-	\item Hash partioning lost dit probleem merendeels op, maar het is niet de meest efficiënte implementatie. Hier verlies je sortering. De compromise hier is dat je wél een even verdeling zal krijgen. De hash houdt rekening met beschikbare plaats. De kans dat een partitie niet gebruikt zal worden is kleiner. 
+	\item Bij key-value partitionering wordt een zo eerlijk en even mogelijke verdeling gemaakt over alle nodes. Alle sleutels binnen een node behoren tot een range. Alle sleutels worden gesorteerd, bijvoorbeeld alles van A t.e.m. E. Afhankelijk van de context wordt vaak voorkomende data binnen dezelfde partitie opgeslaan. Dit zorgt voor meer verkeer op partitie A-D vergeleken met X-Z. De ene partitie zal een hotspot worden, maar de andere zal geen verkeer krijgen.
+	\item Hash partioning lost dit probleem merendeels op, maar het is niet de meest efficiënte implementatie. Hier raakt sortering verloren. De afweing hier is dat het toewijzen van de partitie op een afgewogen manier zal gebeuren. De hash houdt rekening met beschikbare plaats. De kans dat een partitie niet gebruikt zal worden is kleiner. 
 \end{itemize}
 
 
@@ -310,19 +341,17 @@ De locatie van metadata onderhouden gebeurt met de coordination service. Dit zor
 
 \section{Inleiding}
 
-Het maakt gebruik van parallellisatie om de gegevens te verdelen over meerdere computers in een cluster, waardoor het verwerkingsproces sneller wordt. Dit kan worden gebruikt voor het analyseren van gegevens, zoals het ontdekken van trends en patroonherkenning. Hadoop is één van de eerste frameworks voor Big Data Processing. Het is een relatief oud project met *clunky* technieken. 
-
-Het is ontworpen met de gedachten om clusters te kunnen draaien op normale hardware. Als je cluster bestaat uit honderden computers, dan is de kans groot dat er één zal breken. Het basisidee van Hadoop is om dit soort fouten af te handelen en zodat het systeem blijft werken zoals voordien.
+Hadoop gebruikt parallellisatie om gegevens over meerdere computers in een cluster heen te verdelen, waardoor het verwerkingsproces versnelt. Dit kan worden gebruikt voor het analyseren van gegevens, zoals het ontdekken van trends en patroonherkenning. Hadoop is één van de eerste frameworks voor Big Data Processing. Het is een relatief oud project met \textit{clunky} technieken. Hadoop is ontworpen om clusters te kunnen draaien op normale hardware. Als een cluster bestaat uit honderden computers, dan is de kans groot dat er één zal breken. Het basisidee van Hadoop is om dit soort fouten af te handelen en zodat het systeem blijft werken zoals voordien.
 
 \subsection{Hadoop stack}
 
 Een pure hadoop-stack bestaat uit vier onderdelen:
 
 \begin{itemize}
-	\item Hadoop common: de gedeelde bibliotheken die door de andere modules worden gebruikt. Je ziet dit gedeelte niet. Het is de meeste onderste laag.
-	\item HDFS is een filesystem. Dit zorgt voor de distributed file storage. Je merkt de delay amper.
-	\item MapReduce is het processing-gedeelte. MapReduce laat je toe om parallel grote datasets te verwerken.
-	\item YARN voorkomt dat één element in je cluster alle resources opeet. Dit element zorgt voor request-afhandeling van resourcevragen.
+	\item \textit{Hadoop common}: de gedeelde bibliotheken die door de andere modules worden gebruikt. Dit gedeelte is als gebruiker niet met het blote oog te zien. Het is de meeste onderste laag.
+	\item \textit{HDFS} is een filesystem. Dit zorgt voor de distributed file storage. De vertraging is niet op te merken.
+	\item \textit{MapReduce} is het processing-gedeelte. MapReduce laat toe om parallel grote datasets te verwerken.
+	\item \textit{YARN} voorkomt dat één element in een cluster alle resources zal opeten. Dit element staat in voor request-afhandeling van resourcevragen.
 \end{itemize}
 
 \section{Hadoop filesystem}
@@ -345,20 +374,20 @@ De data wordt opgeslaan in een cluster van gewone machines. De focus van HDFS li
 	\item HDFS is bedoeld om een historiek uit te bouwen. De data wordt ingezet in data-analyse, waar nauwkeurigheid een rol speelt, dus er mogen geen wijzigingen aan de data worden aangebracht.
 \end{itemize}
 
-Het principe is 'write-once, read-many-times'. Een bestand wordt eenmalig gemaakt. De doorvoer van het systeem is hier belangrijker. De hoeveelheid verwerkte data per tijdseenheid. HDFS op een klassiek filesysteem. Eens de machine bezig is kan je een grote doorvoer hebben. Er is sprake van \textbf{append-only fashion}. De gegevens kunnen enkel achteraan worden toegevoegd en niet tussenin of helemaal vooraan. Deze werkwijze helpt om de prestaties en betrouwbaarheid van HDFS te verbeteren, omdat het aantal wijzigingen aan gegevens beperkt. 
+\subsubsection{Write-once, read-many-times}
+
+Het principe is 'write-once, read-many-times'. Een bestand wordt eenmalig gemaakt. De doorvoer van het systeem is hier belangrijker. De hoeveelheid verwerkte data per tijdseenheid. HDFS op een klassiek filesysteem. Eens de machine bezig is, kan de doorvoer groot zijn. Er is sprake van \textbf{append-only fashion}. De gegevens kunnen enkel achteraan worden toegevoegd en niet tussenin of helemaal vooraan. Deze werkwijze helpt om de prestaties en betrouwbaarheid van HDFS te verbeteren, omdat het aantal wijzigingen aan gegevens beperkt. 
 
 \subsubsection{Anti-patterns}
 
-Er zijn enkele situaties waarbij HDFS \textit{overkill} of ongeschikt is als oplossing:
+Er zijn drie situaties waarin HDFS \textit{overkill} is als oplossing:
 
 \begin{itemize}
 	\item Wanneer snelheid een grote rol speelt. De latency is hier niet minimaal.
 	\item Wanneer het merendeel van de data uit kleine bestanden bestaat. De nadruk bij HDFS ligt op grote bestanden. De NameNode houdt de directorystructuur bij, waardoor veel kleine bestanden zal leiden tot veel verschillende takken.
-	\item Wanneer je meerdere schrijvers op eenzelfde moment wilt hebben. Als één client schrijft en de andere wilt lezen, dan kan er een conflict ontstaan bij de integriteit en het delen van een bestand.
-	\item Wanneer je gegevens
+	\item Als er meerdere schrijvers op eenzelfde moment nodig zijn. Als één client schrijft en de andere wilt lezen, dan kan er een conflict ontstaan bij de integriteit en het delen van een bestand.
+	\item Hadoop maakt gebruik van een append-only fashion. Als de inhoud vooraan of in het midden moet worden toegevoegd, dan zal dit niet lukken in Hadoop. Bij Hadoop kan er enkel achteraan worden toegevoegd.
 \end{itemize}
-
-* Append-only fashion: Als je inhoud vooraan of in het midden wilt toevoegen.
 
 
 \section{Hadoop-onderdelen}
@@ -374,7 +403,7 @@ Kort samengevat is de namenode de node dat het bestandssysteem beheert en bijhou
 
 \subsection{NameNode}
 
-Een NameNode (NN) is de centrale coördinator. weet uit welke blokken de data bestaat en houdt bij op welke datanodes de blokken staan. Locaties worden niet persistent bijgehouden. Onderling weten ze dit door middel van \textit{heartbeats}.  Als je een file wilt hernoemen, dan lukt dat ook. Bij een cluster heb je altijd één NN.
+Een NameNode (NN) is de centrale coördinator. weet uit welke blokken de data bestaat en houdt bij op welke datanodes de blokken staan. Locaties worden niet persistent bijgehouden. Onderling weten ze dit door middel van \textit{heartbeats}.  Een bestand hernoemen is mogelijk. Bij een cluster is er altijd één NN.
 
 De NN heeft de volgende rollen:
 
@@ -420,7 +449,7 @@ Wanneer een client data in HDFS wil raadplegen, stuurt hij een verzoek naar de N
 
 \section{Single-point-of-failure}
 
-Als één NN uitvalt, of als de NS Image uitvalt, dan zullen de datablokken niet meer toegankelijk zijn. Alle data zal wél blijven bestaan op de DN. Alle blokken hebben random verwijzingen. Als client ben je er niet van bewust waarvan de data komt en waartoe die gaat. 
+Als één NN uitvalt, of als de NS Image uitvalt, dan zullen de datablokken niet meer toegankelijk zijn. Alle data zal wél blijven bestaan op de DN. Alle blokken hebben random verwijzingen. Een client is niet bewust waarvan de data komt en waartoe die zal gaan. 
 
 \subsection{Bescherming NameNode}
 
@@ -428,7 +457,7 @@ Er zijn twee manieren om het NN te beschermen:
 
 \begin{itemize}
 	\item De meest voor de hand liggende manier is om regelmatig een backup te nemen. Hadoop kan worden geconfigureerd om metadata op meerdere filesystems op een synchrone en atomaire manier te schrijven. 
-	\item De tweede optie is een secondary NN. Zolang je een systeem niet herstart wordt je edit log langer en groter. Dit is niet ideaal, want als het neemt zowel plaats in alsook zal het opstarten van een NS image langer duren. In latere versie van Hadoop hebben ze een secondary NN toegevoegd. Een secondary NN is een proces dat op een andere computer loopt en dat de veranderingen van de edit log verwerkt in de huidige namespace.
+	\item De tweede optie is een secondary NN. Zolang een systeem niet wordt herstart, dan wordt de edit log langer en groter. Dit is niet ideaal, want als het neemt zowel plaats in alsook zal het opstarten van een NS image langer duren. In latere versie van Hadoop hebben ze een secondary NN toegevoegd. Een secondary NN is een proces dat op een andere computer loopt en dat de veranderingen van de edit log verwerkt in de huidige namespace.
 \end{itemize}}
 
 \section{HDFS Blokken}
@@ -518,7 +547,7 @@ Bij het falen van een DN, terwijl er data naartoe wordt geschreven, dan worden e
 
 \section{Command-Line}
 
-De CLI voor HDFS biedt een reeks commando's aan om te communiceren met een HDFS-cluster. Deze taal heeft gelijkenissen met de Bash-taal. Om een lijst te krijgen met beschikbare commando's en opties, kan je het commando "hadoop fs -help" gebruiken.
+De CLI voor HDFS biedt een reeks commando's aan om te communiceren met een HDFS-cluster. Deze taal heeft gelijkenissen met de Bash-taal. Om een lijst te krijgen met beschikbare commando's en opties, moet het commando "hadoop fs -help" worden ingegeven.
 
 \subsubsection{Kopiëren en ophalen}
 
@@ -594,9 +623,9 @@ Java werd gekozen omdat dit de meest prevalente taal is voor MapReduce. Een MapR
 
 \begin{enumerate}
 	\item Het schrijven van de mapfunctie. De mapfunctie zal iedere input record verwerken en maakt hierop een verzameling van key-value paren. De mapper-klasse wordt ge-\textit{extend} en enkel de \textit{map()}-methode wordt overerfd. De \textit{map()}-methode vraagt een sleutel als inputwaarde op. Dit is regelmatig de lijn waarop tekst voorkomt. Op basis van deze invoer maakt het een verzameling van key-value paren.
-	\item Het schrijven van de reducefunctie. De reducefunctie verwerkt iedere key met de toebehorende waarden. Je moet de Reducer-klasse \textit{extenden} en de \textit{reduce()}-methode overerven. De input bij deze methode is een sleutel en een set waarden dat de verzameling van output key-value paren gaat maken.
+	\item Het schrijven van de reducefunctie. De reducefunctie verwerkt iedere key met de toebehorende waarden. De Reducer-klasse \textit{extenden} en de \textit{reduce()}-methode moeten worden overgeërfd. De input bij deze methode is een sleutel en een set waarden dat de verzameling van output key-value paren gaat maken.
 	\item Boilerplate-code schrijven. Dit is de code die specifieert hoe de MapReduce job moet draaien. Iedere fase, inclusief extra-reduce fasen, moeten aan bod komen. Alles van job configuratie, input en outputpaden instellen en \textit{job running} moet in de boilerplate code terug te vinden zijn. 
-	\item In sommige gevallen kan je ook een combinerfunctie schrijven. Deze gelijkt sterk op een reducefunctie en wordt op de output van de \textit{map task} toegepast. De combinerfunctie wordt gebruikt om het aantal data, dat tussen de mapper en de reducer bevindt, aan te passen. Zo wordt het proces efficiënter behandeld. Voor een combiner moet je de Reducer-klasse \textit{extenden} en de \textit{reduce()}-methode overerven, net zoals bij de reducefunctie.
+	\item In sommige gevallen is een combinerfunctie handig. Deze lijkt sterk op een reducefunctie en wordt op de output van de \textit{map task} toegepast. De combinerfunctie wordt gebruikt om het aantal data, dat tussen de mapper en de reducer bevindt, aan te passen. Zo wordt het proces efficiënter behandeld. Voor een combiner moet de Reducer-klasse \textit{extenden} en de \textit{reduce()}-methode worden overgeërfd, net zoals bij de reducefunctie.
 \end{enumerate}
 
 \begin{figure}
@@ -811,7 +840,7 @@ Er zijn drie belangrijke rollen:
 
 \subsubsection{Partitionering}
 
-Parallelle verwerking met Spark kan enkel gebeuren wanneer het systeem in verschillende clusters is opgebouwd. Een partitie is in dit geval een verzameling van rijen die op een fysieke machine in een cluster is opgeslaan. De partities van een DataFrame tonen hoe de data fysiek is verdeeld over de cluster heen. Het aantal partities is gebonden op het niveau van parallelisme in een Spark applicatie. Als je één partitie hebt, dan ga je een parallelisme van één hebben, zelfs al heb je meerdere executors. Omgekeerd ook, want als je meerdere partities hebt met één executor, dan zal je nog steeds een parallelisme van één hebben. De afweging maken tussen aantal partities en aantal executors speelt hier een rol op het vlak van snelheid.
+Parallelle verwerking met Spark kan enkel gebeuren wanneer het systeem in verschillende clusters is opgebouwd. Een partitie is in dit geval een verzameling van rijen die op een fysieke machine in een cluster is opgeslaan. De partities van een DataFrame tonen hoe de data fysiek is verdeeld over de cluster heen. Het aantal partities is gebonden op het niveau van parallelisme in een Spark applicatie. Bij één partitie zal de parallellisatiefactor gelijk staan aan één, zelfs al zijn er meerdere executors. Omgekeerd ook, want als er meerdere partities zijn met één executor, dan zal de parallellisatiefactor gelijk staan aan één. De afweging maken tussen aantal partities en aantal executors speelt hier een rol op het vlak van snelheid.
 
 \section{Spark in Java}
 
@@ -982,7 +1011,7 @@ public static void main(String[] args){
 
 \subsubsection{Schema overerven}
 
-In de vorige twee berekeningen werd er een schema zelf, door de ontwikkelaar, aangemaakt. Dit is vrijblijvend, want Spark kan ook een schema overerven. Hieronder is er een alternatieve methode op stap twee van het vorige voorbeeld. Deze methode is minder efficiënt, want Spark moet zelf achterhalen wat de meest geschikte datatypes zijn. Daarnaast gaat Spark lijn per lijn door de volledige dataset heen. Wel kan je de workload minimaliseren door het schema op te bouwen o.b.v. een deel van de volledige dataset. Dit is een deelse oplossing, want er kunnen nog steeds problemen voorkomen bij de gekozen datatypes. Daarom is het aangeraden om zelf een schema op te bouwen.
+In de vorige twee berekeningen werd er een schema zelf, door de ontwikkelaar, aangemaakt. Dit is vrijblijvend, want Spark kan ook een schema overerven. Hieronder is er een alternatieve methode op stap twee van het vorige voorbeeld. Deze methode is minder efficiënt, want Spark moet zelf achterhalen wat de meest geschikte datatypes zijn. Daarnaast gaat Spark lijn per lijn door de volledige dataset heen. De workload kan worden geminimaliseerd door het schema op te bouwen o.b.v. een deel van de volledige dataset. Dit is een deelse oplossing, want er kunnen nog steeds problemen voorkomen bij de gekozen datatypes. Daarom is het aangeraden om zelf een schema op te bouwen.
 
 \begin{lstlisting}[language=Java]
 Dataset<Row> df  = spark.read()
@@ -1024,7 +1053,7 @@ spark.close();
 \section{Dataframe-kolommen inlezen, toevoegen en verwijderen.}
 
 \subsubsection{Kolommen toevoegen}
-Een dataframe bestaat uit kolommen. Sommige functies vragen de naam van een kolom op als String, maar andere functies vereisen dat je een object van de klasse 'Column' meegeeft. In het volgende voorbeeld wordt er een extra kolom aangemaakt. De kolom is een berekening op de leeftijdskolom. 
+Een dataframe bestaat uit kolommen. Sommige functies vragen de naam van een kolom op als String, maar andere functies vereisen dat er een object van de klasse 'Column' wordt meegegeven. In het volgende voorbeeld wordt er een extra kolom aangemaakt. De kolom is een berekening op de leeftijdskolom. 
 
 \begin{enumerate}
 	\item Bovenaan komen de imports. De klasse 'functions' is met een kleine letter geschreven, daarmee een uitzondering op de regel om alle klassen met een hoofdletter te laten starten.
@@ -1073,7 +1102,7 @@ df = df.drop("id","naam");
 
 \subsubsection{Kolommen hernoemen}
 
-Kolomnamen kunnen worden aangepast. Bij het toevoegen wordt er vaak een standaardnaam toegekend aan een kolom, bijvoorbeeld \textit{count} of \textit{sum}. Hieronder wordt de kolom met de naam \textit{count} aangepast naar \textit{aantalRijen}. Na een berekening kan je ook de \textit{alias}-functie gebruiken. 
+Kolomnamen kunnen worden aangepast. Bij het toevoegen wordt er vaak een standaardnaam toegekend aan een kolom, bijvoorbeeld \textit{count} of \textit{sum}. Hieronder wordt de kolom met de naam \textit{count} aangepast naar \textit{aantalRijen}. Na een berekening wordt er ook de \textit{alias}-functie gebruikt. 
 
 \begin{lstlisting}[language=Java]
 df = df.withColumnRenamed("count","aantalRijen");
@@ -1517,7 +1546,7 @@ Dataset<Row> matched = purchases.join(customers,”adId”);
 
 \subsubsection{Buffering}
 
-Bij buffering wordt de inputdata van beide streams tijdelijk bijgehouden. Zo wordt er gekeken naar matches, zelfs al is de data in een andere volgorde binnengekomen. Structured streaming verloopt zo effectiever, en je hebt een beter zicht op de data.
+Bij buffering wordt de inputdata van beide streams tijdelijk bijgehouden. Zo wordt er gekeken naar matches, zelfs al is de data in een andere volgorde binnengekomen. Structured streaming verloopt zo effectiever en er is een beter zicht op de data.
 
 \section{Keeping the state bounded}
 
@@ -1644,7 +1673,7 @@ Een topic is opgedeeld in een aantal partities. het doel van meerdere partities 
 
 \begin{itemize}
 	\item De volgorde ligt definitief vast. De volgorde wordt bepaald door de offset. Het is vergelijkbaar met een oude typmachine. Eenmaal een lijn is geschreven, dan blijft dit zo. De volgorde waarin een partitie wordt geschreven, is dezelfde volgorde waarin een lezer de partitie zal lezen.
-	\item Dit is een \textit{append-only} logfile. Als iets geschreven is in de partitie, dan zal dit achteraan zijn. Daarnaast kan een boodschap niet gewijzigd of verwijderd worden. Als je een foute boodschap stuurt, dan moet je een tweede boodschap sturen om de fout recht te zetten.
+	\item Dit is een \textit{append-only} logfile. Als iets geschreven is in de partitie, dan zal dit achteraan zijn. Daarnaast kan een boodschap niet gewijzigd of verwijderd worden. Als er een foute boodschap wordt verstuurd, dan is er een tweede boodschap nodig om de fout recht te zetten.
 	\item Een broker kijkt nooit naar de data. Ze plakken er enkel metadata aan, maar ze bewerken geen inhoud.
 	\item Er is geen verhouding tussen nummers van verschillende partities. De volgorde en offset is enkel zinvol binnen dezelfde partitie. Offset 3 bij partitie 0 heeft geen invloed of correlatie met offset 3 van partitie 1.
 \end{itemize}
@@ -1665,7 +1694,7 @@ Kafka bezit vier belangrijke kenmerken:
 
 \begin{itemize}
 	\item De offset is enkel geldig binnen een gekozen topic partitie.
-	\item De volgorde is enkel binnen een partitie gegarandeerd. Als je als consumer een topic leest, dan gebeurt dit hoogstwaarschijnlijk niet in dezelfde volgorde als hoe ze werden gepost.
+	\item De volgorde is enkel binnen een partitie gegarandeerd. De volgorde waarin een consumer een topic leest is niet gelijk aan de volgorde als hoe ze messages werden gepost.
 	\item Data kan opstapelen. Als er niets wordt toegevoegd of gelezen, dan zal Kafka alles ouder dan een week verwijderen. Deze periode kan worden veranderd. Een tweede mogelijkheid is om een capaciteitslimiet in te stellen, bijvoorbeeld wanneer de partitie te groot is.
 	\item Data is immutable. Eenmaal geschreven, kan de data niet meer worden aangepast.
 	\item Als er geen key wordt meegegeven, dan kiest Kafka zelf een partitie om de data naar uit te schrijven. Deze keuze gebeurt willekeurig om de partities even groot te houden. Op de key wordt er een hash berekend. 
@@ -1680,7 +1709,7 @@ Iedere Kafka-cluster bestaat uit minstens één \textit{broker}.
 \begin{itemize}
 	\item Een \textit{broker} is een server met een eigen ID en topic-partitions.
 	\item Er is geen specifieke master-broker. Er wordt verbonden met een willekeurige broker die de metadata van de cluster bijhoudt. Verbinden met één broker staat gelijk aan verbinden met de hele cluster.
-	\item Bij enkel één broker heb je geen fouttolerantie. Pas vanaf twee brokers biedt je systeem fouttolerantie aan. Per standaard zijn er drie brokers.
+	\item Bij enkel één broker is er geen fouttolerantie. Pas vanaf twee brokers biedt het systeem fouttolerantie aan. Per standaard zijn er drie brokers.
 	\item Het toekennen van een partitie aan een broker gebeurt o.b.v. een algoritme.
 \end{itemize}
 
@@ -1733,7 +1762,7 @@ Belangrijke configuratie is wanneer de producer iets ziet als geslaagd. Er zijn 
 	\begin{itemize}
 		\item Replicatiefactor 3 met min-insync-replicas van 1 is gevaarlijk, want dat geeft aan dat de data verloren zijn wanneer de leader uitvalt. De producer zal denken dat het bericht is toegekomen.
 		\item Replicatiefactor drie met min-insync-replicas van 2 wilt zeggen er minstens één \textit{out-of-sync} volger wordt toegelaten.
-		\item Replicatiefactor 3 met min-insync-replicas van 3 is functioneel ok, maar de beschikbaarheid van het systeem zal \textit{tanken}. Hier verwacht je dat je géén trage volgers zal hebben.
+		\item Replicatiefactor 3 met min-insync-replicas van 3 is functioneel ok, maar de beschikbaarheid van het systeem zal \textit{tanken}. Er wordt geassumeerd dat er geen trage volgers zijn.
 	\end{itemize}
 \end{itemize}
 
@@ -1765,11 +1794,11 @@ Er zijn drie verschillende delivery semantics:
 
 \subsubsection{Broker Discovery}
 
-Het maakt niet uit met welke broker er een verbinding wordt opgestart. De client zal een verbinding leggen met eender welke broker. Welke maakt niet uit, want je bent met de cluster verbonden als je met eender welke broker een verbinding kan opstarten. Iedere broker houdt metadata bij.
+Het maakt niet uit met welke broker er een verbinding wordt opgestart. De client zal een verbinding leggen met eender welke broker. Welke broker maakt niet uit, want de verbinding met één broker wijst aan dat er een verbinding is met de volledige cluster. Iedere broker houdt metadata bij, dus iedere broker kent de weg naar een cluster.
 
 \subsection{Zookeeper}
 
-Als je Kafka wilt draaien in productie, dan wordt Zookeeper aangeraden. Zookeeper wordt gebruikt om Kafka te beheren. Enkele functies van Zookeeper:
+Zookeeper wordt aangeraden wanneer Kafka in productie wordt gebruikt. Deze technologie wordt gebruikt om Kafka te beheren. Enkele functies van Zookeeper:
 
 \begin{itemize}
 	\item Zookeeper houdt de brokers bij.
@@ -1863,7 +1892,7 @@ De offset kan op vier verschillende manieren worden aangepast.
 	\item To-earliest zal de offset naar het begin verplaatsen
 	\item To-datetime maakt het mogelijk om de offset te verplaatsen naar de offset die het dichtste bij een specifiek gekozen datum 
 	\item Shift-by verlegt de offset met n-aantal lijnen
-	\item By-period is gelijkaardig aan \textit{to-datetime}, maar hier kan je enkel met periodes werken. Bijvoorbeeld een week geleden, een dag geleden, een uur geleden enzovoort.
+	\item By-period is gelijkaardig aan \textit{to-datetime}, maar hier wordt er enkel met periodes gewerkt. Bijvoorbeeld een week geleden, een dag geleden, een uur geleden enzovoort.
 \end{itemize}
 
 \begin{lstlisting}[language=CLI-kafka]
