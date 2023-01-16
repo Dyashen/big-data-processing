@@ -25,7 +25,7 @@ public class FilteringLogMessages {
 		System.out.println("Will read from the topic " + topic);
 		
 		SparkSession spark = SparkSession.builder()
-				.appName("KafkaReadExample")				
+				.appName("FilteringLogExercise")				
 				.master("local[*]")
 				.getOrCreate();
 		

@@ -1,3 +1,5 @@
+% play phantom dust
+
 \documentclass[a4paper,10pt,twoside]{report}
 
 \usepackage[margin=1in]{geometry}
@@ -75,13 +77,13 @@
 \setmainfont{Montserrat}
 
 \title{Samenvatting Big Data Processing}
+
 \author{Dylan {Cluyse}}
-\date{1 januari 2023}
 
 \begin{document}
 	
 \maketitle
-
+	
 \tableofcontents
 	
 \chapter{Big Data Processing}
@@ -1192,6 +1194,170 @@ Dataset<Row> result = percentageDF
 	.groupBy("courseId").agg(sum("score").as("total"))
 	.join(titleDF, "courseId")
 	.orderBy(desc("total"));
+\end{lstlisting}
+
+\newpage
+
+\section{Oefeningen op Spark}
+
+\subsection{Inverted Index}
+
+\begin{lstlisting}[language=Java]
+public class InvertedIndex {
+	
+	static UDF1<String, String> getFilename = new UDF1<String, String>()
+	{
+		public String call(String fullPath) throws Exception 
+		{
+			int index = fullPath.lastIndexOf("/");
+			return fullPath.substring(index + 1, fullPath.length());
+		}
+	};
+	
+	private static SparkSession spark;
+	final static String PATH = "src/main/resources/*";
+	
+	public static void main(String[] args) {
+		spark = SparkSession.builder()
+			.appName("InvertedIndex")
+			.master("local[1]")
+			.getOrCreate();
+		
+		spark.sparkContext().setLogLevel("ERROR");
+		
+		// Dataset inlezen
+		Dataset<Row> dataframe = spark.read().text(PATH);
+		
+		// Woorden ophalen per bestand
+		Dataset<Row> invertedIndex = dataframe
+			.withColumn("raw", input_file_name().cast("String"))
+			.withColumn("words", explode(split(col("value"), " ")))
+			.drop("value");
+		
+		// Filename toevoegen en raw droppen
+		spark.udf().register("getFilename", getFilename, DataTypes.StringType);
+		
+		invertedIndex
+			.withColumn("filename", callUDF("getFilename", col("raw")))
+			.drop("raw")
+			.groupBy(col("words"), col("filename")).count()
+			.orderBy(desc("count"))
+			.show();
+		
+		// Aantal woorden per bestand.
+		invertedIndex.groupBy(col("raw")).count()//.show()
+		;
+	}
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Fire Department}
+\begin{lstlisting}[language=Java]
+public class SanFransiscoFireDepartment {
+	
+	static SparkSession spark;
+	static final String PATH = "src/main/resources/output";
+	
+	public static void main(String[] args) {
+		
+		spark = SparkSession.builder().appName("InvertedIndex").master("local[*]").getOrCreate();
+		
+		spark.sparkContext().setLogLevel("ERROR");
+		
+		List<StructField> fields = Arrays.asList(DataTypes.createStructField("CallNumber", DataTypes.IntegerType, true),
+			DataTypes.createStructField("UnitID", DataTypes.StringType, true),
+			...
+			DataTypes.createStructField("Delay", DataTypes.DoubleType, true));
+		
+		StructType schema = DataTypes.createStructType(fields);
+		
+		// Data inlezen
+		Dataset<Row> department = spark.read()
+			.option("header", true)
+			.schema(schema)
+			.csv("src/main/resources/sf-fire-calls.csv");
+		
+		// Part I
+		
+		// convert the columns calldate and watchdate
+		department = department
+			.withColumn("Calldate", to_date(col("CallDate"), "MM/dd/yyyy"))
+			.withColumn("Watchdate", to_date(col("Watchdate"), "MM/dd/yyyy"));
+		
+		// convert the column availabledtm to a timestamp
+		department = department
+			.withColumn("AvailableDtTm", to_timestamp(col("AvailableDtTm"), "MM/dd/yyyy hh:mm:ss a"));
+		
+		// save the dataframe as a parquet file
+		department.write()
+			.mode(SaveMode.Overwrite)
+			.parquet(PATH);
+		
+		
+		// Part II
+				
+		// Alle verschillende calltypes in 2018 met WHERE
+		department
+			.where(year(col("Calldate")).equalTo("2018"))
+			.groupBy(col("CallType"))
+			.agg(count("*").as("Aantal"))
+			.select("CallType")
+			.orderBy("CallType")
+			.show(false);
+		
+		// Alle verschillende calltypes in 2018 met filter
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy(col("CallType"))
+			.agg(count("*").as("Aantal"))
+			.select("CallType")
+			.orderBy("CallType")
+			.show(false);
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[language=Java]
+		
+		// Alle maanden in 2018 met het hoogst aantal calls.
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy(month(col("Calldate")).as("Maandnummer"))
+			.agg(count("*").as("Aantal"))
+			.orderBy(desc("Aantal"))
+			.show(false);
+		
+		// De neighborhood met de meeste oproepen in 2018
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy("neighborhood")
+			.agg(count("*").as("Aantal"))
+			.orderBy(desc("Aantal"))
+			.limit(1)
+			.show(false);
+		
+		// De neighborhoods met de slechtste gemiddelde vertraagtijden bij een omroep.
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy("neighborhood")
+			.agg(avg(col("Delay")).as("avgResponse"))
+			.orderBy(desc("avgResponse"))
+			.select(col("neighborhood"), bround(col("avgResponse"), 2))
+			.show(false);
+		
+		// De week in 2018 met de meeste calls
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy(weekofyear(col("Calldate")).as("Weeknummer"))
+			.agg(count("*").as("Aantal"))
+			.limit(1)
+			.show(false);
+		
+		spark.close();
+	}
+}
 \end{lstlisting}
 
 \chapter{Spark Streaming}
