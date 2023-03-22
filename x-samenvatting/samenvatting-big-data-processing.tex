@@ -18,7 +18,7 @@
 	keywordstyle=[1]\color{Bittersweet},
 	keywords=[2]{linearsvc, pipeline, parammap, minmaxscaler, vectorassembler, crossvalidatormodel, linearregression, pipelinemodel, stringindexer, randomforestregressor, crossvalidator, regressionevaluator, regextokenizer, stopwordsremover, countvectorizer, hashingtf, logisticregression, paramgridbuilder, randomforestclassifier}, % ML-typen
 	keywordstyle=[2]\color{purple},	
-	keywords=[3]{private, static, final, throws, public, exception, call, udf4, udf2, new, return, system, printf}, 
+	keywords=[3]{private, static, final, throws, public, exception, call, udf4, udf2, new, return, system, printf, try, finally, catch}, 
 	keywordstyle=[3]\color{violet},
 	keywords=[4]{double, doubletype, timestamptype, stringtype, integertype, boolean , int, long, string, dataset},
 	keywordstyle=[4]\color{RoyalBlue},
@@ -800,989 +800,156 @@ Er zijn verschillende schedulers in YARN:
 	\item \textit{Fair scheduler} zal de resources op een eerlijke manier proberen te verdelen over alle applicaties heen. Hier zijn er verschillende factoren zoals de noden aan middelen en voorafgaand gebruik voor iedere applicatie.
 \end{itemize}
 
-\chapter{Spark}
-
-\subsubsection{Vooraf}
-
-Voor de komst waren er een aantal programmeermodellen gericht op filesystemclusters. De meeste waren gespecialiseerd, waaronder MapReduce, Storm, Impala en Pregel. Spark werd ontworpen om sneller en flexibeler te zijn dan de vooraf genoemde modellen. Sindsdien is het een populaire keze geworden voor een heleboel dataverwerkingstaken, waaronder \textit{batch processing}, streamverwerking, \textit{machine learning} en gegevensanalyse. Het biedt een aantal voordelen t.o.v. andere clustercomputersystemen, zoals: 
-
-\begin{itemize}
-	\item Flexibele en expressieve API
-	\item Ondersteuning voor een breed aantal gegevensbronnen en formaten
-	\item Mogelijk om te draaien in een groot aantal deployment-omgevingen, zoals on-premises clusters, cloudgebaseerde clusters en zelfs op één enkele machine.
-\end{itemize}
-
-\subsubsection{Algemene voordelen}
-
-Spark is generiek en algemeen. Een analoge uitleg is om Spark een smartphone te noemen, terwijl andere modellen eerder een GPS, mobiele telefoon of digitale camera zijn. Spark is een \textit{jack-of-all-trades}. daarom brengt het drie voordelen met zich mee:
-
-\begin{itemize}
-	\item Toepassingen zijn makkelijker te ontwikkelen, want ze maken gebruik van een gecentraliseerde API.
-	\item Het is efficiënter om verwerkingstaken te combineren. Voor Spark moeten pipelines vaak de gegevens wegschrijven naar opslag om ze door te geven aan een andere engine. Spark kan diverse functies uitvoeren op dezelfde gegevens, vaak in het geheugen.
-	\item Spark maakt nieuwe toepassingen mogelijk, bijvoorbeeld interactieve queries op het streamen van ML.
-\end{itemize}
-
-\section{Spark Application Architecture}
-
-Er zijn drie belangrijke rollen:
-
-\begin{itemize}
-	\item Bij een Spark-applicatie is de \textit{driverprocess} hetgeen wat de applicatiecode doet draaien. Dit proces onderhoudt de informatie van de Spark-applicatie, beantwoordt de input van de gebruiker en verdeeld het werk over de \textit{executors}.
-	\item Een executorprocess gaat het werk uitvoeren dat hen werd toegekend. De staat van de actie (geslaagd/niet geslaagd) wordt gerapporteerd aan het driverproces.
-	\item De \textit{clustermanager} houdt logs bij van de beschikbare resources en welke resources er aan de executors, indien mogelijk, kunnen worden gegeven. Spark ondersteunt verschillende clustermanagers, waaronder YARN, Mesos en Kubernetes.
-\end{itemize}
-
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[height=5cm]{images/Screenshot_258.png}
-	\end{center}
-		\caption{Opbouw en structuur van een Spark-applicatie}
-\end{figure}
-
-
-\subsubsection{Partitionering}
-
-Parallelle verwerking met Spark kan enkel gebeuren wanneer het systeem in verschillende clusters is opgebouwd. Een partitie is in dit geval een verzameling van rijen die op een fysieke machine in een cluster is opgeslaan. De partities van een DataFrame tonen hoe de data fysiek is verdeeld over de cluster heen. Het aantal partities is gebonden op het niveau van parallelisme in een Spark applicatie. Bij één partitie zal de parallellisatiefactor gelijk staan aan één, zelfs al zijn er meerdere executors. Omgekeerd ook, want als er meerdere partities zijn met één executor, dan zal de parallellisatiefactor gelijk staan aan één. De afweging maken tussen aantal partities en aantal executors speelt hier een rol op het vlak van snelheid.
-
-\section{Spark in Java}
-
-\subsection{Dataframe}
-
-Een dataframe is een gedistribueerde, in-memory tabel met benoemde kolommen en een schema. Het schema duidt elke specifiek datatype aan. Een dataframe is \textit{immutable}, dus eenmaal aangemaakt kan het object niet meer worden gewijzigd. Dataframes kunnen worden aangemaakt uit verschillende bronnen, zoals Hadoop InputFormats of CSV-bestanden. Verdere transformaties, zoals aggregaties en filteren, kunnen zeker toegepast worden op eender welk type formaat. In Java-code verwijzen we naar het object 'Dataset<>'. Tussen de diamandtekens plaatsen we het object 'Row'.
-
-\subsection{Transformaties}
-
-Er zijn verschillende types transformaties die op een dataframe kunnen worden uitgevoerd. Deze transformaties verlopen \textit{lazy evaluated}. Het onderscheid tussen \textit{wide} en \textit{narrow} transformaties wordt hier gemaakt:
-
-\begin{itemize}
-	\item Een narrow transformatie is wanneer het resultaat voor een partitie kan worden berekend met enkel de data van die partitie. Iedere inputpartitie contribueert tot minstens één outputpartite. Deze transformatie kan ook gebeuren aan de hand van een pipeline, zo hoeft er geen data naar de disk te worden geschreven. Narrow transformaties zijn snel en efficiënt.
-	\item Een wide transformatie heeft nood aan meerdere outputpartities. Sommige inputpartities zullen contribueren tot elk meerdere outputpartities. Hier is er nood aan een \textit{shuffle}, waarbij er een proces wordt toegevoegd. In dit proces worden de partities, over een cluster heen, onderling met elkaar uitgewisseld. Een shuffle vereist dat er resultaten naar de \textit{disk} wordt geschreven. Aangezien dit extra schrijfoperaties zijn, is het aangeraden om het aantal wide-transformaties zo minimaal mogelijk te houden.
-\end{itemize}
-
-\subsubsection{Lazy Evaluation}
-
-Spark maakt gebruik van Lazy evaluation, wat wilt zeggen dat een transformatie niet zal resulteren in een nieuwe dataframe. De return-waarde is wél een nieuw object dat het resultaat van de bewerking bijhoudt. De berekening is nog niet uitgevoerd. Bij het triggeren van een actie kijkt Spark naar de graph van alle transformaties die werden opgeroepen. Net zoals bij SQL wordt er een \textit{query execution plan} aangemaakt. Dit proces noemt \textit{query optimization}. Spark kan mogelijks meerdere filters en filters gaan samensteken, of het kan andere soorten optimizatie gaan toepassen om zo min mogelijk data te moeten verwerken.
-
-\subsection{Acties}
-
-Transformaties in Spark bouwen een logische transformatieplan op. Die geeft aan hoe de inputdata moet worden getransformeerd om de gewenste output te krijgen. Het transformatieplan wordt niet uitgevoerd tot de actie wordt getriggerd. Een actie geeft Spark de instructie om een resultaat of verzameling van transformaties te berekenen. Sommige voorbeelden van acties zijn:
-
-\begin{itemize}
-	\item Sommige rijen van een dataframe tonen.
-	\item Het aantal rijen van een dataframe optellen.
-	\item De dataframe opslaan als een native object, zoals een Java lijst.
-	\item Een dataframe schrijven naar een externe \textit{data sink}.
-\end{itemize}
-
-Eenmaal de actie is getriggerd, dan zal Spark het transformatieplan uitvoeren en de resultaat van de actie berekenen. 
-
-\subsection{Physical plan}
-Spark's Physical Plan wijst aan hoe de Spark-applicatie zal uitgevoerd worden op een cluster van machines. Dit omvat details zoals:
-\begin{itemize}
-	\item Welke transformaties moeten er worden uitgevoerd?
-	\item Hoe moet de data gepartitioneerd of geshuffled worden?
-	\item Hoe moeten de resultaten van de transformaties worden opgeslaan of geretourneerd?
-\end{itemize}
-
-\subsubsection{Het belang van een physical plan}
-
-Het \textit{physical plan} is belangrijk, want zo achterhalen ontwikkelaars hoe zij hun middelengebruik kunnen optimaliseren en het aantal data, dat tussen machines heen moet worden geschreven, kan geminimaliseerd worden. Verdere oplossingen zijn:
-
-\begin{itemize}
-	\item Debugging en troubleshooten.
-	\item Performance optimization
-	\item Resource management
-	\item Capaciteitsplanning
-\end{itemize}
-
-\section{Spark Libraries}
-
-Dit is puur informatief. Spark bevat meerdere libraries om data-analyse of data-berekeningen op uit te voeren.
-
-\begin{itemize}
-	\item SQL en dataframe
-	\item Spark Streaming
-	\item MLLib
-	\item GraphX
-\end{itemize}
-
-\subsection{Integratie met opslagsystemen}
-
-Spark is ontworpen om met verschillende externe systemen te werken. Het is \textit{storage-system agnostic}, wat wilt zeggen dat het met een breed gamma aan storage systemen kan werken. Enkele voorbeelden van Spark-geïntegreerde storage systemen zijn:
-
-\begin{itemize}
-	\item HDFS is de populairste keuze voor Big Data, zowel gestructureerde als non-gestructureerde data.
-	\item Key-value stores
-	\item Relationele databanken
-\end{itemize} 
-
-\subsection{Resilient Distributed Dataset}
-
-Voor Apache 2.0 werd er gewerkt met een Resilient Distributed Dataset of RDD object. Dit is een verzameling van objecten die parallel gemanipuleerd kunnen worden. Het is een fouttolerante werkwijze. RDD's zijn ook immutable en ze worden aangemaakt wanneer er wordt gelezen van een databron. RDD's zijn meer in de achtergrond verdwenen bij de nieuwere versies, maar ze blijven toegankelijk. RDD's komen in deze cursus niet meer aan bod.
-
-\section{Spark-applicaties schrijven}
-
-\subsection{Een dataframe met nieuwe waarden aanmaken.}
-
-Stap voor stap wordt de volgende code uitgelegd:
-
-\begin{enumerate}
-	\item Eerst wordt er een spark-object aangemaakt in de main-methode. Zonder deze kan de applicatie niet werken.
-	\item Er wordt een nieuwe lege lijst aangemaakt. We houden een Java-lijst bij van "Row's", ofwel de inhoud voor de dataframe.
-	\item We maken vijf nieuwe rijen aan. In iedere rij houden we twee waarden bij: tekst en een getal. Met de RowFactory wordt er een Row-object aangemaakt, om dan vervolgens aan de Java-lijst toe te voegen.
-	\item De komende twee stappen zijn optioneel, maar aan te raden. De ambitie is om een schema op te stellen. Het schema is een weergave van alle datatypes die in de dataframe aan bod komen. Zonder een schema moet Spark zelf uitvissen wat de datatypes zijn, en zelfs dan is er géén garantie dat het de juiste datatype is. In dit geval zijn er twee velden: naam in de vorm van een String en leeftijd in de vorm van een Integer. Deze lijst houdt de StructFields of schemavelden bij die in een schema moeten voorkomen. Dit is het schema nog niet!
-	\item Op basis van de lijst met datatypes wordt er een schema gemaakt. Het schema is van het type StructType.
-	\item Het dataframe wordt aangemaakt. Hiervoor komt het Spark-object van pas. Samen met de lijst van rijen als eerste parameter én het schema wordt het dataframe aangemaakt.
-	\item Vervolgens wordt de data gegroepeerd op basis van naam. Zo zijn er twee Brooke's in het dataframe. In het resultaat zal er maar één Brooke te vinden zijn, maar van de twee leeftijden wordt het gemiddelde genomen.
-	\item Het dataframe wordt in de terminal weergegeven. Alle kolommen, dus naam en leeftijd, worden weergegeven.
-	\item Optioneel, maar wel aangeraden om het Spark-object te sluiten.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-public	static void main(String[] args){
-	
-	SparkSession spark = SparkSession.builder()
-									.appName("applicatiePersonenMetLeeftijd")
-									.master("local[*]")
-									.getOrCreate();
-									
-	List<Row> inMemory = new ArrayList<>();
-	
-	inMemory.add(RowFactory.create("Brooke",20));
-	inMemory.add(RowFactory.create("Brooke",25));
-	inMemory.add(RowFactory.create("Denny",31));
-	inMemor.add(RowFactory.create("Jules",30));
-	inMemory.add(RowFactory.create("TD",35));
-	
-	List<StructField> fields = Arrays.asList(
-		DataTypes.createStructField("name",DataTypes.StringType, true),
-		DataTypes.createStructField("age",DataTypes.IntegerType, true);
-	)
-	
-	StructType schema = DataTypes.createStructType(fields);
-	
-	Dataset<Row> df = spark.createDataFrame(inMemory, schema);
-
-	Dataset<Row> result = df.groupby("name").avg("age");
-	
-	result.show();
-	
-	spark.close();
-}
-\end{lstlisting}
-
-\subsection{Een bestaande dataframe lezen}
-
-Een dataframe wordt vaak gelezen uit een externe bron, zoals JSON, CSV, Parquet of Kafka output. Het Spark-object bezit een methode \textit{read()}. Deze methode geeft een DataFrameReader-object terug, wat nodig is om een bron in te lezen. Veronderstel dat we hier met dezelfde dataset te maken hebben, maar enkel al vooraf opgeslaan in een csv-bestand.
-
-\begin{enumerate}
-	\item Spark-object aanmaken.
-	\item Schema maken door een lijst van StructFields te maken én die dan te gieten in een StructType-object.
-	\item Het CSV-bestand wordt ingelezen. Net zoals het aanmaken, gebeurt het inlezen ook met het Spark-object. In het CSV-bestand is er een header, vandaar dat er eerst de optie 'header:true' wordt meegeven. Vervolgens wordt het schema meegegeven én uiteindelijk het pad waar de CSV kan worden teruggevonden.
-	\item Net zoals daarnet wordt er gegroepeerd op naam. Per naam wordt de gemiddelde leeftijd teruggegeven.
-	\item Het dataframe wordt in de terminal getoond.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-public static void main(String[] args){
-	
-	SparkSession spark = SparkSession.builder()
-								.appName("applicatiePersonenMetLeeftijd")
-								.master("local[*]")
-								.getOrCreate();
-								
-	List<StructField> fields = Arrays.asList(
-			DataTypes.createStructField("name",DataTypes.StringType, true),
-			DataTypes.createStructField("age",DataTypes.IntegerType, true);
-	)
-	
-	StructType schema = DataTypes.createStructType(fields);
-	
-	Dataset<Row> df = spark.read()
-						.option("header", true)
-						.schema(schema)
-						.csv("src/main/resources/PersonenMetLeeftijd.csv");
-	
-	Dataset<Row> result = df.groupby("name").avg("age");
-	
-	result.show();
-	
-	spark.close();
-}
-\end{lstlisting}
-
-\subsubsection{Schema overerven}
-
-In de vorige twee berekeningen werd er een schema zelf, door de ontwikkelaar, aangemaakt. Dit is vrijblijvend, want Spark kan ook een schema overerven. Hieronder is er een alternatieve methode op stap twee van het vorige voorbeeld. Deze methode is minder efficiënt, want Spark moet zelf achterhalen wat de meest geschikte datatypes zijn. Daarnaast gaat Spark lijn per lijn door de volledige dataset heen. De workload kan worden geminimaliseerd door het schema op te bouwen o.b.v. een deel van de volledige dataset. Dit is een deelse oplossing, want er kunnen nog steeds problemen voorkomen bij de gekozen datatypes. Daarom is het aangeraden om zelf een schema op te bouwen.
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> df  = spark.read()
-						.option("header", true)
-						.option("inferSchema", true)
-						.option("samplingRation", 0.0001)
-						.csv("src/main/resources/PersonenMetLeeftijd.csv)
-\end{lstlisting}
-
-\subsection{Een dataframe uitschrijven naar een nieuw bestand.}
-
-In de volgende code wordt er verondersteld dat er een Spark-object is aangemaakt, een schema is opgesteld én een dataset al is ingelezen. De dataset werd opgeslaan als DataFrame onder de naam 'result'.
-
-\begin{enumerate}
-	\item Het pad wordt tweemaal gebruikt, dus dat wordt opgeslaan onder een variabele. Het pad kan zowel relatief als absoluut zijn. In dit voorbeeld is het pad absoluut.
-	\item Er zijn drie opties:
-	\begin{enumerate}
-		\item De inhoud van de dataframe wordt uitgeschreven naar een parquet-bestand. Dit bestand is een must bij een column-oriented databankstructuur.
-		\item Vervolgens wordt de mode meegegeven. Bij het uitschrijven wordt er een map gegenereerd. In die map kan het parquet-bestand worden teruggevonden.
-		\item Als laatste moet er een outputpad worden meegegeven. 
-	\end{enumerate}
-	\item Puur uit controle wordt het net aangemaakte bestand ingelezen door Spark. De outputpad, waar het parquet-bestand werd opgeslaan, dient nu als inputpad.
-	\item Het Spark-object wordt gesloten.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-String path = "file:///C:/tmp/personen";
-
-df.write()
-	.format("parquet")
-	.mode("overwrite")
-	.save(path);
-	
-Dataset<Row> dfParquet = spark.read().parquet(path);
-
-spark.close();
-\end{lstlisting}
-
-\section{Dataframe-kolommen inlezen, toevoegen en verwijderen.}
-
-\subsubsection{Kolommen toevoegen}
-Een dataframe bestaat uit kolommen. Sommige functies vragen de naam van een kolom op als String, maar andere functies vereisen dat er een object van de klasse 'Column' wordt meegegeven. In het volgende voorbeeld wordt er een extra kolom aangemaakt. De kolom is een berekening op de leeftijdskolom. 
-
-\begin{enumerate}
-	\item Bovenaan komen de imports. De klasse 'functions' is met een kleine letter geschreven, daarmee een uitzondering op de regel om alle klassen met een hoofdletter te laten starten.
-	\item Er worden twee kolommen aan de dataset toegevoegd. Een expressie of where-clausule wordt meegegeven met de \textit{expr(...)}-functie.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-import org.apache.spark.sql.Column;
-import static org.apache.spark.sql.functions.col;
-
-df = df.withColumn("ageNextYear2", expr("age + 1"))
-			.withColumn("over30", expr("age > 30"));
-\end{lstlisting}
-
-\subsubsection{Kolommen selecteren}
-Tot nu toe werden alle kolommen van de dataframes bij de keuze betrokken. Spark laat de ontwikkelaar toe om kolommen, net zoals bij SQL, te kiezen. Hieronder wordt er een voorbeeld gegeven van de verschillende kolommen. Er wordt verondersteld dat er al een spark-object is aangemaakt én dat het pad in een String 'inputpath' wordt bijgehouden.
-
-\begin{enumerate}
-	\item Er wordt een nieuwe dataset opgehaald. De dataset is opgeslaan in een CSV-bestand. Het bevat vijf kolommen: id, score, naam, jaartal en kwartaal. Enkel bij dit voorbeeld wordt het schema overgeërfd. 
-	\item De dataset wordt in de terminal getoond. Alle vijf kolommen worden weergegeven.
-	\item Met de \textit{select}-functie worden enkel de score, jaartal en kwartaalkolommen opgehaald. Een dataframe is \textit{immutable}, dus het object moet worden overschreven.
-	\item De dataset bestaat nu uit drie kolommen. 'Id' en 'naam' zijn niet meer terug te vinden in de dataset.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> df = spark.read()
-						.option("header",true)
-						.option("inferSchema",true)
-						.option("sampleRation", 0.001)
-						.csv(inputpath);
-
-df.show();
-
-df = df.select("score","jaartal","kwartaal");
-
-df.show();
-\end{lstlisting}
-
-\subsubsection{Kolommen verwijderen}
-
-Een kolom kan op een passieve wijze worden weggelaten door de kolom niet in een \textit{select} te betrekken. In sommige gevallen, bijvoorbeeld bij een groot aantal kolommen, is het handiger om één specifieke kolom te verwijderen, in plaats van een select uit te voeren. De gouden regel is dat dataframes immutable zijn, dus hier moet de nieuwe versie van de dataframe opnieuw wordt toegekend.
-
-\begin{lstlisting}
-df = df.drop("id","naam");
-\end{lstlisting}
-
-\subsubsection{Kolommen hernoemen}
-
-Kolomnamen kunnen worden aangepast. Bij het toevoegen wordt er vaak een standaardnaam toegekend aan een kolom, bijvoorbeeld \textit{count} of \textit{sum}. Hieronder wordt de kolom met de naam \textit{count} aangepast naar \textit{aantalRijen}. Na een berekening wordt er ook de \textit{alias}-functie gebruikt. 
-
-\begin{lstlisting}[language=Java]
-df = df.withColumnRenamed("count","aantalRijen");
-df = df.count().alias("aantalRijen");
-\end{lstlisting}
-
-\subsection{Dataframes filteren}
-
-\subsubsection{Voorbeelden van de studentendataset}
-
-\begin{enumerate}
-	\item Hou een dataset bij met alle rijen die een score hebben van 'A+'.
-	\item Hou een dataset bij met alle rijen waarvan de score 'B' is én de score werd behaald in het jaar 2010 of 2011.
-	\item Neem de dataset van nummer 3 en behoud enkel de unieke rijen.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> dfAplus = df.select()
-						.where(col("grade")
-						.equalTo("A+");
-						
-Dataset<Row> dfB1011 = df.select()
-						.where(col("grade").equalTo("B")
-										.and(col("year").isin(2010,2011)));
-						
-Dataset<Row> dfUniekB1011 = dfB1011.distinct();
-\end{lstlisting}
-
-\subsection{Aggregaties uitvoeren op dataframes}
-
-\subsubsection{Voorbeelden van de studenten-dataset}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> dfCountPerJaar = df.select("year")
-			.groupby("year")
-			.count()
-			.orderBy(desc("count"));
-			
-Dataset<Row> dfStatisticsPerJaarEnOnderwerp = df.select("year","subject","score")
-			.groupby("year","subject")
-			.agg(max("score"), min("score"), avg("score"))
-			
-\end{lstlisting}
-
-\subsubsection{Voorbeelden van de ViewingFigures-oefening}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> chaptersPerCourse = chaptersDF
-									.drop("chapterId")
-									.groupBy("courseId").count()
-									.withColumnRenamed("count", "chapters");
-\end{lstlisting}
-
-
-\subsection{User Defined Functions}
-
-User Defined Functions of UDF's worden ingezet wanneer een berekening de ingebouwde functies van Spark overstijgt. De berekening maken is mogelijk, maar de logica is te complex en vereist daarmee een aparte aanpak. Bij een UDF zijn er drie stappen:
-
-\begin{enumerate}
-	\item UDF schrijven.
-	\item UDF registreren.
-	\item UDF oproepen.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-UDF1<Double, Integer> score = new UDF1<Double, Integer>() {
-	public Integer call(Double percent) throws Exception {
-		if (percent > 0.9) {
-			return 10;
-		} else if (percent > 0.5) {
-			return 6;
-		} else if (percent > 0.25) {
-			return 2;
-		} else {
-			return 0;
-		}
-	}
-};
-
-spark.udf().register("berekenScore", score, DataTypes.IntegerType);
-
-
-Dataset<Row> result = percentageDF
-	.withColumn("score",  call_udf("berekenScore",col("percentage")))
-	.drop("percentage")
-	.groupBy("courseId").agg(sum("score").as("total"))
-	.join(titleDF, "courseId")
-	.orderBy(desc("total"));
-\end{lstlisting}
-
 \newpage
-
-\section{Oefeningen op Spark}
-
-\subsection{Inverted Index}
-
+\section{MapReduce-oefening}
+\subsubsection{Deel I: Mapper, partitioner en combiner}
 \begin{lstlisting}[language=Java]
 public class InvertedIndex {
 	
-	static UDF1<String, String> getFilename = new UDF1<String, String>()
-	{
-		public String call(String fullPath) throws Exception 
-		{
-			int index = fullPath.lastIndexOf("/");
-			return fullPath.substring(index + 1, fullPath.length());
-		}
-	};
-	
-	private static SparkSession spark;
-	final static String PATH = "src/main/resources/*";
-	
-	public static void main(String[] args) {
-		spark = SparkSession.builder()
-			.appName("InvertedIndex")
-			.master("local[1]")
-			.getOrCreate();
+	public static class InvertedIndexMapper 
+	extends Mapper<LongWritable, Text, Text, LongWritable>{
 		
-		spark.sparkContext().setLogLevel("ERROR");
+		private static final LongWritable ONE = new LongWritable(1);
 		
-		// Dataset inlezen
-		Dataset<Row> dataframe = spark.read().text(PATH);
-		
-		// Woorden ophalen per bestand
-		Dataset<Row> invertedIndex = dataframe
-			.withColumn("raw", input_file_name().cast("String"))
-			.withColumn("words", explode(split(col("value"), " ")))
-			.drop("value");
-		
-		// Filename toevoegen en raw droppen
-		spark.udf().register("getFilename", getFilename, DataTypes.StringType);
-		
-		invertedIndex
-			.withColumn("filename", callUDF("getFilename", col("raw")))
-			.drop("raw")
-			.groupBy(col("words"), col("filename")).count()
-			.orderBy(desc("count"))
-			.show();
-		
-		// Aantal woorden per bestand.
-		invertedIndex.groupBy(col("raw")).count()//.show()
-		;
-	}
-}
-\end{lstlisting}
-
-\newpage
-
-\subsection{Fire Department}
-\begin{lstlisting}[language=Java]
-public class SanFransiscoFireDepartment {
-	
-	static SparkSession spark;
-	static final String PATH = "src/main/resources/output";
-	
-	public static void main(String[] args) {
-		
-		spark = SparkSession.builder().appName("InvertedIndex").master("local[*]").getOrCreate();
-		
-		spark.sparkContext().setLogLevel("ERROR");
-		
-		List<StructField> fields = Arrays.asList(DataTypes.createStructField("CallNumber", DataTypes.IntegerType, true),
-			DataTypes.createStructField("UnitID", DataTypes.StringType, true),
-			...
-			DataTypes.createStructField("Delay", DataTypes.DoubleType, true));
-		
-		StructType schema = DataTypes.createStructType(fields);
-		
-		// Data inlezen
-		Dataset<Row> department = spark.read()
-			.option("header", true)
-			.schema(schema)
-			.csv("src/main/resources/sf-fire-calls.csv");
-		
-		// Part I
-		
-		// convert the columns calldate and watchdate
-		department = department
-			.withColumn("Calldate", to_date(col("CallDate"), "MM/dd/yyyy"))
-			.withColumn("Watchdate", to_date(col("Watchdate"), "MM/dd/yyyy"));
-		
-		// convert the column availabledtm to a timestamp
-		department = department
-			.withColumn("AvailableDtTm", to_timestamp(col("AvailableDtTm"), "MM/dd/yyyy hh:mm:ss a"));
-		
-		// save the dataframe as a parquet file
-		department.write()
-			.mode(SaveMode.Overwrite)
-			.parquet(PATH);
-		
-		
-		// Part II
-				
-		// Alle verschillende calltypes in 2018 met WHERE
-		department
-			.where(year(col("Calldate")).equalTo("2018"))
-			.groupBy(col("CallType"))
-			.agg(count("*").as("Aantal"))
-			.select("CallType")
-			.orderBy("CallType")
-			.show(false);
-		
-		// Alle verschillende calltypes in 2018 met filter
-		department
-			.filter(year(col("Calldate")).equalTo("2018"))
-			.groupBy(col("CallType"))
-			.agg(count("*").as("Aantal"))
-			.select("CallType")
-			.orderBy("CallType")
-			.show(false);
-\end{lstlisting}
-
-\newpage
-
-\begin{lstlisting}[language=Java]
-		
-		// Alle maanden in 2018 met het hoogst aantal calls.
-		department
-			.filter(year(col("Calldate")).equalTo("2018"))
-			.groupBy(month(col("Calldate")).as("Maandnummer"))
-			.agg(count("*").as("Aantal"))
-			.orderBy(desc("Aantal"))
-			.show(false);
-		
-		// De neighborhood met de meeste oproepen in 2018
-		department
-			.filter(year(col("Calldate")).equalTo("2018"))
-			.groupBy("neighborhood")
-			.agg(count("*").as("Aantal"))
-			.orderBy(desc("Aantal"))
-			.limit(1)
-			.show(false);
-		
-		// De neighborhoods met de slechtste gemiddelde vertraagtijden bij een omroep.
-		department
-			.filter(year(col("Calldate")).equalTo("2018"))
-			.groupBy("neighborhood")
-			.agg(avg(col("Delay")).as("avgResponse"))
-			.orderBy(desc("avgResponse"))
-			.select(col("neighborhood"), bround(col("avgResponse"), 2))
-			.show(false);
-		
-		// De week in 2018 met de meeste calls
-		department
-			.filter(year(col("Calldate")).equalTo("2018"))
-			.groupBy(weekofyear(col("Calldate")).as("Weeknummer"))
-			.agg(count("*").as("Aantal"))
-			.limit(1)
-			.show(false);
-		
-		spark.close();
-	}
-}
-\end{lstlisting}
-
-\chapter{Spark Streaming}
-
-\section{Stream Processing}
-
-\subsubsection{Structured Spark batch processing}
-
-Voordien gebeurde alles bij Spark in één keer. Dit wordt ook batch processing genoemd en omvat de volgende drie kenmerken:
-
-\begin{itemize}
-	\item De data is bounded. De analogie wordt gemaakt met de logistiek bij de Colruyt. Wanneer de winkel dichtgaat, dan wordt er een verslag gemaakt van alles wat die dag werd verkocht. Bij een CSV of XML-bestand is de laatste rij gekend.
-	\item Er wordt géén data toegevoegd. Het lezen van data gebeurt in één batch. Werken met batches is geen ideale methode voor real-time dataverwerking.
-	\item Alle data wordt in een tabel bijgehouden.
-\end{itemize}
-
-\subsection{Spark Stream Processing}
-
-Data wordt continu aan het systeem toegevoegd en moet in real-time worden verwerkt. Bijvoorbeeld bij een live dashboard. De status van de data is hier belangrijk. De data is niet-gebonden of \textit{unbounded}, wat wilt zeggen dat er continu rijen achteraan worden toegevoegd. Het probleem is dat er géén oneindige tabel in het geheugen is. Een stream bestaat uit drie kenmerken:
-
-\begin{itemize}
-	\item Het is \textit{unbounded}, al denkt het systeem niet zo. Er is géén vast einde van de inputdata gekend en de stroom vloeit op een niet-gekende manier. Piekperioden, rustige momenten en alles tussenin zijn mogelijke scenario's.
-	\item Er wordt telkens data achteraan de inputdata toegevoegd. Iedere nieuwe record in een datastream wordt behandeld als een nieuwe rij. De rij wordt telkens aan de inputtabel achteraan toegevoegd. Het real-time aspect klinkt als een radicale verandering voor het programmeren, maar alle code wordt geschreven zoals ze voor een batch processing job werd geschreven. Deze job moet telkens getriggerd worden om data te verkrijgen. Pas bij de trigger kijkt Spark voor nieuwe data en die data wordt achteraan de inputdata toegevoegd.
-	\item Alle data wordt in een tabel bijgehouden.
-\end{itemize}
-
-
-\subsubsection{Data ophalen met sockets}
-
-Spark zal gemiste input vergeten, want er wordt gewerkt met sockets. Een socket leest enkel de binnenkomende info. Data die voordien werd gestuurd, zal niet worden gelezen. Historiek wordt niet bijgehouden. Als de deur toe is, dan zal niemand staan wachten tot de deur opengaat. 
-
-\subsubsection{Output sink}
-
-Dit is de bestemming waarnaar de data wordt geschreven. Dit kan een databank, bestand of systeem zijn dat data kan verwerken of manipuleren. Bij stream processing is dit het systeem dat de resultaten van real-time verwerkingsoperaties zal bijhouden. Een output sink dient als werkpaard om de gestreamede data persistent bij te houden.
-
-\subsection{Outputmodes}
-
-Er zijn drie outputmodes: append, update en complete. Deze instelling geeft aan hoe de data tijdelijk moet worden bijgehouden.
-
-\begin{itemize}
-	\item Appendmode zal enkel de nieuwe rijen als resultaat zien. De historiek of bestaande rijen worden niet getoond of aangepast. Dit is de standaardmodus. Met enkel de nieuwe rijen is er weinig mogelijk. Zo is WordCount niet odnersteudn, want het aantal voorkomens wordt niet lang bijgehouden én de vorige geschreven data wordt niet betrokken. Dit is de meest efficiënte outputmode.
-	\item Updatemode zal zowel nieuwe als oude rijen teruggeven. Van de oude rijen worden enkel aanpassingen gemaakt. Als een woord bij de vorige trigger werd gegeven, en nu zijn er vijf voorkomens meer, dan wordt dat aantal opgeteld. 
-	\begin{itemize}
-		\item Sommige outputsinks ondersteunen deze modus niet, want de bestanden hebben geen interne structuur. Eenmaal een bestand geschreven is, dan is het moeilijk om dit aan te passen. Bijvoorbeeld als de vorige rij vijf kolommen had, en nu wordt er een rij toegevoegd met zes kolommen, dan zal dit resulteren in een fout.
-	\end{itemize}
-	\item Completemode zal het volledige resultaat uitschrijven. De output zal stelselmatig groeien en de job zal in de tussentijd niet draaien. Dit is een \textit{go-to} mode voor aggregatieberekeningen, maar wordt met voorkeur gekozen voor kleine datasets. WordCount werkt wel bij deze modus. Deze mode is de meest flexibele outputmode.
-\end{itemize}
-
-\subsubsection{Voorbeeld stock prices}
-
-Stel dat er een continue flow van stock prices is. Bij appendmode worden enkel de binnenkomende shares getoond. Bij updatemode worden enkel de veranderingen, dus nieuwe en aangepaste shares, weergegeven. Bij completemode worden alle shares na iedere trigger uitgeprint.
-
-\section{Code}
-
-Een streamingquery opbouwen vereist vijf stappen:
-
-\begin{enumerate}
-	\item Inputsources bepalen
-	\item Data omzetten
-	\item Outputsink en outputmode bepalen
-	\item Processingsdetails bepalen
-	\item Query starten
-\end{enumerate}}
-	
-
-\subsection{Inputbron bepalen}
-
-Nu wordt er gewerkt met een \textit{readStream} methode. Bij batch-processing werd er gewerkt met een gewone \textit{read}-methode. De keuzes bij stream-processing lopen in lijn met batch-processing. 
-\begin{itemize}
-	\item De format zal in de meeste gevallen een socket zijn, wat voordien een CSV, parquet of tekstbestand was. 
-	\item Bij de opties worden de netwerkinstellingen en Kafka-informatie meegegeven. Het poort van de socket, gegevens over de broker, etc.
-	\item Load start het leesproces.
-\end{itemize}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> df = spark.readStream()
-						.format("socket")             
-						.option("host", "localhost")  
-						.option("port", 9999)         
-						.load();
-\end{lstlisting}
-
-\subsection{Data omzetten}
-
-Je hebt enkel de huidige data nodig. Data kunnen zich in twee statussen bevinden: stateful en stateless. De opdeling loopt in lijn met \textit{wide} en \textit{narrow} berekeningen.
-
-\begin{itemize}
-	\item Bij stateful kan iedere rij op zich worden verwerkt. Met enkel de huidige informatie is het systeem voldoende. Bijvoorbeeld mapping volgens select of filters.
-	\item Bij stateless is de informatie van voordien nodig. Stateless komt bij een aggregatie goed van pas. De meeste combinaties worden ondersteund, tenzij de combinaties te moeilijk zijn om op een incrementele manier te berekenen.
-\end{itemize}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> words = lines.select(
-	explode(split(col("value"), "\\s")).as("word")
-);
-
-Dataset<Row> counts = words.groupBy("word").count();
-\end{lstlisting}
-
-\subsection{Outputsink -en modus bepalen}
-
-Er wordt bepaald hoe de geschreven outputdata moet worden geschreven. De outputmode en de outputlocatie moeten in de code te zien zijn. De code hieronder bouwt verder op de de counts-dataset die net werd opgesteld:
-\begin{itemize}
-	\item In de code hieronder wordt er gewerkt met een complete outputmode, want er wordt een aggregatie op de dataset gemaakt.
-	\item Alle output wordt naar de console geschreven. Andere mogelijkheden zijn: 'memory', 'kafka', 'rate', 'parquet' of 'csv'. 
-\end{itemize}
-
-\begin{lstlisting}[language=Java]
-DataStreamWriter<Row> writer = counts.writeStream()
-				.format("console")
-				.outputMode(OutputMode.Complete());
-\end{lstlisting}
-
-\subsection{Processingdetails bepalen}
-
-De laatste stap voor het starten van de query is het specifiëren hoe de data moet worden verwerkt. Er zijn vier mogelijkheden:
-
-\begin{itemize}
-	\item De standaardoptie is het behandelen in microbatches. Deze worden kort na elkaar uitgevoerd. Wel moet de onderlinge tijd worden meegegeven. 
-	\item Werken met een vast triggerinterval is soortgelijk aan Linux cronjobs. Op een vooraf gespecifieerd moment wordt de query uitgevoerd.
-	\item Alle data wordt op één moment verwerkt, daarna stopt de applicatie. Alle nieuwe data wordt in één batch verwerkt. Dit is handig wanneer er controle over een externe scheduler moet worden genomen.
-	\item Continuous is een experimentele modus. Hierbij de data zo snel als mogelijk continu verwerkt, dus niet meer in micro-batches. Enkel een klein aantal dataframebewerkingen ondersteunen deze modus. De latency is hier minimaal. 
-\end{itemize}}
-
-\subsubsection{Code}
-
-Dit is een aanvulling op de code van stap 3. Onder format en outputmode wordt er een trigger meegegeven. In dit geval gebeurt de verwerking iedere seconde. 
-
-\begin{lstlisting}[language=Java]
-DataStreamWriter<Row> writer = counts.writeStream()
-				.format("console")
-				.outputMode(OutputMode.Complete())
-				.trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
-\end{lstlisting}
-
-\subsection{Query starten}
-
-De query wordt gestart met een start-methode op de DataStreamWriter. Dit geeft een StreamingQuery terug, wat de actieve query voorstelt. Een StreamingQuery kan dienen voor verder beheer van de query.
-
-\begin{lstlisting}[language=Java]
-StreamingQuery streamingQuery = writer.start();
-try{
-	streamingQuery.awaitTermination();
-} except {
-	e.printStackTrace();
-};
-\end{lstlisting}
-
-\section{Sources \& Sinks}
-
-\subsection{Bestanden lezen}
-
-Bestanden in een directory kunnen worden ingezet als input voor een stream. Wel moeten er drie zaken in het achterhoofd worden gehouden:
-
-\begin{itemize}
-	\item Alle bestanden moeten in eenzelfde formaat zijn geschreven. Alles is ofwel een CSV-formaat, ofwel een tekstformaat, ofwel een specifiek ander formaat.
-	\item Bestanden moeten atomisch beschikbaar zijn. Tijdens het lezen mogen de bestanden niet worden bewerkt of verwijderd.
-	\item Bestanden worden genomen op basis van de timestamp, maar het verwerken daarentegen is niet vooraf bepaald. Alle bestanden worden parallel gelezen. Er is geen garantie welk bestand er eerst wordt bekeken.
-	\item Naar een bestand schrijven gebeurt in append-only mode. Het is makkelijker om bestanden aan een bestaande directory toe te voegen, dan de inhoud van bestaande bestanden aan te passen.
-\end{itemize}
-
-
-\subsection{Kafka-inhoud lezen}
-
-Net zoals bij bestanden kan de inhoud van een Kafka topic worden gezien als een stream. Het schema bij Kafka Dataframes zal altijd hetzelfde zijn. Parsen zal wel altijd noodzakelijk zijn.
-
-\begin{itemize}
-	\item De key-value wordt als binary teruggegeven, maar dit is in binary. 
-	\item De topic wordt als een String teruggegeven.
-	\item De partitie waar de record in terug kan worden gevonden.
-	\item De line offsset value van een record.
-	\item De timestamp van de record en het type van de timestamp.
-\end{itemize} 
-
-\subsubsection{Naar Kafka schrijven.}
-
-Het is mogelijk om in alle drie outputmodes naar Kafka uit te schrijven. Ter aanvulling is het ook mogelijk om van een topic naar een topic te schrijven.Completemode wordt wel niet aangeraden. Bij het uitschrijven naar Kafka moet er met het volgende schema worden gewerkt:
-
-\begin{itemize}
-	\item De key is optioneel. Dit in de vorm van een String of een binaire waarde.
-	\item De value is verplicht. 
-	\item de topic is verplicht wanneer er geen topic werd meegegeven als optie. Als dit werd meegegeven in de applicatie, dan wordt deze kolom in het schema genegeerd.
-\end{itemize}
-
-\begin{lstlisting}[language=Java]
-SparkSession spark = SparkSession.builder();
-
-final String topic = args[0];
-
-Dataset<Row> messages = spark.readStream()
-			.format("kafka")
-			.option("kafka.bootstrap.servers"), BOOTSTRAP_SERVERS)
-			.option("subscribe", topic)
-			.load();
+		@Override
+		public void map(LongWritable key, Text value, Context context) 
+		throws IOException, InterruptedException {
 			
-StreamingQuery query = null;
-
-try {
-	query = messages.writeStream()
-		.format("console")
-		.outputMode(OutputMode.append())
-		.option("checkpointLocation", CHECKPOINT_LOCATION)
-		.start();
-} catch {
-	e.printStackTrace();
-}
-
-try {
-	query.awaitTermination();
-} catch (StreamingQueryException e) {
-	e.printStackTrace();
-}
-
-spark.close();
-\end{lstlisting}
-
-\section{Aggregations with Event-Time windows}
-
-Gebruikelijk worden aggregaties niet over een volledige stream gedaan, maar in kleine stukken over een tijdspanne. Bijvoorbeeld in een casus waar sensoren data iedere minuut doorsturen. Hier ligt de nadruk eerder op wanneer de data werd aangemaakt en niet op wanneer de data werd verwerkt door Spark. Iedere timestamp wordt naar een window gemapt. Zo wordt er een groupby op het interval uitgevoerd.
-
-\subsubsection{Tumbling windows}
-
-Tumbling windows zijn windows van een vaste grootte en afwisselend. Ieder event wordt aan één window toegekend, en de windows overlappen elkaar niet. 
-
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/tumbling.png}
-	\caption{Tumbling event time. Learning Spark (2022)}
-\end{figure}
-
-\subsubsection{Overlapping windows}
-
-Overlapping windows zijn time windows die elkaar onderling overlappen. Een event kan tot meerdere overlappende windows behoren.
-
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/overlapping.png}
-	\caption{Overlapping time windows. Learning Spark (2022)}
-\end{figure}
-
-\subsubsection{WordCount met time interval}
-
-\begin{enumerate}
-	\item Allereerst wordt er een spark-object aangemaakt.
-	\item Vervolgens wordt de dataset als stream-object ingelezen. Er wordt gelezen vanuit een socket met de gewoonlijke opties. Wel wordt er een extra kolom toegevoegd, namelijk een timestamp. We veronderstellen voor de volgende stap dat het dataframe minstens twee kolommen heeft: value en timestamp.
-	\item 
-	\begin{enumerate}
-		\item We veronderstellen dat de value-kolom een doorlopende tekst is van alle woorden. Dit is niet nodig, dus de explode-functie wordt gebruikt om alle woorden uit de tekst te halen. Dit wordt opgeslaan in een nieuwe kolom.
-		\item Op basis van de timestamp en het woord wordt er gegroepeerd. Hier moet er binnen een window worden gewerkt. De window-functie wordt aangesproken op de timestamp-kolom met als tijdspanne 10 seconden en sliding interval van 5 seconden.
-	\end{enumerate}
-	\item Uiteindelijk wordt count als aggregatie-functie gebruikt. De order-by voorziet een chronologische volgorde.
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-SparkSession spark = SparkSession.builder()
-
-Dataset<Row> lines = spark.readStream()
-								.format("socket")
-								.option("host","localhost")
-								.option("port",9999)
-								.option("includeTimestamp",true)
-								.load();
-
-Dataset<Row> output = lines.withColumn("word",explode(split(col("value"),"\\s")))
-								.select("word","timestamp")
-								.groupby(window(col("timestamp"),"10 seconds", "5 seconds"), col("word"))
-								.count()
-								.orderBy(col("window"), col("count"));			
-
-StreamingQuery query = null;
-
-try{
-	query = output.writeStream()
-					.format("console")
-					.option("truncate",false)
-					.option("numRows", 100)
-					.outputMode(OutputMode.Complete())
-					.trigger(Trigger.ProcessingTime(5,TimeUnit.SECONDS))
-					.start()
-} catch (TimeoutException e){
-	e.printStackTrace();
-}
-
-try {
-	query.awaitTermination();
-} catch (StreamingQueryException e) {
-	e.printStackTrace();
-}
+			//Bepaal de bestandsnaam
+			FileSplit filesplit = (FileSplit) context.getInputSplit();
+			Path path = filesplit.getPath();
+			String filename = path.getName();
+			
+			//Itereren over alle tokens, ofwel woorden, in een tekst.
+			StringTokenizer itr = new StringTokenizer(value.toString());
+			
+			while(itr.hasMoreTokens()) {
+				String keyToWrite = itr.nextToken().toLowerCase() + "@" + filename;
+				context.write(new Text(keyToWrite), ONE);
+			}
+		}
+	}
+	
+	
+	// Combiner:
+	// Alle '1's optellen om het verkeer te verminderen.
+	public static class InvertedIndexCombiner
+	extends Reducer<Text, LongWritable, Text, LongWritable>{
+		
+		@Override
+		public void reduce(Text word, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException{
+			long total = 0;
+			for(LongWritable value : values) {
+				total += value.get();
+			}
+			
+			context.write(word,  new LongWritable(total));
+			
+		}
+	}
+	
+	// Partitioner: (woord@filename) enkel 'word' hashen
+	public class InvertedIndexPartitioner<Text, LongWritable> extends Partitioner<Text, LongWritable>{
+		public int getPartition(Text key, LongWritable value, int numReduceTasks) {
+			String s = key.toString().split("@")[0];
+			return (s.hashCode() & Integer.MAX_VALUE) % numReduceTasks;
+		}
+	}
+	
 \end{lstlisting}
 
 \newpage
 
-\subsection{Watermarking}
-
-Tijdens het streamen wordt de staat van de data bijgehouden. De staat vergroot zolang het systeem data zal streamen. De kans op \textit{unbounded} data vergroot. De oplossing hiervoor is \textit{watermarking}. Een watermark is een event-time threshold. De event-time is het moment wanneer iets bij de bron werd aangemaakt Enkele kenmerken van watermarking:
-\begin{itemize}
-	\item De watermark kijkt naar de grootste of meest recente event-time. Deze threshold definieert welke events te laat in een stream terechtkomen. Een watermark delay is de tijd dat het systeem wacht op late data, voordat het systeem de data verwerpt.
-	\item Enkel de relevante data wordt behouden. Het systeem verwerpt achterhaalde data.
-	\item Enkel de laatste timestamp wordt geüpdate. Een watermark stelt hier een bezemwagen voor. Bijvoorbeeld iedere event met een event-time voor 12u10 wordt niet meegeteld, want de range ligt tussen 12u10 en 12u20.
-\end{itemize}
-
-\begin{figure}
-	\includegraphics[width=\linewidth]{images/watermarking-in-windowed-grouped-aggregation.png}
-	\caption{De twee events komen aan tussen 12u20 en 12u25. Het watermark wordt gebruikt om het verschil tussen \textit{late} en \textit{too-late} aan te duiden. Opgehaald uit Databricks (2022)}
-\end{figure}
-
-\subsection{Streaming joins}
-
-Er zijn twee mogelijkheden: 
-
-\begin{enumerate}
-	\item Een stream joinen met een statische dataframe. 
-	\item Twee streams met elkaar joinen. Dit kan enkel met een outer join.
-\end{enumerate}}
-
-\subsubsection{Stream-static joins}
-
-Data uit een gestreamede dataframe wordt gecombineerd met data uit een statische dataframe, bijvoorbeeld een dataframe opgebouwd uit een CSV. De code om dit mogelijk te maken, lijkt zeer sterk op de code voor een join bij een gewone dataframe.
-
-\begin{itemize}
-	\item Dit is een stateless-operatie, daarom is er geen watermarking nodig.
-	\item Een stream houdt geen state van de dataframe bij.
-	\item Dit kan volgens een left-outer, inner of right outer join. Andere outer join opties, zoals een full outer join, zijn niet mogelijk. Het probleem is te wijten aan het incrementeel aflopen van de data. 
-	\item Iedere n-aantal seconden wordt de volledige statische dataframe gelezen. Caching zorgt ervoor dat de dataframe één maal moet worden gelezen. 
-	\item Aanpassingen aan de statische file worden tijdelijk genegeerd, vooral omdat caching wordt gebruikt. Pas bij het herstarten van de streamingquery worden de aanpassingen doorgevoerd. Dit hangt af van het gekozen bestandstype van de statische dataframe.
-\end{itemize}
-
+\subsubsection{Deel II: Reducer}
 \begin{lstlisting}[language=Java]
-Dataset<Row> staticDF = spark.read()...;
-Dataset<Row> streamingDF = spark.readStream()....;
-streamingDF.join(staticDF, "type");
-streamingDF.join(staticDF, "type", "left_outer");
+	// Reducer
+	public static class InvertedIndexReducer extends Reducer<Text, LongWritable, Text, Text>{
+		
+		private String previousWord = null;
+		private StringBuilder outString = new StringBuilder();
+		
+		
+		// key: word@filename
+		@Override
+		public void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
+			String word = key.toString().split("@")[0];
+			String filename = key.toString().split("@")[1];
+			
+			long sum = 0;
+			
+			if(previousWord != null && !previousWord.equals(word)) { // nieuw woord gezien
+				outString.setLength(outString.length() - 1);
+				context.write(new Text(previousWord), new Text(outString.toString()));
+				
+			}
+			
+			//bezig met huidig woord
+			for (LongWritable value:values) {
+				sum += value.get();
+			}
+			
+			// outstring aanpassen
+			outString.append(filename + ":" + sum + ";");
+			
+			// previousword aanpassen
+			previousWord = word;
+		}
+		
+		
+		public void cleanup(Context context) throws IOException, InterruptedException{
+			outString.setLength(outString.length() - 1);
+			context.write(new Text(previousWord), new Text(outString.toString()));
+			super.cleanup(context);
+		}
+	}
+	
 \end{lstlisting}
 
-\subsection{Stream-Stream joins}
+\newpage
 
-Data uit een stream wordt gecombineerd met data uit een andere stream. 
-
-\begin{itemize}
-	\item Beide bronnen veranderen snel van inhoud. 
-	\item Bijvoorbeeld een stream van iedere aankoop en een stream met info van iedere klant. De twee streams kunnen met elkaar worden ge\textit{joined}.
-	\item De grootste uitdagingen zijn:
-	\begin{itemize}
-		\item De incompleetheid van de datastream. De kans dat er matches zijn tussen de inputs van de twee datastreams is kleiner. 
-		\item Events in twee streams kunnen in eender welke volgorde komen. Mogelijk met vertraging wat het moeilijker maakt om matches terug te vinden.
-	\end{itemize} 
-	\item Om deze changes aan te pakken, wordt er gewerkt met \textit{buffering}. 
-\end{itemize}
-
+\subsubsection{Deel III: Boilerplate}
 \begin{lstlisting}[language=Java]
-Dataset<Row> purchases = spark.readStream(). ...;
-Dataset<Row> customers = spark.readStream(). ...;
-Dataset<Row> matched = purchases.join(customers,”adId”);
-\end{lstlisting}
-
-\subsubsection{Buffering}
-
-Bij buffering wordt de inputdata van beide streams tijdelijk bijgehouden. Zo wordt er gekeken naar matches, zelfs al is de data in een andere volgorde binnengekomen. Structured streaming verloopt zo effectiever en er is een beter zicht op de data.
-
-\section{Keeping the state bounded}
-
-Het probleem bij de stream-stream joins is dat de engine een unbounded aantal streaming state kan bijhouden. Uit het voorbeeld van de aankopen zal niet iedere klant worden gekoppeld aan een aankoop en vice versa. Rijen zullen niet worden gebruikt en zo een lange periode in de buffer blijven.
-
-\subsubsection{State beperken}
-
-Twee zaken moeten zijn gekend:
-
-\begin{itemize}
-	\item Wat is de maximale tijdsrange tussen de twee events?
-	\begin{itemize}
-		\item In het voorbeeld van de aankopen: Hoe lang duurt het vooraleer een klant een aankoop uitvoert?
-	\end{itemize}
-	\item Wat is de maximale tijsdperiode waarin een event tussen de bron en de processing engine kan worden vertraagd?
-	\begin{itemize}
-		\item In het voorbeeld van de aankopen: Mogelijks kan er vertraging optreden bij het aankopen. De verbinding speelt hier een belangrijke rol.
-	\end{itemize}
-\end{itemize}}
-
-\subsubsection{State clean-up}
-
-De \textit{delay limits} en \textit{event-time constraints} kunnen omgezet worden in dataframebewerkingen. Bij deze bewerkingen worden watermarks en \textit{time range conditions} gebruikt. Er zijn twee stappen:
-
-\begin{enumerate}
-	\item Stel een watermark delay op voor beide inputstreams. Zo weet de engine hoe lang de vertraging van de input kan zijn. 
-	\item Stel een \textit{event-time constraint} op over de twee inputs heen. Zo weet de engine welke rijen verplicht zijn. M.a.w. de rijen die wél voldoen aan de \textit{time-constraint}. Een \textit{time-constraint} kan op twee manieren worden opgesteld:
-	\begin{itemize}
-		\item Time range join conditions zoals \textit{between righttime and (righttime + "interval 1 hour")}
-		\item Join op event-time windows zoals \textit{"lefttimewindow = righttimewindow"}.
-	\end{itemize}
-\end{enumerate}
-
-\begin{lstlisting}[language=Java]
-Dataset<Row> purchases = spark.readStream()...
-Dataset<Row> customers = spark.readStream()...
-
-Dataset<Row> purchasesWWatermark = purchases.withWatermark("purchasesTime","2 hours");
-Dataset<Row> customersWithWatermark = customers.withWatermark("customersTime", "3 hours");
-
-impressionsWithwatermark.join(
-	clicksWithWatermark,
-	expr(
-		"custID = purchasesCustId AND " +
-		"customersTime >= purchasesTime AND " +
-		"customersTime <= purchasesTime + interval 1 hour"
-	)
-);
-\end{lstlisting}
-
-\subsubsection{Outer joins with watermarking}
-
-De outer-type join specifiëren gebeurt helemaal onderaan. Wel zijn er enkele opmerkingen over outer joins:
-\begin{itemize}
-	\item De watermark delay en event-time constraints zijn verplicht. De engine moet weten wanneer een event niet gaat matchen, anders leidt dit tot een null-resultaat.
-	\item De \textit{outer} null-resultaten worden met een delay aangemaakt. De engine doet dit om zeker te zijn dat er mogelijke matches niet worden verworpen.
-\end{itemize}
-
-\begin{lstlisting}
-impressionsWithWatermark.join(
-	clicksWithWatermark,
-	expr(
-		"custID = purchasesCustId AND " +
-		"customersTime >= purchasesTime AND " +
-		"customersTime <= purchasesTime + interval 1 hour",
-		"leftOuter"
-	)
-
-);
+	public static void main(String[] args) throws Exception {
+		if(args.length != 2) {
+			System.out.println("Usage: Nuclear meltdown. Usage: <input_dir> <output_dir>");
+			System.exit(-1);
+		}
+		
+		//instance of job maken
+		Configuration conf = new Configuration();
+		Job job = Job.getInstance(conf, "WordCount");
+		
+		// moet je altijd doen als je ...
+		job.setJarByClass(InvertedIndex.class);
+		
+		// set mapper and reducer
+		job.setMapperClass(InvertedIndexMapper.class);
+		job.setReducerClass(InvertedIndexReducer.class);
+		
+		// set combiner
+		job.setCombinerClass(InvertedIndexCombiner.class);
+		job.setPartitionerClass(InvertedIndexPartitioner.class);
+		
+		//set input and output types
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(LongWritable.class);
+		
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(LongWritable.class);
+		
+		//set input and output directory
+		// waar zijn de input-files?
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		
+		// waar zijn de outputfiles? 
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		
+		// voor het testen
+		job.setNumReduceTasks(0);
+		
+		System.exit(job.waitForCompletion(true) ? 0 : 1);		
+	}
+}
 \end{lstlisting}
 
 \chapter{Kafka}
@@ -2665,49 +1832,1810 @@ In de volgende code worden er drie nieuwe zaken aan het properties-bestand toege
 \newpage
 
 \begin{lstlisting}[language=Java]
-Properties props = new Properties();
+public class KafkaAvroProducerExample {
+	
+	private static final String TOPIC = "users";
+	private static final String BOOTSTRAP_SERVER = "127.0.0.1:9092";
+	private static final String SCHEMA_REGISTRY_URL = "http://127.0.0.1:8081";
 
-props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class.getName());
-
-props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class.getName());
-
-props.put("schema.registry.url","http://localhost:8081");
-
-Producer<String, be.hogent.dit.tin.avro.User> producer = new KafkaProducer<>(props);
-
-List<User> users = new ArrayList<>();
-
-...
-
-for (User user : users)
-{
-	ProducerRecord<String,User> record = new ProducerRecord<>(TOPIC, user.getName().toString(), user);
-	producer.send(record);
+	public static void main(String[] args) {
+		
+		// Create the KafkaProducer
+		Properties props = new Properties();
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
+		
+		// Use Avro to serialize the key, even though we will use Strings as key
+		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
+		io.confluent.kafka.serializers.KafkaAvroSerializer.class.getName());
+		// Use Avro to serialize the value. 
+		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, 
+		io.confluent.kafka.serializers.KafkaAvroSerializer.class.getName());
+		
+		props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
+		
+		// Use the generated class as the value class for the KafkaProducer.
+		Producer<String, be.hogent.dit.tin.avro.User> producer = new KafkaProducer<>(props);
+		
+		// Create some User objects and put them in a list.
+		// This is identical to the code in AvroExample.
+		List<User> users = new ArrayList<>();
+		
+		User user1 = new User();
+		user1.setName("Alyssa");
+		user1.setFavoriteNumber(256);
+		// Leave favorite color null
+		users.add(user1);
+		
+		// Alternate constructor
+		User user2 = new User("Ben", 7, "red");
+		users.add(user2);
+		
+		// Construct via builder
+		User user3 = User.newBuilder()
+		.setName("Charlie")
+		.setFavoriteColor("blue")
+		.setFavoriteNumber(null)
+		.build();
+		users.add(user3);
+		
+		// Send the records to Kafka. Note how this exactly the same as before.
+		// We use the name of the user as the key.
+		for (User user : users) {
+			ProducerRecord<String, User> record = 
+			new ProducerRecord<>(TOPIC, user.getName().toString(), user);			
+			producer.send(record);
+			System.out.println("User " + user + " sent");
+		}
+		
+		
+		// flush and close the producer
+		producer.flush();
+		producer.close();	
+	}	
 }
-
-producer.flush();
-producer.close();
 \end{lstlisting}
+
+\newpage
 
 \subsection{Kafka Consumer met Avro}
 
 \begin{lstlisting}[language=Java]
-props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+public class KafkaAvroConsumerExample {
+	
+	private static final String TOPIC = "users";
+	private static final String BOOTSTRAP_SERVER = "127.0.0.1:9092";
+	private static final String SCHEMA_REGISTRY_URL = "http://127.0.0.1:8081";
+	private static final String GROUP_ID = "my-avro-app";
+	
+	public static void main(String [] args) {
+		
+		// Create the KafkaProducer
+		Properties props = new Properties();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+		
+		// Use String deserializer for the key
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		
+		// Use KafkaAvroDeserializer for the value
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+		io.confluent.kafka.serializers.KafkaAvroDeserializer.class.getName());
+		
+		props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
+		props.put("specific.avro.reader", "true");
+		
+		// Add the shutdown hook for proper shutdown of consumer
+		final Thread mainThread = Thread.currentThread();
+		final AtomicBoolean stopRequested = new AtomicBoolean(false);
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.err.println("Starting exit .....");
+				stopRequested.set(true);
+				try {
+					mainThread.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		// Create the consumer and subscribe to topics
+		Consumer<String, User> consumer = new KafkaConsumer<>(props);
+		consumer.subscribe(Collections.singleton(TOPIC));
+		
+		try {
+			while (!stopRequested.get()) {
+				ConsumerRecords<String, User> records = consumer.poll(Duration.ofMillis(500));
+				
+				for (ConsumerRecord<String, User> record : records) {
+					System.out.println("Received record with key [" + record.key() + "]");
+					System.out.println("Value of this record is " + record.value());
+					System.out.println("The type of the value is " + record.value().getClass().getName());
+				}
+			}
+		} finally {
+			System.out.println("Starting to close the consumer");
+			consumer.close();
+			System.out.println("Consumer closed");
+		}
+	}	
+}
+\end{lstlisting}
 
-props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroDeserializer.class.getName());
+\section{Voorbeelden}
 
-props.put("schema.registry.url", "http://localhost:8081");
-props.put("specific.avro.reader", "true");
+\subsection{ConsumerOffsetExample1}
 
-Consumer<String, User> consumer = new KafkaConsumer<>(props);
+\begin{lstlisting}[language=Java]
+public class ConsumerOffsetExample1 {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerOffsetExample1.class);
+	
+	public static void main(String[] args) {
+		
+		String bootstrapServers = "localhost:9092";
+		String groupId = "my-application";
+		String topic = "first_topic";
+		
+		Properties properties = new Properties();
+		
+		properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+			StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, 
+			StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+		properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		
+		// Each call to poll will return at most 2 records
+		properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "2"); 
+		
+		// Create consumer
+		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+		
+		// Subscribe to topic
+		consumer.subscribe(Collections.singleton(topic));
+		
+		// Add the shutdown hook
+		final Thread mainThread = Thread.currentThread();
+		final AtomicBoolean stopRequested = new AtomicBoolean(false);
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.err.println("Starting exit .....");
+				stopRequested.set(true);
+				try {
+					mainThread.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		// Start the (infinite) poll loop. Surround with try-catch to catch the WakeupException
+		try {
+			while (!stopRequested.get()) {
+				ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+				
+				for (ConsumerRecord<String, String> record : records) {
+					LOGGER.info("key: " + record.key() + ", value: " + record.value());
+					LOGGER.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+				}
+				
+				try {
+					Thread.sleep(2000); // Sleep for two seconds 
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		} finally {
+			System.err.println("Starting to close the consumer");
+			consumer.close();
+			System.err.println("Consumer closed");
+		}		
+	}
+}
+\end{lstlisting}
 
-ConsumerRecords<String, User> records = consumer.poll(Duration.ofMillis(500));
+\subsection{ConsumerOffsetExample2}
 
-for(ConsumerRecord<String,User>record:records)
-{
-	System.out.println("Received record with key [" + record.key() + "]");
-	System.out.println("Value of this record is " + record.value());
-	System.out.println("The type of this value is " + record.value().getClass().getName());
+\begin{lstlisting}[language=Java]
+public class ConsumerOffsetExample2 {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerDemo.class);
+	public static void main(String[] args) {
+		
+		String bootstrapServers = "localhost:9092";
+		String groupId = "my-application";
+		String topic = "first_topic";
+		
+		Properties properties = new Properties();
+		
+		properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+		properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		
+		
+		// Disable automatic commit
+		properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+		// Each call to poll will return at most 2 records
+		properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "2"); 
+		
+		// Create consumer
+		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+		
+		// Subscribe to topic
+		consumer.subscribe(Collections.singleton(topic));
+		
+		// Add the shutdown hook
+		final Thread mainThread = Thread.currentThread();
+		final AtomicBoolean stopRequested = new AtomicBoolean(false);
+		LOGGER.info("mainThread has name: " + mainThread.getName());
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.err.println("Starting exit .....");
+				LOGGER.info("shutDownHook running in thread: " + Thread.currentThread().getName());
+				stopRequested.set(true);
+				try {
+					mainThread.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		// Start the (infinite) poll loop. Surround with try-catch to catch the WakeupException
+		try {
+			while (!stopRequested.get()) {
+				ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+				
+				for (ConsumerRecord<String, String> record : records) {
+					LOGGER.info("key: " + record.key() + ", value: " + record.value());
+					LOGGER.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+				}
+				
+				try {
+					Thread.sleep(2000); // Sleep for two seconds 
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				// Commit the offsets
+				try {
+					consumer.commitSync();
+				} catch (CommitFailedException e) {
+					LOGGER.error("Commit failed", e);	
+				}
+			}
+		} finally {
+			System.err.println("Starting to close the consumer");
+			// Commit the offsets just before closing the consumer
+			try {
+				consumer.commitSync();
+			} catch (CommitFailedException e) {
+				LOGGER.error("Commit failed", e);	
+			}
+			consumer.close();
+			System.err.println("Consumer closed");
+		}	
+	}	
+}
+\end{lstlisting}
+
+\subsection{ConsumerOffsetExample3}
+
+\begin{lstlisting}[language=Java]
+public class ConsumerOffsetExample3 {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerDemo.class);
+	
+	
+	public static void main(String[] args) {
+		
+		String bootstrapServers = "localhost:9092";
+		String groupId = "my-application";
+		String topic = "first_topic";
+		
+		Properties properties = new Properties();
+		
+		properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+		properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		
+		
+		// Disable automatic commit
+		properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+		// Each call to poll will return at most 2 records
+		properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "2"); 
+		
+		// Create consumer
+		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+		
+		// Subscribe to topic
+		consumer.subscribe(Collections.singleton(topic));
+		
+		// Add the shutdown hook
+		final Thread mainThread = Thread.currentThread();
+		final AtomicBoolean stopRequested = new AtomicBoolean(false);
+		LOGGER.info("mainThread has name: " + mainThread.getName());
+		
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				System.err.println("Starting exit .....");
+				LOGGER.info("shutDownHook running in thread: " + Thread.currentThread().getName());
+				stopRequested.set(true);
+				try {
+					mainThread.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
+		// Start the (infinite) poll loop. Surround with try-catch to catch the WakeupException
+		try {
+			while (!stopRequested.get()) {
+				ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+				
+				for (ConsumerRecord<String, String> record : records) {
+					LOGGER.info("key: " + record.key() + ", value: " + record.value());
+					LOGGER.info("Partition: " + record.partition() + ", Offset:" + record.offset());
+				}
+				
+				try {
+					Thread.sleep(2000); // Sleep for two seconds 
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				// Commit the offsets asynchronously				
+				consumer.commitAsync();				
+			}
+		} finally {
+			System.err.println("Starting to close the consumer");
+			// Commit the offsets synchronously just before closing the consumer
+			try {
+				consumer.commitSync();
+			} catch (CommitFailedException e) {
+				LOGGER.error("Commit failed", e);	
+			}
+			consumer.close();
+			System.err.println("Consumer closed");
+		}
+		
+	}
+}
+\end{lstlisting}
+
+\section{Oefeningen}
+
+\subsection{KafkaProducer aanmaken}
+
+\begin{lstlisting}[language=Java]
+public class ProduceLogMessages {
+	
+	static final String BOOTSTRAP_SERVER = "localhost:9092";
+	static final String TOPIC = "log.messages";
+	static final Integer DELAY_MS = 1000; // 1000 ms
+	
+	public static void main(String[] args) {
+		
+		Properties properties = new Properties();
+		
+		final AtomicBoolean stopRequested = new AtomicBoolean(false);
+		final Thread mainThread = Thread.currentThread();
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.println("Shutdownhook called");
+				stopRequested.set(true);
+				try {
+					mainThread.join();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		// Bootstrap-server instellen
+		properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
+		
+		//Key & Value serializer
+		properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		
+		final Producer<String, String> producer = new KafkaProducer<String, String>(properties);
+		final LogMessageGenerator generator = new LogMessageGenerator();
+		
+		try {
+			while (!stopRequested.get()) {
+				String msg = generator.next(); // volgende line offset in een bestand
+				String[] parts = msg.split(" "); // message opsplitsen in een array
+				String sourceSystem = parts[1]; // want de key is het tweede element in de string
+				ProducerRecord<String, String> record = 
+							new ProducerRecord<String, String>(TOPIC, sourceSystem, msg);
+				producer.send(record); 
+				try {
+					Thread.sleep(DELAY_MS);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} finally {
+			System.out.println("Closing the producer...");
+			producer.close();
+			System.out.println("Closed the producer");
+		}
+	}	
+}
+\end{lstlisting}
+
+\newpage
+\subsection{Consumer / Producer}
+\begin{lstlisting}[language=Java]
+public class ConsumeLogMessages {
+	static final String BOOTSTRAP_SERVER = "localhost:9092";
+	static final String TOPIC = "log.messages";
+	static final String GROUP_ID = "important";
+	
+	static final Integer DELAY_MS = 1000; // 1000 ms
+	
+	public static void main(String[] args) {
+		
+		String GROUP_ID = ""; 
+		
+		// create properties for consumer and producer
+		Properties properties = new Properties();
+		properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
+		properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+		
+		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+		properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+		
+		
+		// create ConsumerRunnable
+		final ConsumerRunnable consumer = null;
+		final Thread consumerThread = new Thread(consumer);
+		consumerThread.start();
+		
+		
+		// Wordt aangesproken als het programma opeens wordt afgesloten.
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.println("Shutdownhook called. Calling shutdown");
+				consumer.shutdown();
+				
+				try {
+					consumerThread.join(); // wacht tot de andere thread klaar is
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Done waiting on consumer");
+			}
+		});
+	}
+}
+\end{lstlisting}
+\newpage
+\subsubsection{ConsumerRunnable}
+\begin{lstlisting}[language=Java]
+class ConsumerRunnable implements Runnable {
+	
+	private final Consumer<String, String> consumer;
+	private final Producer<String, String> producer;
+	private final AtomicBoolean stopRequested;
+	
+	public ConsumerRunnable(Properties consumerProperties, Properties producerProperties) {
+		this.consumer = new KafkaConsumer<String, String>(consumerProperties);
+		this.producer = new KafkaProducer<String, String>(producerProperties);
+		this.stopRequested = new AtomicBoolean(false);
+	}
+	
+	public void run() {
+		// hier komt de while-loop
+		try{
+			while(!stopRequested.get()) {
+				ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(500));
+				for(ConsumerRecord<String, String> record : records) {
+					System.out.println("Received record with key: " + record.key() + "and value" + record.value());
+				}
+			}
+		} finally {
+			System.out.println("About to close the consumer.");
+			consumer.close();
+			System.out.println("Consumer closed");
+		}
+	}
+	
+	public void shutdown() {
+		stopRequested.set(true);
+	}
+}
+\end{lstlisting}
+
+\chapter{Spark}
+
+\subsubsection{Vooraf}
+
+Voor de komst waren er een aantal programmeermodellen gericht op filesystemclusters. De meeste waren gespecialiseerd, waaronder MapReduce, Storm, Impala en Pregel. Spark werd ontworpen om sneller en flexibeler te zijn dan de vooraf genoemde modellen. Sindsdien is het een populaire keze geworden voor een heleboel dataverwerkingstaken, waaronder \textit{batch processing}, streamverwerking, \textit{machine learning} en gegevensanalyse. Het biedt een aantal voordelen t.o.v. andere clustercomputersystemen, zoals: 
+
+\begin{itemize}
+	\item Flexibele en expressieve API
+	\item Ondersteuning voor een breed aantal gegevensbronnen en formaten
+	\item Mogelijk om te draaien in een groot aantal deployment-omgevingen, zoals on-premises clusters, cloudgebaseerde clusters en zelfs op één enkele machine.
+\end{itemize}
+
+\subsubsection{Algemene voordelen}
+
+Spark is generiek en algemeen. Een analoge uitleg is om Spark een smartphone te noemen, terwijl andere modellen eerder een GPS, mobiele telefoon of digitale camera zijn. Spark is een \textit{jack-of-all-trades}. daarom brengt het drie voordelen met zich mee:
+
+\begin{itemize}
+	\item Toepassingen zijn makkelijker te ontwikkelen, want ze maken gebruik van een gecentraliseerde API.
+	\item Het is efficiënter om verwerkingstaken te combineren. Voor Spark moeten pipelines vaak de gegevens wegschrijven naar opslag om ze door te geven aan een andere engine. Spark kan diverse functies uitvoeren op dezelfde gegevens, vaak in het geheugen.
+	\item Spark maakt nieuwe toepassingen mogelijk, bijvoorbeeld interactieve queries op het streamen van ML.
+\end{itemize}
+
+\section{Spark Application Architecture}
+
+Er zijn drie belangrijke rollen:
+
+\begin{itemize}
+	\item Bij een Spark-applicatie is de \textit{driverprocess} hetgeen wat de applicatiecode doet draaien. Dit proces onderhoudt de informatie van de Spark-applicatie, beantwoordt de input van de gebruiker en verdeeld het werk over de \textit{executors}.
+	\item Een executorprocess gaat het werk uitvoeren dat hen werd toegekend. De staat van de actie (geslaagd/niet geslaagd) wordt gerapporteerd aan het driverproces.
+	\item De \textit{clustermanager} houdt logs bij van de beschikbare resources en welke resources er aan de executors, indien mogelijk, kunnen worden gegeven. Spark ondersteunt verschillende clustermanagers, waaronder YARN, Mesos en Kubernetes.
+\end{itemize}
+
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[height=5cm]{images/Screenshot_258.png}
+	\end{center}
+	\caption{Opbouw en structuur van een Spark-applicatie}
+\end{figure}
+
+
+\subsubsection{Partitionering}
+
+Parallelle verwerking met Spark kan enkel gebeuren wanneer het systeem in verschillende clusters is opgebouwd. Een partitie is in dit geval een verzameling van rijen die op een fysieke machine in een cluster is opgeslaan. De partities van een DataFrame tonen hoe de data fysiek is verdeeld over de cluster heen. Het aantal partities is gebonden op het niveau van parallelisme in een Spark applicatie. Bij één partitie zal de parallellisatiefactor gelijk staan aan één, zelfs al zijn er meerdere executors. Omgekeerd ook, want als er meerdere partities zijn met één executor, dan zal de parallellisatiefactor gelijk staan aan één. De afweging maken tussen aantal partities en aantal executors speelt hier een rol op het vlak van snelheid.
+
+\section{Spark in Java}
+
+\subsection{Dataframe}
+
+Een dataframe is een gedistribueerde, in-memory tabel met benoemde kolommen en een schema. Het schema duidt elke specifiek datatype aan. Een dataframe is \textit{immutable}, dus eenmaal aangemaakt kan het object niet meer worden gewijzigd. Dataframes kunnen worden aangemaakt uit verschillende bronnen, zoals Hadoop InputFormats of CSV-bestanden. Verdere transformaties, zoals aggregaties en filteren, kunnen zeker toegepast worden op eender welk type formaat. In Java-code verwijzen we naar het object 'Dataset<>'. Tussen de diamandtekens plaatsen we het object 'Row'.
+
+\subsection{Transformaties}
+
+Er zijn verschillende types transformaties die op een dataframe kunnen worden uitgevoerd. Deze transformaties verlopen \textit{lazy evaluated}. Het onderscheid tussen \textit{wide} en \textit{narrow} transformaties wordt hier gemaakt:
+
+\begin{itemize}
+	\item Een narrow transformatie is wanneer het resultaat voor een partitie kan worden berekend met enkel de data van die partitie. Iedere inputpartitie contribueert tot minstens één outputpartite. Deze transformatie kan ook gebeuren aan de hand van een pipeline, zo hoeft er geen data naar de disk te worden geschreven. Narrow transformaties zijn snel en efficiënt.
+	\item Een wide transformatie heeft nood aan meerdere outputpartities. Sommige inputpartities zullen contribueren tot elk meerdere outputpartities. Hier is er nood aan een \textit{shuffle}, waarbij er een proces wordt toegevoegd. In dit proces worden de partities, over een cluster heen, onderling met elkaar uitgewisseld. Een shuffle vereist dat er resultaten naar de \textit{disk} wordt geschreven. Aangezien dit extra schrijfoperaties zijn, is het aangeraden om het aantal wide-transformaties zo minimaal mogelijk te houden.
+\end{itemize}
+
+\subsubsection{Lazy Evaluation}
+
+Spark maakt gebruik van Lazy evaluation, wat wilt zeggen dat een transformatie niet zal resulteren in een nieuwe dataframe. De return-waarde is wél een nieuw object dat het resultaat van de bewerking bijhoudt. De berekening is nog niet uitgevoerd. Bij het triggeren van een actie kijkt Spark naar de graph van alle transformaties die werden opgeroepen. Net zoals bij SQL wordt er een \textit{query execution plan} aangemaakt. Dit proces noemt \textit{query optimization}. Spark kan mogelijks meerdere filters en filters gaan samensteken, of het kan andere soorten optimizatie gaan toepassen om zo min mogelijk data te moeten verwerken.
+
+\subsection{Acties}
+
+Transformaties in Spark bouwen een logische transformatieplan op. Die geeft aan hoe de inputdata moet worden getransformeerd om de gewenste output te krijgen. Het transformatieplan wordt niet uitgevoerd tot de actie wordt getriggerd. Een actie geeft Spark de instructie om een resultaat of verzameling van transformaties te berekenen. Sommige voorbeelden van acties zijn:
+
+\begin{itemize}
+	\item Sommige rijen van een dataframe tonen.
+	\item Het aantal rijen van een dataframe optellen.
+	\item De dataframe opslaan als een native object, zoals een Java lijst.
+	\item Een dataframe schrijven naar een externe \textit{data sink}.
+\end{itemize}
+
+Eenmaal de actie is getriggerd, dan zal Spark het transformatieplan uitvoeren en de resultaat van de actie berekenen. 
+
+\subsection{Physical plan}
+Spark's Physical Plan wijst aan hoe de Spark-applicatie zal uitgevoerd worden op een cluster van machines. Dit omvat details zoals:
+\begin{itemize}
+	\item Welke transformaties moeten er worden uitgevoerd?
+	\item Hoe moet de data gepartitioneerd of geshuffled worden?
+	\item Hoe moeten de resultaten van de transformaties worden opgeslaan of geretourneerd?
+\end{itemize}
+
+\subsubsection{Het belang van een physical plan}
+
+Het \textit{physical plan} is belangrijk, want zo achterhalen ontwikkelaars hoe zij hun middelengebruik kunnen optimaliseren en het aantal data, dat tussen machines heen moet worden geschreven, kan geminimaliseerd worden. Verdere oplossingen zijn:
+
+\begin{itemize}
+	\item Debugging en troubleshooten.
+	\item Performance optimization
+	\item Resource management
+	\item Capaciteitsplanning
+\end{itemize}
+
+\section{Spark Libraries}
+
+Dit is puur informatief. Spark bevat meerdere libraries om data-analyse of data-berekeningen op uit te voeren.
+
+\begin{itemize}
+	\item SQL en dataframe
+	\item Spark Streaming
+	\item MLLib
+	\item GraphX
+\end{itemize}
+
+\subsection{Integratie met opslagsystemen}
+
+Spark is ontworpen om met verschillende externe systemen te werken. Het is \textit{storage-system agnostic}, wat wilt zeggen dat het met een breed gamma aan storage systemen kan werken. Enkele voorbeelden van Spark-geïntegreerde storage systemen zijn:
+
+\begin{itemize}
+	\item HDFS is de populairste keuze voor Big Data, zowel gestructureerde als non-gestructureerde data.
+	\item Key-value stores
+	\item Relationele databanken
+\end{itemize} 
+
+\subsection{Resilient Distributed Dataset}
+
+Voor Apache 2.0 werd er gewerkt met een Resilient Distributed Dataset of RDD object. Dit is een verzameling van objecten die parallel gemanipuleerd kunnen worden. Het is een fouttolerante werkwijze. RDD's zijn ook immutable en ze worden aangemaakt wanneer er wordt gelezen van een databron. RDD's zijn meer in de achtergrond verdwenen bij de nieuwere versies, maar ze blijven toegankelijk. RDD's komen in deze cursus niet meer aan bod.
+
+\section{Spark-applicaties schrijven}
+
+\subsection{Een dataframe met nieuwe waarden aanmaken.}
+
+Stap voor stap wordt de volgende code uitgelegd:
+
+\begin{enumerate}
+	\item Eerst wordt er een spark-object aangemaakt in de main-methode. Zonder deze kan de applicatie niet werken.
+	\item Er wordt een nieuwe lege lijst aangemaakt. We houden een Java-lijst bij van "Row's", ofwel de inhoud voor de dataframe.
+	\item We maken vijf nieuwe rijen aan. In iedere rij houden we twee waarden bij: tekst en een getal. Met de RowFactory wordt er een Row-object aangemaakt, om dan vervolgens aan de Java-lijst toe te voegen.
+	\item De komende twee stappen zijn optioneel, maar aan te raden. De ambitie is om een schema op te stellen. Het schema is een weergave van alle datatypes die in de dataframe aan bod komen. Zonder een schema moet Spark zelf uitvissen wat de datatypes zijn, en zelfs dan is er géén garantie dat het de juiste datatype is. In dit geval zijn er twee velden: naam in de vorm van een String en leeftijd in de vorm van een Integer. Deze lijst houdt de StructFields of schemavelden bij die in een schema moeten voorkomen. Dit is het schema nog niet!
+	\item Op basis van de lijst met datatypes wordt er een schema gemaakt. Het schema is van het type StructType.
+	\item Het dataframe wordt aangemaakt. Hiervoor komt het Spark-object van pas. Samen met de lijst van rijen als eerste parameter én het schema wordt het dataframe aangemaakt.
+	\item Vervolgens wordt de data gegroepeerd op basis van naam. Zo zijn er twee Brooke's in het dataframe. In het resultaat zal er maar één Brooke te vinden zijn, maar van de twee leeftijden wordt het gemiddelde genomen.
+	\item Het dataframe wordt in de terminal weergegeven. Alle kolommen, dus naam en leeftijd, worden weergegeven.
+	\item Optioneel, maar wel aangeraden om het Spark-object te sluiten.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	public	static void main(String[] args){
+		
+		SparkSession spark = SparkSession.builder()
+		.appName("applicatiePersonenMetLeeftijd")
+		.master("local[*]")
+		.getOrCreate();
+		
+		List<Row> inMemory = new ArrayList<>();
+		
+		inMemory.add(RowFactory.create("Brooke",20));
+		inMemory.add(RowFactory.create("Brooke",25));
+		inMemory.add(RowFactory.create("Denny",31));
+		inMemor.add(RowFactory.create("Jules",30));
+		inMemory.add(RowFactory.create("TD",35));
+		
+		List<StructField> fields = Arrays.asList(
+		DataTypes.createStructField("name",DataTypes.StringType, true),
+		DataTypes.createStructField("age",DataTypes.IntegerType, true);
+		)
+		
+		StructType schema = DataTypes.createStructType(fields);
+		
+		Dataset<Row> df = spark.createDataFrame(inMemory, schema);
+		
+		Dataset<Row> result = df.groupby("name").avg("age");
+		
+		result.show();
+		
+		spark.close();
+	}
+\end{lstlisting}
+
+\subsection{Een bestaande dataframe lezen}
+
+Een dataframe wordt vaak gelezen uit een externe bron, zoals JSON, CSV, Parquet of Kafka output. Het Spark-object bezit een methode \textit{read()}. Deze methode geeft een DataFrameReader-object terug, wat nodig is om een bron in te lezen. Veronderstel dat we hier met dezelfde dataset te maken hebben, maar enkel al vooraf opgeslaan in een csv-bestand.
+
+\begin{enumerate}
+	\item Spark-object aanmaken.
+	\item Schema maken door een lijst van StructFields te maken én die dan te gieten in een StructType-object.
+	\item Het CSV-bestand wordt ingelezen. Net zoals het aanmaken, gebeurt het inlezen ook met het Spark-object. In het CSV-bestand is er een header, vandaar dat er eerst de optie 'header:true' wordt meegeven. Vervolgens wordt het schema meegegeven én uiteindelijk het pad waar de CSV kan worden teruggevonden.
+	\item Net zoals daarnet wordt er gegroepeerd op naam. Per naam wordt de gemiddelde leeftijd teruggegeven.
+	\item Het dataframe wordt in de terminal getoond.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	public static void main(String[] args){
+		
+		SparkSession spark = SparkSession.builder()
+		.appName("applicatiePersonenMetLeeftijd")
+		.master("local[*]")
+		.getOrCreate();
+		
+		List<StructField> fields = Arrays.asList(
+		DataTypes.createStructField("name",DataTypes.StringType, true),
+		DataTypes.createStructField("age",DataTypes.IntegerType, true);
+		)
+		
+		StructType schema = DataTypes.createStructType(fields);
+		
+		Dataset<Row> df = spark.read()
+		.option("header", true)
+		.schema(schema)
+		.csv("src/main/resources/PersonenMetLeeftijd.csv");
+		
+		Dataset<Row> result = df.groupby("name").avg("age");
+		
+		result.show();
+		
+		spark.close();
+	}
+\end{lstlisting}
+
+\subsubsection{Schema overerven}
+
+In de vorige twee berekeningen werd er een schema zelf, door de ontwikkelaar, aangemaakt. Dit is vrijblijvend, want Spark kan ook een schema overerven. Hieronder is er een alternatieve methode op stap twee van het vorige voorbeeld. Deze methode is minder efficiënt, want Spark moet zelf achterhalen wat de meest geschikte datatypes zijn. Daarnaast gaat Spark lijn per lijn door de volledige dataset heen. De workload kan worden geminimaliseerd door het schema op te bouwen o.b.v. een deel van de volledige dataset. Dit is een deelse oplossing, want er kunnen nog steeds problemen voorkomen bij de gekozen datatypes. Daarom is het aangeraden om zelf een schema op te bouwen.
+
+\begin{lstlisting}[language=Java]
+	Dataset<Row> df  = spark.read()
+	.option("header", true)
+	.option("inferSchema", true)
+	.option("samplingRation", 0.0001)
+	.csv("src/main/resources/PersonenMetLeeftijd.csv)
+\end{lstlisting}
+
+\subsection{Een dataframe uitschrijven naar een nieuw bestand.}
+
+In de volgende code wordt er verondersteld dat er een Spark-object is aangemaakt, een schema is opgesteld én een dataset al is ingelezen. De dataset werd opgeslaan als DataFrame onder de naam 'result'.
+
+\begin{enumerate}
+	\item Het pad wordt tweemaal gebruikt, dus dat wordt opgeslaan onder een variabele. Het pad kan zowel relatief als absoluut zijn. In dit voorbeeld is het pad absoluut.
+	\item Er zijn drie opties:
+	\begin{enumerate}
+		\item De inhoud van de dataframe wordt uitgeschreven naar een parquet-bestand. Dit bestand is een must bij een column-oriented databankstructuur.
+		\item Vervolgens wordt de mode meegegeven. Bij het uitschrijven wordt er een map gegenereerd. In die map kan het parquet-bestand worden teruggevonden.
+		\item Als laatste moet er een outputpad worden meegegeven. 
+	\end{enumerate}
+	\item Puur uit controle wordt het net aangemaakte bestand ingelezen door Spark. De outputpad, waar het parquet-bestand werd opgeslaan, dient nu als inputpad.
+	\item Het Spark-object wordt gesloten.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	String path = "file:///C:/tmp/personen";
+	
+	df.write()
+	.format("parquet")
+	.mode("overwrite")
+	.save(path);
+	
+	Dataset<Row> dfParquet = spark.read().parquet(path);
+	
+	spark.close();
+\end{lstlisting}
+
+\section{Dataframe-kolommen inlezen, toevoegen en verwijderen.}
+
+\subsubsection{Kolommen toevoegen}
+Een dataframe bestaat uit kolommen. Sommige functies vragen de naam van een kolom op als String, maar andere functies vereisen dat er een object van de klasse 'Column' wordt meegegeven. In het volgende voorbeeld wordt er een extra kolom aangemaakt. De kolom is een berekening op de leeftijdskolom. 
+
+\begin{enumerate}
+	\item Bovenaan komen de imports. De klasse 'functions' is met een kleine letter geschreven, daarmee een uitzondering op de regel om alle klassen met een hoofdletter te laten starten.
+	\item Er worden twee kolommen aan de dataset toegevoegd. Een expressie of where-clausule wordt meegegeven met de \textit{expr(...)}-functie.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	import org.apache.spark.sql.Column;
+	import static org.apache.spark.sql.functions.col;
+	
+	df = df.withColumn("ageNextYear2", expr("age + 1"))
+	.withColumn("over30", expr("age > 30"));
+\end{lstlisting}
+
+\subsubsection{Kolommen selecteren}
+Tot nu toe werden alle kolommen van de dataframes bij de keuze betrokken. Spark laat de ontwikkelaar toe om kolommen, net zoals bij SQL, te kiezen. Hieronder wordt er een voorbeeld gegeven van de verschillende kolommen. Er wordt verondersteld dat er al een spark-object is aangemaakt én dat het pad in een String 'inputpath' wordt bijgehouden.
+
+\begin{enumerate}
+	\item Er wordt een nieuwe dataset opgehaald. De dataset is opgeslaan in een CSV-bestand. Het bevat vijf kolommen: id, score, naam, jaartal en kwartaal. Enkel bij dit voorbeeld wordt het schema overgeërfd. 
+	\item De dataset wordt in de terminal getoond. Alle vijf kolommen worden weergegeven.
+	\item Met de \textit{select}-functie worden enkel de score, jaartal en kwartaalkolommen opgehaald. Een dataframe is \textit{immutable}, dus het object moet worden overschreven.
+	\item De dataset bestaat nu uit drie kolommen. 'Id' en 'naam' zijn niet meer terug te vinden in de dataset.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	Dataset<Row> df = spark.read()
+	.option("header",true)
+	.option("inferSchema",true)
+	.option("sampleRation", 0.001)
+	.csv(inputpath);
+	
+	df.show();
+	
+	df = df.select("score","jaartal","kwartaal");
+	
+	df.show();
+\end{lstlisting}
+
+\subsubsection{Kolommen verwijderen}
+
+Een kolom kan op een passieve wijze worden weggelaten door de kolom niet in een \textit{select} te betrekken. In sommige gevallen, bijvoorbeeld bij een groot aantal kolommen, is het handiger om één specifieke kolom te verwijderen, in plaats van een select uit te voeren. De gouden regel is dat dataframes immutable zijn, dus hier moet de nieuwe versie van de dataframe opnieuw wordt toegekend.
+
+\begin{lstlisting}
+	df = df.drop("id","naam");
+\end{lstlisting}
+
+\subsubsection{Kolommen hernoemen}
+
+Kolomnamen kunnen worden aangepast. Bij het toevoegen wordt er vaak een standaardnaam toegekend aan een kolom, bijvoorbeeld \textit{count} of \textit{sum}. Hieronder wordt de kolom met de naam \textit{count} aangepast naar \textit{aantalRijen}. Na een berekening wordt er ook de \textit{alias}-functie gebruikt. 
+
+\begin{lstlisting}[language=Java]
+	df = df.withColumnRenamed("count","aantalRijen");
+	df = df.count().alias("aantalRijen");
+\end{lstlisting}
+
+\subsection{Dataframes filteren}
+
+\subsubsection{Voorbeelden van de studentendataset}
+
+\begin{enumerate}
+	\item Hou een dataset bij met alle rijen die een score hebben van 'A+'.
+	\item Hou een dataset bij met alle rijen waarvan de score 'B' is én de score werd behaald in het jaar 2010 of 2011.
+	\item Neem de dataset van nummer 3 en behoud enkel de unieke rijen.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	Dataset<Row> dfAplus = df.select()
+	.where(col("grade")
+	.equalTo("A+");
+	
+	Dataset<Row> dfB1011 = df.select()
+	.where(col("grade").equalTo("B")
+	.and(col("year").isin(2010,2011)));
+	
+	Dataset<Row> dfUniekB1011 = dfB1011.distinct();
+\end{lstlisting}
+
+\subsection{Aggregaties uitvoeren op dataframes}
+
+\subsubsection{Voorbeelden van de studenten-dataset}
+
+\begin{lstlisting}[language=Java]
+	Dataset<Row> dfCountPerJaar = df.select("year")
+	.groupby("year")
+	.count()
+	.orderBy(desc("count"));
+	
+	Dataset<Row> dfStatisticsPerJaarEnOnderwerp = df.select("year","subject","score")
+	.groupby("year","subject")
+	.agg(max("score"), min("score"), avg("score"))
+	
+\end{lstlisting}
+
+\subsubsection{Voorbeelden van de ViewingFigures-oefening}
+
+\begin{lstlisting}[language=Java]
+	Dataset<Row> chaptersPerCourse = chaptersDF
+	.drop("chapterId")
+	.groupBy("courseId").count()
+	.withColumnRenamed("count", "chapters");
+\end{lstlisting}
+
+
+\subsection{User Defined Functions}
+
+User Defined Functions of UDF's worden ingezet wanneer een berekening de ingebouwde functies van Spark overstijgt. De berekening maken is mogelijk, maar de logica is te complex en vereist daarmee een aparte aanpak. Bij een UDF zijn er drie stappen:
+
+\begin{enumerate}
+	\item UDF schrijven.
+	\item UDF registreren.
+	\item UDF oproepen.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+	UDF1<Double, Integer> score = new UDF1<Double, Integer>() {
+		public Integer call(Double percent) throws Exception {
+			if (percent > 0.9) {
+				return 10;
+			} else if (percent > 0.5) {
+				return 6;
+			} else if (percent > 0.25) {
+				return 2;
+			} else {
+				return 0;
+			}
+		}
+	};
+	
+	spark.udf().register("berekenScore", score, DataTypes.IntegerType);
+	
+	
+	Dataset<Row> result = percentageDF
+	.withColumn("score",  call_udf("berekenScore",col("percentage")))
+	.drop("percentage")
+	.groupBy("courseId").agg(sum("score").as("total"))
+	.join(titleDF, "courseId")
+	.orderBy(desc("total"));
+\end{lstlisting}
+
+\newpage
+
+\section{Oefeningen op Spark}
+
+\subsection{Inverted Index}
+
+\begin{lstlisting}[language=Java]
+public class InvertedIndex {
+	
+	static SparkSession spark;
+	
+	static final String INPUT_PATH = "src/main/resources/*";
+	
+	static UDF1<String, String> parseFilename = new UDF1<String, String>()
+	{
+		public String call(String fullPath) throws Exception {
+			int index = fullPath.lastIndexOf("/");
+			return fullPath.substring(index + 1, fullPath.length());
+		};
+	};
+	
+	public static void main(String[] args) {
+		
+		spark = SparkSession.builder()
+							.appName(InvertedIndex.class.getName())
+							.master("local[1]")
+							.getOrCreate();
+							
+		spark.sparkContext().setLogLevel("ERROR");
+		
+		Dataset<Row> invertedIndex = spark.read()
+			.text(INPUT_PATH);
+		
+		spark.udf()
+			.register("parseFilename", parseFilename, DataTypes.StringType);
+		
+		invertedIndex
+			.withColumn("raw", input_file_name().cast("String")) 			
+			.withColumn("filename", call_udf("parseFilename", col("raw"))) 	
+			.withColumn("woorden", explode(split(col("value"), " ")))		
+			.drop("raw")													
+			.groupBy(col("woorden"), col("filename"))						
+			.agg(count("woorden").as("aantalVoorkomens"))
+			.orderBy(desc("aantalVoorkomens"))
+			.show();
+		
+		
+		// extra aanvulling: ervoor zorgen dat de bestanden waarin spark terechtkomt opnemen
+		invertedIndex
+			.withColumn("raw", input_file_name().cast("String")) 			
+			.withColumn("filename", call_udf("parseFilename", col("raw"))) 	
+			.withColumn("woorden", explode(split(col("value"), " ")))  		
+			.withColumn("woorden", lower(col("woorden")))
+			.drop("raw")													
+			.groupBy(col("woorden"))										
+			.agg(count("woorden").as("aantalVoorkomens"), 					
+					collect_set(col("filename")).as("bestandenVoorkomens"))	
+			.orderBy(desc("aantalVoorkomens"))
+			.show(false);	
+	}
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Fire Department}
+\begin{lstlisting}[language=Java]
+public class SanFransiscoFireDepartment {
+		
+	static SparkSession spark;
+	static final String PATH = "src/main/resources/output";
+		
+	public static void main(String[] args) {
+			
+		spark = SparkSession.builder()
+				.appName("InvertedIndex")
+				.master("local[*]")
+				.getOrCreate();
+			
+		spark.sparkContext().setLogLevel("ERROR");
+			
+		List<StructField> fields = Arrays.asList(DataTypes.createStructField("CallNumber", DataTypes.IntegerType, true),
+		DataTypes.createStructField("UnitID", DataTypes.StringType, true),
+		...
+		DataTypes.createStructField("Delay", DataTypes.DoubleType, true));
+			
+		StructType schema = DataTypes.createStructType(fields);
+			
+		// Data inlezen
+		Dataset<Row> department = spark.read()
+			.option("header", true)
+			.schema(schema)
+			.csv("src/main/resources/sf-fire-calls.csv");
+			
+		// Part I
+			
+		// convert the columns calldate and watchdate
+		department = department
+			.withColumn("Calldate", to_date(col("CallDate"), "MM/dd/yyyy"))
+			.withColumn("Watchdate", to_date(col("Watchdate"), "MM/dd/yyyy"));
+			
+		// convert the column availabledtm to a timestamp
+		department = department
+			.withColumn("AvailableDtTm", 
+				to_timestamp(col("AvailableDtTm"), "MM/dd/yyyy hh:mm:ss a"));
+			
+		// save the dataframe as a parquet file
+		department.write()
+			.mode(SaveMode.Overwrite)
+			.parquet(PATH);
+						
+		// Part II
+		// Alle verschillende calltypes in 2018 met WHERE
+		department
+			.where(year(col("Calldate")).equalTo("2018"))
+			.groupBy(col("CallType"))
+			.agg(count("*").as("Aantal"))
+			.select("CallType")
+			.orderBy("CallType")
+			.show(false);
+			
+		// Alle verschillende calltypes in 2018 met filter
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy(col("CallType"))
+			.agg(count("*").as("Aantal"))
+			.select("CallType")
+			.orderBy("CallType")
+			.show(false);
+\end{lstlisting}
+		
+		\newpage
+		
+		\begin{lstlisting}[language=Java]
+			
+		// Alle maanden in 2018 met het hoogst aantal calls.
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy(month(col("Calldate")).as("Maandnummer"))
+			.agg(count("*").as("Aantal"))
+			.orderBy(desc("Aantal"))
+			.show(false);
+			
+		// De neighborhood met de meeste oproepen in 2018
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy("neighborhood")
+			.agg(count("*").as("Aantal"))
+			.orderBy(desc("Aantal"))
+			.limit(1)
+			.show(false);
+			
+		// De neighborhoods met de slechtste gemiddelde vertraagtijden bij een omroep.
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy("neighborhood")
+			.agg(avg(col("Delay")).as("avgResponse"))
+			.orderBy(desc("avgResponse"))
+			.select(col("neighborhood"), bround(col("avgResponse"), 2))
+			.show(false);
+			
+		// De week in 2018 met de meeste calls
+		department
+			.filter(year(col("Calldate")).equalTo("2018"))
+			.groupBy(weekofyear(col("Calldate")).as("Weeknummer"))
+			.agg(count("*").as("Aantal"))
+			.limit(1)
+			.show(false);
+			
+			spark.close();
+		}
+	}
+\end{lstlisting}
+
+\chapter{Spark Streaming}
+
+\section{Stream Processing}
+
+\subsubsection{Structured Spark batch processing}
+
+Voordien gebeurde alles bij Spark in één keer. Dit wordt ook batch processing genoemd en omvat de volgende drie kenmerken:
+
+\begin{itemize}
+	\item De data is bounded. De analogie wordt gemaakt met de logistiek bij de Colruyt. Wanneer de winkel dichtgaat, dan wordt er een verslag gemaakt van alles wat die dag werd verkocht. Bij een CSV of XML-bestand is de laatste rij gekend.
+	\item Er wordt géén data toegevoegd. Het lezen van data gebeurt in één batch. Werken met batches is geen ideale methode voor real-time dataverwerking.
+	\item Alle data wordt in een tabel bijgehouden.
+\end{itemize}
+
+\subsection{Spark Stream Processing}
+
+Data wordt continu aan het systeem toegevoegd en moet in real-time worden verwerkt. Bijvoorbeeld bij een live dashboard. De status van de data is hier belangrijk. De data is niet-gebonden of \textit{unbounded}, wat wilt zeggen dat er continu rijen achteraan worden toegevoegd. Het probleem is dat er géén oneindige tabel in het geheugen is. Een stream bestaat uit drie kenmerken:
+
+\begin{itemize}
+	\item Het is \textit{unbounded}, al denkt het systeem niet zo. Er is géén vast einde van de inputdata gekend en de stroom vloeit op een niet-gekende manier. Piekperioden, rustige momenten en alles tussenin zijn mogelijke scenario's.
+	\item Er wordt telkens data achteraan de inputdata toegevoegd. Iedere nieuwe record in een datastream wordt behandeld als een nieuwe rij. De rij wordt telkens aan de inputtabel achteraan toegevoegd. Het real-time aspect klinkt als een radicale verandering voor het programmeren, maar alle code wordt geschreven zoals ze voor een batch processing job werd geschreven. Deze job moet telkens getriggerd worden om data te verkrijgen. Pas bij de trigger kijkt Spark voor nieuwe data en die data wordt achteraan de inputdata toegevoegd.
+	\item Alle data wordt in een tabel bijgehouden.
+\end{itemize}
+
+
+\subsubsection{Data ophalen met sockets}
+
+Spark zal gemiste input vergeten, want er wordt gewerkt met sockets. Een socket leest enkel de binnenkomende info. Data die voordien werd gestuurd, zal niet worden gelezen. Historiek wordt niet bijgehouden. Als de deur toe is, dan zal niemand staan wachten tot de deur opengaat. 
+
+\subsubsection{Output sink}
+
+Dit is de bestemming waarnaar de data wordt geschreven. Dit kan een databank, bestand of systeem zijn dat data kan verwerken of manipuleren. Bij stream processing is dit het systeem dat de resultaten van real-time verwerkingsoperaties zal bijhouden. Een output sink dient als werkpaard om de gestreamede data persistent bij te houden.
+
+\subsection{Outputmodes}
+
+Er zijn drie outputmodes: append, update en complete. Deze instelling geeft aan hoe de data tijdelijk moet worden bijgehouden.
+
+\begin{itemize}
+	\item Appendmode zal enkel de nieuwe rijen als resultaat zien. De historiek of bestaande rijen worden niet getoond of aangepast. Dit is de standaardmodus. Met enkel de nieuwe rijen is er weinig mogelijk. Zo is WordCount niet odnersteudn, want het aantal voorkomens wordt niet lang bijgehouden én de vorige geschreven data wordt niet betrokken. Dit is de meest efficiënte outputmode.
+	\item Updatemode zal zowel nieuwe als oude rijen teruggeven. Van de oude rijen worden enkel aanpassingen gemaakt. Als een woord bij de vorige trigger werd gegeven, en nu zijn er vijf voorkomens meer, dan wordt dat aantal opgeteld. 
+	\begin{itemize}
+		\item Sommige outputsinks ondersteunen deze modus niet, want de bestanden hebben geen interne structuur. Eenmaal een bestand geschreven is, dan is het moeilijk om dit aan te passen. Bijvoorbeeld als de vorige rij vijf kolommen had, en nu wordt er een rij toegevoegd met zes kolommen, dan zal dit resulteren in een fout.
+	\end{itemize}
+	\item Completemode zal het volledige resultaat uitschrijven. De output zal stelselmatig groeien en de job zal in de tussentijd niet draaien. Dit is een \textit{go-to} mode voor aggregatieberekeningen, maar wordt met voorkeur gekozen voor kleine datasets. WordCount werkt wel bij deze modus. Deze mode is de meest flexibele outputmode.
+\end{itemize}
+
+\subsubsection{Voorbeeld stock prices}
+
+Stel dat er een continue flow van stock prices is. Bij appendmode worden enkel de binnenkomende shares getoond. Bij updatemode worden enkel de veranderingen, dus nieuwe en aangepaste shares, weergegeven. Bij completemode worden alle shares na iedere trigger uitgeprint.
+
+\section{Code}
+
+Een streamingquery opbouwen vereist vijf stappen:
+
+\begin{enumerate}
+	\item Inputsources bepalen
+	\item Data omzetten
+	\item Outputsink en outputmode bepalen
+	\item Processingsdetails bepalen
+	\item Query starten
+\end{enumerate}}
+
+
+\subsection{Inputbron bepalen}
+
+Nu wordt er gewerkt met een \textit{readStream} methode. Bij batch-processing werd er gewerkt met een gewone \textit{read}-methode. De keuzes bij stream-processing lopen in lijn met batch-processing. 
+\begin{itemize}
+\item De format zal in de meeste gevallen een socket zijn, wat voordien een CSV, parquet of tekstbestand was. 
+\item Bij de opties worden de netwerkinstellingen en Kafka-informatie meegegeven. Het poort van de socket, gegevens over de broker, etc.
+\item Load start het leesproces.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> df = spark.readStream()
+.format("socket")             
+.option("host", "localhost")  
+.option("port", 9999)         
+.load();
+\end{lstlisting}
+
+\subsection{Data omzetten}
+
+Je hebt enkel de huidige data nodig. Data kunnen zich in twee statussen bevinden: stateful en stateless. De opdeling loopt in lijn met \textit{wide} en \textit{narrow} berekeningen.
+
+\begin{itemize}
+\item Bij stateful kan iedere rij op zich worden verwerkt. Met enkel de huidige informatie is het systeem voldoende. Bijvoorbeeld mapping volgens select of filters.
+\item Bij stateless is de informatie van voordien nodig. Stateless komt bij een aggregatie goed van pas. De meeste combinaties worden ondersteund, tenzij de combinaties te moeilijk zijn om op een incrementele manier te berekenen.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> words = lines.select(
+explode(split(col("value"), "\\s")).as("word")
+);
+
+Dataset<Row> counts = words.groupBy("word").count();
+\end{lstlisting}
+
+\subsection{Outputsink -en modus bepalen}
+
+Er wordt bepaald hoe de geschreven outputdata moet worden geschreven. De outputmode en de outputlocatie moeten in de code te zien zijn. De code hieronder bouwt verder op de de counts-dataset die net werd opgesteld:
+\begin{itemize}
+\item In de code hieronder wordt er gewerkt met een complete outputmode, want er wordt een aggregatie op de dataset gemaakt.
+\item Alle output wordt naar de console geschreven. Andere mogelijkheden zijn: 'memory', 'kafka', 'rate', 'parquet' of 'csv'. 
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+DataStreamWriter<Row> writer = counts.writeStream()
+.format("console")
+.outputMode(OutputMode.Complete());
+\end{lstlisting}
+
+\subsection{Processingdetails bepalen}
+
+De laatste stap voor het starten van de query is het specifiëren hoe de data moet worden verwerkt. Er zijn vier mogelijkheden:
+
+\begin{itemize}
+\item De standaardoptie is het behandelen in microbatches. Deze worden kort na elkaar uitgevoerd. Wel moet de onderlinge tijd worden meegegeven. 
+\item Werken met een vast triggerinterval is soortgelijk aan Linux cronjobs. Op een vooraf gespecifieerd moment wordt de query uitgevoerd.
+\item Alle data wordt op één moment verwerkt, daarna stopt de applicatie. Alle nieuwe data wordt in één batch verwerkt. Dit is handig wanneer er controle over een externe scheduler moet worden genomen.
+\item Continuous is een experimentele modus. Hierbij de data zo snel als mogelijk continu verwerkt, dus niet meer in micro-batches. Enkel een klein aantal dataframebewerkingen ondersteunen deze modus. De latency is hier minimaal. 
+\end{itemize}}
+
+\subsubsection{Code}
+
+Dit is een aanvulling op de code van stap 3. Onder format en outputmode wordt er een trigger meegegeven. In dit geval gebeurt de verwerking iedere seconde. 
+
+\begin{lstlisting}[language=Java]
+DataStreamWriter<Row> writer = counts.writeStream()
+.format("console")
+.outputMode(OutputMode.Complete())
+.trigger(Trigger.ProcessingTime(1,TimeUnit.SECONDS));
+\end{lstlisting}
+
+\subsection{Query starten}
+
+De query wordt gestart met een start-methode op de DataStreamWriter. Dit geeft een StreamingQuery terug, wat de actieve query voorstelt. Een StreamingQuery kan dienen voor verder beheer van de query.
+
+\begin{lstlisting}[language=Java]
+StreamingQuery streamingQuery = writer.start();
+try{
+streamingQuery.awaitTermination();
+} except {
+e.printStackTrace();
+};
+\end{lstlisting}
+
+\section{Sources \& Sinks}
+
+\subsection{Bestanden lezen}
+
+Bestanden in een directory kunnen worden ingezet als input voor een stream. Wel moeten er drie zaken in het achterhoofd worden gehouden:
+
+\begin{itemize}
+\item Alle bestanden moeten in eenzelfde formaat zijn geschreven. Alles is ofwel een CSV-formaat, ofwel een tekstformaat, ofwel een specifiek ander formaat.
+\item Bestanden moeten atomisch beschikbaar zijn. Tijdens het lezen mogen de bestanden niet worden bewerkt of verwijderd.
+\item Bestanden worden genomen op basis van de timestamp, maar het verwerken daarentegen is niet vooraf bepaald. Alle bestanden worden parallel gelezen. Er is geen garantie welk bestand er eerst wordt bekeken.
+\item Naar een bestand schrijven gebeurt in append-only mode. Het is makkelijker om bestanden aan een bestaande directory toe te voegen, dan de inhoud van bestaande bestanden aan te passen.
+\end{itemize}
+
+
+\subsection{Kafka-inhoud lezen}
+
+Net zoals bij bestanden kan de inhoud van een Kafka topic worden gezien als een stream. Het schema bij Kafka Dataframes zal altijd hetzelfde zijn. Parsen zal wel altijd noodzakelijk zijn.
+
+\begin{itemize}
+\item De key-value wordt als binary teruggegeven, maar dit is in binary. 
+\item De topic wordt als een String teruggegeven.
+\item De partitie waar de record in terug kan worden gevonden.
+\item De line offsset value van een record.
+\item De timestamp van de record en het type van de timestamp.
+\end{itemize} 
+
+\subsubsection{Naar Kafka schrijven.}
+
+Het is mogelijk om in alle drie outputmodes naar Kafka uit te schrijven. Ter aanvulling is het ook mogelijk om van een topic naar een topic te schrijven.Completemode wordt wel niet aangeraden. Bij het uitschrijven naar Kafka moet er met het volgende schema worden gewerkt:
+
+\begin{itemize}
+\item De key is optioneel. Dit in de vorm van een String of een binaire waarde.
+\item De value is verplicht. 
+\item de topic is verplicht wanneer er geen topic werd meegegeven als optie. Als dit werd meegegeven in de applicatie, dan wordt deze kolom in het schema genegeerd.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+SparkSession spark = SparkSession.builder();
+
+final String topic = args[0];
+
+Dataset<Row> messages = spark.readStream()
+.format("kafka")
+.option("kafka.bootstrap.servers"), BOOTSTRAP_SERVERS)
+.option("subscribe", topic)
+.load();
+
+StreamingQuery query = null;
+
+try {
+query = messages.writeStream()
+.format("console")
+.outputMode(OutputMode.append())
+.option("checkpointLocation", CHECKPOINT_LOCATION)
+.start();
+} catch {
+e.printStackTrace();
+}
+
+try {
+query.awaitTermination();
+} catch (StreamingQueryException e) {
+e.printStackTrace();
+}
+
+spark.close();
+\end{lstlisting}
+
+\section{Aggregations with Event-Time windows}
+
+Gebruikelijk worden aggregaties niet over een volledige stream gedaan, maar in kleine stukken over een tijdspanne. Bijvoorbeeld in een casus waar sensoren data iedere minuut doorsturen. Hier ligt de nadruk eerder op wanneer de data werd aangemaakt en niet op wanneer de data werd verwerkt door Spark. Iedere timestamp wordt naar een window gemapt. Zo wordt er een groupby op het interval uitgevoerd.
+
+\subsubsection{Tumbling windows}
+
+Tumbling windows zijn windows van een vaste grootte en afwisselend. Ieder event wordt aan één window toegekend, en de windows overlappen elkaar niet. 
+
+\begin{figure}
+\includegraphics[width=\linewidth]{images/tumbling.png}
+\caption{Tumbling event time. Learning Spark (2022)}
+\end{figure}
+
+\subsubsection{Overlapping windows}
+
+Overlapping windows zijn time windows die elkaar onderling overlappen. Een event kan tot meerdere overlappende windows behoren.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{images/overlapping.png}
+\caption{Overlapping time windows. Learning Spark (2022)}
+\end{figure}
+
+\subsubsection{WordCount met time interval}
+
+\begin{enumerate}
+\item Allereerst wordt er een spark-object aangemaakt.
+\item Vervolgens wordt de dataset als stream-object ingelezen. Er wordt gelezen vanuit een socket met de gewoonlijke opties. Wel wordt er een extra kolom toegevoegd, namelijk een timestamp. We veronderstellen voor de volgende stap dat het dataframe minstens twee kolommen heeft: value en timestamp.
+\item 
+\begin{enumerate}
+\item We veronderstellen dat de value-kolom een doorlopende tekst is van alle woorden. Dit is niet nodig, dus de explode-functie wordt gebruikt om alle woorden uit de tekst te halen. Dit wordt opgeslaan in een nieuwe kolom.
+\item Op basis van de timestamp en het woord wordt er gegroepeerd. Hier moet er binnen een window worden gewerkt. De window-functie wordt aangesproken op de timestamp-kolom met als tijdspanne 10 seconden en sliding interval van 5 seconden.
+\end{enumerate}
+\item Uiteindelijk wordt count als aggregatie-functie gebruikt. De order-by voorziet een chronologische volgorde.
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+SparkSession spark = SparkSession.builder()
+
+Dataset<Row> lines = spark.readStream()
+.format("socket")
+.option("host","localhost")
+.option("port",9999)
+.option("includeTimestamp",true)
+.load();
+
+Dataset<Row> output = lines.withColumn("word",explode(split(col("value"),"\\s")))
+.select("word","timestamp")
+.groupby(window(col("timestamp"),"10 seconds", "5 seconds"), col("word"))
+.count()
+.orderBy(col("window"), col("count"));			
+
+StreamingQuery query = null;
+
+try{
+query = output.writeStream()
+.format("console")
+.option("truncate",false)
+.option("numRows", 100)
+.outputMode(OutputMode.Complete())
+.trigger(Trigger.ProcessingTime(5,TimeUnit.SECONDS))
+.start()
+} catch (TimeoutException e){
+e.printStackTrace();
+}
+
+try {
+query.awaitTermination();
+} catch (StreamingQueryException e) {
+e.printStackTrace();
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Watermarking}
+
+Tijdens het streamen wordt de staat van de data bijgehouden. De staat vergroot zolang het systeem data zal streamen. De kans op \textit{unbounded} data vergroot. De oplossing hiervoor is \textit{watermarking}. Een watermark is een event-time threshold. De event-time is het moment wanneer iets bij de bron werd aangemaakt Enkele kenmerken van watermarking:
+\begin{itemize}
+\item De watermark kijkt naar de grootste of meest recente event-time. Deze threshold definieert welke events te laat in een stream terechtkomen. Een watermark delay is de tijd dat het systeem wacht op late data, voordat het systeem de data verwerpt.
+\item Enkel de relevante data wordt behouden. Het systeem verwerpt achterhaalde data.
+\item Enkel de laatste timestamp wordt geüpdate. Een watermark stelt hier een bezemwagen voor. Bijvoorbeeld iedere event met een event-time voor 12u10 wordt niet meegeteld, want de range ligt tussen 12u10 en 12u20.
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{images/watermarking-in-windowed-grouped-aggregation.png}
+\caption{De twee events komen aan tussen 12u20 en 12u25. Het watermark wordt gebruikt om het verschil tussen \textit{late} en \textit{too-late} aan te duiden. Opgehaald uit Databricks (2022)}
+\end{figure}
+
+\subsection{Streaming joins}
+
+Er zijn twee mogelijkheden: 
+
+\begin{enumerate}
+\item Een stream joinen met een statische dataframe. 
+\item Twee streams met elkaar joinen. Dit kan enkel met een outer join.
+\end{enumerate}}
+
+\subsubsection{Stream-static joins}
+
+Data uit een gestreamede dataframe wordt gecombineerd met data uit een statische dataframe, bijvoorbeeld een dataframe opgebouwd uit een CSV. De code om dit mogelijk te maken, lijkt zeer sterk op de code voor een join bij een gewone dataframe.
+
+\begin{itemize}
+\item Dit is een stateless-operatie, daarom is er geen watermarking nodig.
+\item Een stream houdt geen state van de dataframe bij.
+\item Dit kan volgens een left-outer, inner of right outer join. Andere outer join opties, zoals een full outer join, zijn niet mogelijk. Het probleem is te wijten aan het incrementeel aflopen van de data. 
+\item Iedere n-aantal seconden wordt de volledige statische dataframe gelezen. Caching zorgt ervoor dat de dataframe één maal moet worden gelezen. 
+\item Aanpassingen aan de statische file worden tijdelijk genegeerd, vooral omdat caching wordt gebruikt. Pas bij het herstarten van de streamingquery worden de aanpassingen doorgevoerd. Dit hangt af van het gekozen bestandstype van de statische dataframe.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> staticDF = spark.read()...;
+Dataset<Row> streamingDF = spark.readStream()....;
+streamingDF.join(staticDF, "type");
+streamingDF.join(staticDF, "type", "left_outer");
+\end{lstlisting}
+
+\subsection{Stream-Stream joins}
+
+Data uit een stream wordt gecombineerd met data uit een andere stream. 
+
+\begin{itemize}
+\item Beide bronnen veranderen snel van inhoud. 
+\item Bijvoorbeeld een stream van iedere aankoop en een stream met info van iedere klant. De twee streams kunnen met elkaar worden ge\textit{joined}.
+\item De grootste uitdagingen zijn:
+\begin{itemize}
+\item De incompleetheid van de datastream. De kans dat er matches zijn tussen de inputs van de twee datastreams is kleiner. 
+\item Events in twee streams kunnen in eender welke volgorde komen. Mogelijk met vertraging wat het moeilijker maakt om matches terug te vinden.
+\end{itemize} 
+\item Om deze changes aan te pakken, wordt er gewerkt met \textit{buffering}. 
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> purchases = spark.readStream(). ...;
+Dataset<Row> customers = spark.readStream(). ...;
+Dataset<Row> matched = purchases.join(customers,”adId”);
+\end{lstlisting}
+
+\subsubsection{Buffering}
+
+Bij buffering wordt de inputdata van beide streams tijdelijk bijgehouden. Zo wordt er gekeken naar matches, zelfs al is de data in een andere volgorde binnengekomen. Structured streaming verloopt zo effectiever en er is een beter zicht op de data.
+
+\section{Keeping the state bounded}
+
+Het probleem bij de stream-stream joins is dat de engine een unbounded aantal streaming state kan bijhouden. Uit het voorbeeld van de aankopen zal niet iedere klant worden gekoppeld aan een aankoop en vice versa. Rijen zullen niet worden gebruikt en zo een lange periode in de buffer blijven.
+
+\subsubsection{State beperken}
+
+Twee zaken moeten zijn gekend:
+
+\begin{itemize}
+\item Wat is de maximale tijdsrange tussen de twee events?
+\begin{itemize}
+\item In het voorbeeld van de aankopen: Hoe lang duurt het vooraleer een klant een aankoop uitvoert?
+\end{itemize}
+\item Wat is de maximale tijsdperiode waarin een event tussen de bron en de processing engine kan worden vertraagd?
+\begin{itemize}
+\item In het voorbeeld van de aankopen: Mogelijks kan er vertraging optreden bij het aankopen. De verbinding speelt hier een belangrijke rol.
+\end{itemize}
+\end{itemize}}
+
+\subsubsection{State clean-up}
+
+De \textit{delay limits} en \textit{event-time constraints} kunnen omgezet worden in dataframebewerkingen. Bij deze bewerkingen worden watermarks en \textit{time range conditions} gebruikt. Er zijn twee stappen:
+
+\begin{enumerate}
+\item Stel een watermark delay op voor beide inputstreams. Zo weet de engine hoe lang de vertraging van de input kan zijn. 
+\item Stel een \textit{event-time constraint} op over de twee inputs heen. Zo weet de engine welke rijen verplicht zijn. M.a.w. de rijen die wél voldoen aan de \textit{time-constraint}. Een \textit{time-constraint} kan op twee manieren worden opgesteld:
+\begin{itemize}
+\item Time range join conditions zoals \textit{between righttime and (righttime + "interval 1 hour")}
+\item Join op event-time windows zoals \textit{"lefttimewindow = righttimewindow"}.
+\end{itemize}
+\end{enumerate}
+
+\begin{lstlisting}[language=Java]
+Dataset<Row> purchases = spark.readStream()...
+Dataset<Row> customers = spark.readStream()...
+
+Dataset<Row> purchasesWWatermark = purchases.withWatermark("purchasesTime","2 hours");
+Dataset<Row> customersWithWatermark = customers.withWatermark("customersTime", "3 hours");
+
+impressionsWithwatermark.join(
+clicksWithWatermark,
+expr(
+"custID = purchasesCustId AND " +
+"customersTime >= purchasesTime AND " +
+"customersTime <= purchasesTime + interval 1 hour"
+)
+);
+\end{lstlisting}
+
+\subsubsection{Outer joins with watermarking}
+
+De outer-type join specifiëren gebeurt helemaal onderaan. Wel zijn er enkele opmerkingen over outer joins:
+\begin{itemize}
+\item De watermark delay en event-time constraints zijn verplicht. De engine moet weten wanneer een event niet gaat matchen, anders leidt dit tot een null-resultaat.
+\item De \textit{outer} null-resultaten worden met een delay aangemaakt. De engine doet dit om zeker te zijn dat er mogelijke matches niet worden verworpen.
+\end{itemize}
+
+\begin{lstlisting}[language=Java]
+impressionsWithWatermark.join(
+	clicksWithWatermark,
+	expr(
+	"custID = purchasesCustId AND " +
+	"customersTime >= purchasesTime AND " +
+	"customersTime <= purchasesTime + interval 1 hour",
+	"leftOuter"
+)
+
+);
+\end{lstlisting}
+
+\section{Voorbeelden}
+
+\subsection{Kafka Read Example}
+
+\begin{lstlisting}[language=Java]
+public class KafkaReadExample {
+	
+	private static final String BOOTSTRAP_SERVERS = "localhost:9092";
+	private static final String CHECKPOINT_LOCATION = "checkpoint_kafkareadexample";
+	
+	public static void main(String[] args)  {
+		if (args.length == 0) {
+			System.out.println("Usage: KafkaReadExample <topic>");
+			System.exit(-1);
+		}
+		
+		System.setProperty("hadoop.home.dir", "C:\\tmp\\winutils-extra\\hadoop");
+		
+		final String topic = args[0];
+		
+		System.out.println("Will read from the topic " + topic);
+		
+		SparkSession spark = SparkSession.builder()
+		.appName("KafkaReadExample")				
+		.master("local[*]")
+		.getOrCreate();
+		
+		Dataset<Row> messages = spark.readStream()
+		.format("kafka")
+		.option("kafka.bootstrap.servers", BOOTSTRAP_SERVERS)
+		.option("subscribe", topic)
+		.load();
+		
+		System.out.println("Stream loaded");
+		
+		// Cast the key and the value to Strings
+		messages = messages.withColumn("key", expr("CAST(key AS STRING)"))
+		.withColumn("value", expr("CAST(value AS STRING)"));
+		
+		
+		System.out.println("About to start the query");
+		
+		StreamingQuery query = null;
+		try {
+			query = messages.writeStream()
+			.format("console")
+			.outputMode(OutputMode.Append())
+			.option("checkpointLocation", CHECKPOINT_LOCATION)
+			.start();
+		} catch (TimeoutException e) {		
+			e.printStackTrace();
+		}
+		
+		try {
+			query.awaitTermination();
+		} catch (StreamingQueryException e) {
+			e.printStackTrace();
+		}
+		
+		spark.close();
+	}
+}
+\end{lstlisting}
+
+\subsection{Structured Streaming Example}
+\begin{lstlisting}[language=Java]
+	public class StructuredStreamingExample1 {
+		
+		public static void main(String[] args) throws TimeoutException {
+			
+			System.setProperty("hadoop.home.dir", "C:\\tmp\\winutils-extra\\hadoop");
+			
+			// read delay from command line if specified
+			int delay = args.length == 0 ? 1 : Integer.parseInt(args[0]);
+			
+			
+			SparkSession spark = SparkSession.builder()
+			.master("local[*]")
+			.appName("StructuredStreamingExample1")
+			.getOrCreate();
+			
+			// The job seems terribly slow with the default number of partitions
+			spark.conf().set("spark.sql.shuffle.partitions", 4);
+			
+			
+			Dataset<Row> lines = spark.readStream()
+			.format("socket")              // read from socket
+			.option("host", "localhost")   // obvious options
+			.option("port", 9999)
+			.load();                       // load stream into DataFrame
+			
+			
+			// Regular transformation split line, put each word in 
+			// new record (explode) 
+			Dataset<Row> words = lines.select(
+			explode(split(col("value"), "\\s")).as("word"));
+			Dataset<Row> counts = words.groupBy("word").count();
+			
+			// Write the results
+			DataStreamWriter<Row> writer = counts.writeStream()
+			.format("console") // write to the console
+			.outputMode(OutputMode.Complete()) // write everything
+			.trigger(Trigger.ProcessingTime(delay, TimeUnit.SECONDS));
+			
+			// start execution of writer
+			StreamingQuery streamingQuery = writer.start();   
+			
+			
+			try {
+				streamingQuery.awaitTermination();
+			} catch (StreamingQueryException e) {			
+				e.printStackTrace();
+			}		
+		}
+		
+	}
+\end{lstlisting}
+
+
+\newpage
+
+\section{Oefeningen}
+\subsection{Filter log messages}
+\begin{lstlisting}[language=Java]
+public class SparkFilterLog {
+	
+	private static final String SERVERS = "localhost:9092";
+	private static final String CHECKPOINT_LOCATION = "checkpoint_filterlogs";
+	private static final String INPUT_TOPIC = "log.messages";
+	private static final String OUTPUT_TOPIC = "important.log.messages";
+	private static final String HADOOP_DIR = "C:\\winutils-extra\\hadoop";
+	
+	public static void main(String[] args) {
+		
+		System.setProperty("hadoop.home.dir", HADOOP_DIR);
+		
+		SparkSession spark = SparkSession.builder()
+			.master("local[1]")
+			.appName("SparkFilterLog")
+			.getOrCreate();
+		
+		spark.sparkContext().setLogLevel("ERROR");
+		
+		// Starten lezen vanuit kafka
+		Dataset<Row> messages = spark.readStream()
+			.format("kafka")
+			.option("kafka.bootstrap.servers", SERVERS)
+			.option("subscribe", INPUT_TOPIC)
+			.load();
+		
+		// Filtering uitvoeren: enkel FATAL of ERROR
+		messages = messages
+			.withColumn("value",  col("value").cast(DataTypes.StringType))
+			.where(col("value").like("ERROR%")
+			.or(col("value").like("FATAL%")))
+			.select("key","value");
+		
+		// Enkel de nodige fouten uitprinten naar Kafka
+		StreamingQuery query = null;
+		try {
+			query = messages.writeStream()
+				.format("kafka")
+				.option("kafka.bootstrap.servers", SERVERS)
+				.option("topic", OUTPUT_TOPIC)
+				.option("checkpointLocation", CHECKPOINT_LOCATION)
+				.outputMode(OutputMode.Append())
+				.trigger(Trigger.ProcessingTime(5, TimeUnit.SECONDS))
+				.start();	
+		} catch (TimeoutException e) {		
+			e.printStackTrace();
+		}
+		
+		try {
+			query.awaitTermination();
+		} catch (StreamingQueryException e) {
+			e.printStackTrace();
+		}
+		
+		spark.close();	
+	}	
+}
+\end{lstlisting}
+
+\newpage
+
+\subsection{Count log messages}
+\begin{lstlisting}[language=Java]
+public class SparkCountLogMessages {
+	
+	private static final String SERVERS = "localhost:9092";
+	private static final String CHECKPOINT_LOCATION = "checkpoint_filterlogs";
+	private static final String INPUT_TOPIC = "log.messages";
+	private static final String OUTPUT_TOPIC = "important.log.messages";
+	private static final String HADOOP_DIR = "C:\\winutils-extra\\hadoop";
+	private static final String INPUT_FILE_PATH = "src/main/resources/log.messages.delayed.txt";
+	
+	private static final String WATERMARK_DELAY = "3 minutes";
+	
+	private static final String STATIC_OUTPUT = "src/main/resources/static-report";
+	private static final String STREAMING_SOURCE = "src/main/resources/streaming-source";
+	private static final String STREAMING_OUTPUT = "src/main/resources/streaming-report";
+	
+	public static void main(String[] args) throws TimeoutException, StreamingQueryException {
+		
+		System.setProperty("hadoop.home.dir", HADOOP_DIR);
+		
+		SparkSession spark = SparkSession.builder()
+			.master("local[1]")
+			.appName("SparkCountLog")
+			.getOrCreate();
+		
+		spark.sparkContext().setLogLevel("ERROR");
+		
+		Dataset<Row> messages = spark.read().text(INPUT_FILE_PATH);
+		
+		// Voor static-report.
+		messages = messages
+			.withColumn("value", split(col("value"),"\\s"))
+			.withColumn("log-level", element_at(col("value"), 1))
+			.withColumn("systeem", element_at(col("value"), 2))
+			.withColumn("dag", element_at(col("value"), 3))
+			.withColumn("tijd", element_at(col("value"), 4))
+			.withColumn("eventtime", concat(col("dag"), lit(" "), col("tijd")))
+			.select("log-level", "systeem", "eventtime")
+			.withColumn("window", window(col("eventtime"), "10 minutes", "5 minutes"))
+			.groupBy(col("window"), col("systeem"), col("log-level"))
+			.count()
+			.orderBy(col("window"), desc("count"))
+			.select("window.*", "systeem", "log-level", "count");
+		
+		
+		messages.show(false);
+		
+		// Uitschrijven naar file.
+		messages.repartition(1)
+			.write()
+			.mode(SaveMode.Overwrite)
+			.csv(STATIC_OUTPUT);
+			
+		Dataset<Row> messagesStreaming = spark.readStream().text(STREAMING_SOURCE);
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Deel II}
+
+\begin{lstlisting}[language=Java]
+		// Watermark toevoegen
+		messagesStreaming = messagesStreaming
+			.withColumn("value", split(col("value"),"\\s"))
+			.withColumn("log-level", element_at(col("value"), 1))
+			.withColumn("systeem", element_at(col("value"), 2))
+			.withColumn("dag", element_at(col("value"), 3))
+			.withColumn("tijd", element_at(col("value"), 4))
+			.withColumn("eventtime", concat(col("dag"), lit(" "), col("tijd")))
+			.select("log-level", "systeem", "eventtime")
+			// String-types werken niet voor watermarks, dus casten.
+			.withColumn("eventtime", col("eventtime").cast(DataTypes.TimestampType))
+			.withWatermark("eventtime",  WATERMARK_DELAY)
+			.withColumn("window", window(col("eventtime"), "10 minutes", "5 minutes"))
+			.groupBy(col("window"), col("systeem"), col("log-level"))
+			.count()
+		// Sorteren kan enkel bij complete output!
+		//.orderBy(col("window"), desc("count"))
+			.select("window.*", "systeem", "log-level", "count");
+		
+		
+		
+		// Watermark is verplicht!!
+		StreamingQuery query = messagesStreaming
+			.writeStream()
+			.format("csv")
+			.option("path", STREAMING_OUTPUT)
+			.outputMode(OutputMode.Append())
+			.option("checkpointLocation", CHECKPOINT_LOCATION)
+			.trigger(Trigger.ProcessingTime(5, TimeUnit.SECONDS))
+			.start();
+		
+		query.awaitTermination();
+		spark.close();	
+	}	
 }
 \end{lstlisting}
 
